@@ -1,4 +1,4 @@
-#include "aux_functions.h"
+#include "our_header.h"
 
 /**
 * _calloc - request a space in memory and assign to 0 each one

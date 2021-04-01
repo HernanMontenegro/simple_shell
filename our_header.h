@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include "aux_functions.c"
+#include "aux_functions.h"
 
 /**
 * struct in_com - internal commands
