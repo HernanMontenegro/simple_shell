@@ -21,9 +21,13 @@ int _getline(char **fill, int *n, int where_read)
 		aux = _calloc(aux, buff_size);
 		if (!aux)
 			return (-1);
+
 		readed_bytes = read(where_read, aux, buff_size);
 		if (readed_bytes == -1)
+		{
+			free(aux);
 			return (-1);
+		}
 
 		if (aux != NULL)
 			*fill = add_aux_to_fill(*fill, aux, readed_bytes);
@@ -36,6 +40,7 @@ int _getline(char **fill, int *n, int where_read)
 		*n += buff_size;
 		free(aux);
 	}
+	free(aux);
 
 	return (total_bytes);
 }

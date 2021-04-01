@@ -23,14 +23,9 @@ int main()
 		bytes_read = _getline(&input, &bytes_used_read, 1);
 		if (bytes_read == -1)
 		{
+			free(input);
 			return (1);
 		}
-
-		printf("=============================================================\n");
-		printf("%s\n", input);
-		printf("=============================================================\n");
-		printf("Bytes_read: %i\n", bytes_read);
-		printf("Bytes_used_read: %i\n", bytes_used_read);
 
 		free(input);
 	}
