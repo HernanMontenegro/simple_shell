@@ -15,7 +15,7 @@
 * -----------------------------------------
 * Description: Manages the internal commands
 */
-#typedef struct in_com
+typedef struct in_com
 {
 	char *command;
 	void (*f)(int ac, char **av);
