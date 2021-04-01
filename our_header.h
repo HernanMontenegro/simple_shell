@@ -7,6 +7,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-
+void *_calloc(void *p, int size);
 
 #endif /* OUR_HEADER_H */
