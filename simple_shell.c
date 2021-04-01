@@ -7,7 +7,7 @@ Return: int
 */
 int main(int ac, char **av)
 {
-	char prompt[] = "#cisfun$";
+	char prompt[] = "#cisfun$ ";
 	char *input = NULL;
 	int bytes_used_read = 0;
 	int bytes_read = 0;

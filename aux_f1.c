@@ -44,7 +44,7 @@ int _strlen(char *buff)
 * @ptr: string
 * @old_size: int
 * @new_size: uns int
-*
+* ---------------------------------
 * Return: void pointer
 */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
@@ -131,8 +131,9 @@ char **_split(const char *s, char c)
 /**
 * calc_lines - calculate the amount of times it found a char
 * @s: the str given
-* @c: 
-*
+* @c: the char to find
+* -----------------------------------------
+* Return: the number of times that character has been found
 */
 int calc_lines(const char *s, char c)
 {
