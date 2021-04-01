@@ -43,7 +43,7 @@ int _getline(char *fill, int *n, int where_read)
 * @p: pointer to set
 * @size: amount of space to reserve
 */
-void *_calloc(void *p, int size)
+void *_calloc(char *p, int size)
 {
 	int i;
 
