@@ -11,6 +11,7 @@ int calc_lines(const char *, char c);
 
 /* aux_f2.c */
 void free_split(char **splitted);
+char *_strcpy(char *src, char *dest);
 /* ==============================  */
 
 #endif
