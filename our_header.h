@@ -8,6 +8,8 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+#include "aux_functions.c"
+
 /**
 * struct in_com - internal commands
 * @command: the command char pointer
@@ -24,9 +26,6 @@ typedef struct in_com
 
 /* Prototypes  */
 int _getline(char **fill, int *n, int where_read);
-void *_calloc(char *p, int size);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-int _strlen(char *buff);
 char *add_aux_to_fill(char *fill, char *aux, int aux_size);
 
 #endif /* OUR_HEADER_H */
