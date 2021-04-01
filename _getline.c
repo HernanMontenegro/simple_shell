@@ -85,7 +85,9 @@ int _strlen(char *buff)
 {
 	int len;
 
-	for (len = 0; buff[len]; len++);
+	for (len = 0; buff[len]; len++)
+	{
+	}
 
 	return (len);
 }
