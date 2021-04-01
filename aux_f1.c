@@ -83,6 +83,13 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (p);
 }
 
+/**
+* _split - splits a string with by a specific char
+* @s: the char pointer to be splitted
+* @c: the char to delimitate
+* ----------------------------------
+* Return: a pointer to a pointer with the splitted str
+*/
 char **_split(const char *s, char c)
 {
 	int line_i, i = 0, j;
@@ -121,6 +128,11 @@ char **_split(const char *s, char c)
 	return (res);
 }
 
+/**
+* calc_lines - 
+*
+*
+*/
 int calc_lines(const char *s, char c)
 {
 	int i;
