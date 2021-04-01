@@ -5,11 +5,11 @@
 * @splitted: the splitted string
 * @line: the lines to split
 */
-void free_split(char **splitted, int line)
+void free_split(char **splitted)
 {
-        int i;
+	int i;
 
-        for (i = 0; i < line; i++)
-                free(splitted[i]);
-        free(splitted);
+	for (i = 0; splitted && splitted[i] != NULL; i++)
+		free(splitted[i]);
+	free(splitted);
 }

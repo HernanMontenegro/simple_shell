@@ -129,8 +129,9 @@ char **_split(const char *s, char c)
 }
 
 /**
-* calc_lines - 
-*
+* calc_lines - calculate the amount of times it found a char
+* @s: the str given
+* @c: 
 *
 */
 int calc_lines(const char *s, char c)
