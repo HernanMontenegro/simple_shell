@@ -15,8 +15,9 @@ void free_split(char **splitted)
 }
 
 /**
-*
-*
+* _strcpy - copies a string
+* @src: the source string
+* @dest: the destination string
 */
 void _strcpy(char *src, char *dest)
 {
@@ -25,7 +26,7 @@ void _strcpy(char *src, char *dest)
 
 	dest = malloc(src_len * sizeof(char));
 	if (!dest)
-		return (NULL);
+		return;
 
 	for (i = 0; i < src_len; i++)
 		dest[i] = src[i];
