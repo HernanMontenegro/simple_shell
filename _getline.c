@@ -8,13 +8,13 @@
 * ----------------------------------------
 * Return: -1 if fails, the readed bytes
 */
-int _getline(char *fill, int *n, int where_read)
+int _getline(char **fill, int *n, int where_read)
 {
 	char *aux = NULL;
 	int readed_bytes = 0, total_bytes = 0;
 	int buff_size = 120;
 
-	*n = 0;
+	*n = buff_size;
 	while (1)
 	{
 		aux = NULL;
@@ -25,17 +25,19 @@ int _getline(char *fill, int *n, int where_read)
 		if (readed_bytes == -1)
 			return (-1);
 
-		add_aux_to_fill(fill, aux, readed_bytes);
+		if (aux != NULL)
+			*fill = add_aux_to_fill(*fill, aux, readed_bytes);
+
+		total_bytes += readed_bytes;
 
 		if (readed_bytes == 0 || readed_bytes < buff_size)
 			break;
 
-		total_bytes += readed_bytes;
 		*n += buff_size;
 		free(aux);
 	}
 
-	return (readed_bytes);
+	return (total_bytes);
 }
 
 /**
@@ -63,16 +65,21 @@ void *_calloc(char *p, int size)
 * @aux: the aux char pointer
 * @aux_size: the size of aux
 */
-void add_aux_to_fill(char *fill, char *aux, int aux_size)
+char *add_aux_to_fill(char *fill, char *aux, int aux_size)
 {
-	int fill_len = _strlen(fill);
-	int new_size = fill_len + aux_size;
+	int fill_len;
+	int new_size;
 	int i, j;
+
+	fill_len = _strlen(fill);
+	new_size = fill_len + aux_size;
 
 	fill = _realloc(fill, fill_len, new_size);
 
 	for (i = fill_len, j = 0; i < new_size; i++, j++)
 		fill[i] = aux[j];
+
+	return (fill);
 }
 
 /**
@@ -84,6 +91,9 @@ void add_aux_to_fill(char *fill, char *aux, int aux_size)
 int _strlen(char *buff)
 {
 	int len;
+
+	if (!buff)
+		return (0);
 
 	for (len = 0; buff[len]; len++)
 	{
@@ -110,6 +120,8 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		p = malloc(new_size);
 		if (p == NULL)
 			return (NULL);
+		for (i = 0; i < new_size; i++)
+			p[i] = 0;
 		return (p);
 	}
 	else if (new_size == 0)

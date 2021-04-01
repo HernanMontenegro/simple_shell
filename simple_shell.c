@@ -7,8 +7,8 @@ Return: int
 */
 int main()
 {
-	char prompt[] = "#cisfun$ ";
-	char *input;
+	char prompt[] = "#cisfun$";
+	char *input = NULL;
 	int bytes_used_read = 0;
 	int bytes_read = 0;
 
@@ -20,13 +20,18 @@ int main()
 		/* Print prompt */
 		write(1, &prompt, sizeof(prompt) / sizeof(char));
 
-		bytes_read = _getline(input, &bytes_used_read, 1);
+		bytes_read = _getline(&input, &bytes_used_read, 1);
 		if (bytes_read == -1)
 		{
 			return (1);
 		}
 
+		printf("=============================================================\n");
 		printf("%s\n", input);
+		printf("=============================================================\n");
+		printf("Bytes_read: %i\n", bytes_read);
+		printf("Bytes_used_read: %i\n", bytes_used_read);
+
 		free(input);
 	}
 	return (0);
