@@ -26,7 +26,8 @@ int main()
 			return (1);
 		}
 
-
+		printf("%s\n", input);
+		free(input);
 	}
 	return (0);
 }
