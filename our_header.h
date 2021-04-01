@@ -7,9 +7,10 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+int _getline(char *fill, int *n, int where_read);
 void *_calloc(void *p, int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-void _strlen(char *buff);
+int _strlen(char *buff);
 void add_aux_to_fill(char *fill, char *aux, int aux_size);
 
 #endif /* OUR_HEADER_H */
