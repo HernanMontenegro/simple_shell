@@ -13,3 +13,20 @@ void free_split(char **splitted)
 		free(splitted[i]);
 	free(splitted);
 }
+
+/**
+*
+*
+*/
+void _strcpy(char *src, char *dest)
+{
+	int i;
+	int src_len = _strlen(src) + 1;
+
+	dest = malloc(src_len * sizeof(char));
+	if (!dest)
+		return (NULL);
+
+	for (i = 0; i < src_len; i++)
+		dest[i] = src[i];
+}
