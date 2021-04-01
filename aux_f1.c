@@ -82,3 +82,55 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (p);
 }
+
+char **_split(const char *s, char c)
+{
+	int line_i, i = 0, j;
+	int line_count = calc_lines(s, c);
+	char **res;
+	char *ram;
+
+	res = malloc((line_count + 1) * sizeof(char *));
+	if (!res)
+		return (NULL);
+
+	for (line_i = 0; line_i < line_count; line_i++)
+	{
+		for (j = 0; s[i + j] != c && s[i + j] != '\0'; j++)
+		{
+ 		}
+
+		ram = malloc((j + 1) * sizeof(char));
+		if (ram == NULL)
+		{
+			for (; line_i > 0; line_i--)
+				free(res[line_i]);
+			free(res);
+			return (NULL);
+		}
+
+		for (j = 0; s[i] != c && s[i] != '\0'; i++, j++)
+			ram[j] = s[i];
+		ram[j] = '\0';
+		i++;
+
+		res[line_i] = ram;
+	}
+	res[line_i] = NULL;
+
+	return (res);
+}
+
+int calc_lines(const char *s, char c)
+{
+	int i;
+	int line = 1;
+
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		if (s[i] == c)
+			line++;
+	}
+
+	return (line);
+}
