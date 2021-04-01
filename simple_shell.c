@@ -41,7 +41,7 @@ int infinite_loop(int fd, int read_site)
 	char *input = NULL;
 	int bytes_used_read = 0;
 	int bytes_read = 0;
-	int i;
+	int ret = 0;
 	char **lines = NULL;
 
 	while (1)
@@ -65,16 +65,14 @@ int infinite_loop(int fd, int read_site)
 		lines = _split(input, '\n');
 		free(input);
 
-		for (i = 0; lines && lines[i] != NULL && lines[i][0] != '\0'; i++)
-		{
-			printf("%s\n", lines[i]);
-		}
-
+		ret = syntax_manager(lines);
 		free_split(lines);
+		if (ret == 1)
+			return (1);
 
 		if (fd != -1)
 			break;
 	}
 
-	return (0);
+	return (ret);
 }

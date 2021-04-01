@@ -14,7 +14,7 @@ int syntax_manager(char **input)
 	for (i = 0; input && input[i] != NULL; i++)
 	{
 		command = delete_comments(input[i]);
-		if (!coomand)
+		if (!command)
 			return (1);
 		free(command);
 	}
