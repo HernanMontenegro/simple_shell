@@ -1,8 +1,12 @@
 #include "our_header.h"
 
 /**
-*
-*
+* _getline - read an entire line
+* @fill: the variable to fill with the line
+* @n: the bytes tried to read
+* @where_read: the file descriptor
+* ----------------------------------------
+* Return: -1 if fails, the readed bytes
 */
 int _getline(char *fill, int *n, int where_read)
 {
@@ -34,6 +38,11 @@ int _getline(char *fill, int *n, int where_read)
 	return (readed_bytes);
 }
 
+/**
+* _calloc - request a space in memory and assign to 0 each one
+* @p: pointer to set
+* @size: amount of space to reserve
+*/
 void *_calloc(void *p, int size)
 {
 	int i;
@@ -48,7 +57,12 @@ void *_calloc(void *p, int size)
 	return (p);
 }
 
-
+/**
+* add_aux_to_fill - add aux to our fill in _getline
+* @fill: the fill char pointer
+* @aux: the aux char pointer
+* @aux_size: the size of aux
+*/
 void add_aux_to_fill(char *fill, char *aux, int aux_size)
 {
 	int fill_len = _strlen(fill);
@@ -61,6 +75,12 @@ void add_aux_to_fill(char *fill, char *aux, int aux_size)
 		fill[i] = aux[j];
 }
 
+/**
+* _strlen - counts the length of a string
+* @buff: the buffer pointer
+* ---------------------------------
+* Return: the length of the string
+*/
 int _strlen(char *buff)
 {
 	int len;
