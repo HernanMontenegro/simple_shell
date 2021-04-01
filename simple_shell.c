@@ -9,6 +9,7 @@ int main(int ac, char **av)
 {
 	int fd = -1, ret = 0, read_site = 1;
 
+	/* LEEMOS ARCHIVO */
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
@@ -18,6 +19,11 @@ int main(int ac, char **av)
 			return (1);
 		}
 		read_site = fd;
+	}
+	else if (!isatty(0))
+	{
+		fd = 0;
+		read_site = 0;
 	}
 
 	ret = infinite_loop(fd, read_site);
