@@ -27,5 +27,6 @@ typedef struct in_com
 /* Prototypes  */
 int _getline(char **fill, int *n, int where_read);
 char *add_aux_to_fill(char *fill, char *aux, int aux_size);
+int infinite_loop(int fd, int read_site);
 
 #endif /* OUR_HEADER_H */

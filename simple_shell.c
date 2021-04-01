@@ -7,20 +7,20 @@ Return: int
 */
 int main(int ac, char **av)
 {
-	int fd = -1, ret = 0;
+	int fd = -1, ret = 0, read_site = 1;
 
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
 	 	if (fd == -1)
 		{
-			perror("Error: ");
+			perror("Error");
 			return (1);
 		}
 		read_site = fd;
 	}
 
-	ret = infinite_loop(fd);
+	ret = infinite_loop(fd, read_site);
 
 	if (fd != -1)
 		close(fd);
@@ -29,13 +29,12 @@ int main(int ac, char **av)
 }
 
 
-int infinite_loop(int fd)
+int infinite_loop(int fd, int read_site)
 {
 	char prompt[] = "#cisfun$ ";
 	char *input = NULL;
 	int bytes_used_read = 0;
 	int bytes_read = 0;
-	int read_site = 1;
 	int i;
 	char **lines = NULL;
 
@@ -66,9 +65,10 @@ int infinite_loop(int fd)
 		}
 
 		free_split(lines);
+
+		if (fd != -1)
+			break;
 	}
-	if (fd != -1)
-		break;
 
 	return (0);
 }
