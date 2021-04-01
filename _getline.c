@@ -49,6 +49,8 @@ int _getline(char **fill, int *n, int where_read)
 * _calloc - request a space in memory and assign to 0 each one
 * @p: pointer to set
 * @size: amount of space to reserve
+* ----------------------------------------------
+* Return: void
 */
 void *_calloc(char *p, int size)
 {
@@ -69,6 +71,8 @@ void *_calloc(char *p, int size)
 * @fill: the fill char pointer
 * @aux: the aux char pointer
 * @aux_size: the size of aux
+* --------------------------------------
+* Return: the filled char pointer
 */
 char *add_aux_to_fill(char *fill, char *aux, int aux_size)
 {
@@ -108,18 +112,19 @@ int _strlen(char *buff)
 }
 
 /**
- *_realloc - re size array
- *@ptr: string
- *@old_size: int}
- *@new_size: uns int
- *
- *Return: void pointer
+* _realloc - re size array
+* @ptr: string
+* @old_size: int
+* @new_size: uns int
+*
+* Return: void pointer
 */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	unsigned int i, cal;
 	char *p;
 	char *new_ptr;
+
 	if (ptr == NULL)
 	{
 		p = malloc(new_size);
