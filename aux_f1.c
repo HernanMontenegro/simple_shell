@@ -30,11 +30,11 @@ void *_calloc(char *p, int size)
 int _strlen(char *buff)
 {
 	int len;
+
 	if (!buff)
 		return (0);
 	for (len = 0; buff[len] != '\0'; len++)
-	{
-	}
+		; /* Cursed  */
 
 	return (len);
 }
@@ -52,6 +52,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	unsigned int i, cal;
 	char *p;
 	char *new_ptr;
+
 	if (ptr == NULL)
 	{
 		p = malloc(new_size);
