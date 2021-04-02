@@ -11,7 +11,7 @@ int calc_lines(const char *, char c);
 
 /* aux_f2.c */
 void free_split(char **splitted);
-void _strcpy(char *src, char *dest);
+char *_strcpy(char *src);
 
 /* syntax_manager.c */
 int syntax_manager(char **input);
