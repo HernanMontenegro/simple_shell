@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 
 #include "aux_functions.h"
+#include "lists.h"
 
 /**
 * struct in_com - internal commands
