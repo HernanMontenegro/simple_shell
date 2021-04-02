@@ -16,6 +16,10 @@ char *_strcpy(char *src);
 /* syntax_manager.c */
 int syntax_manager(char **input);
 char *delete_comments(char *str);
+
+/* Marvellous  */
+#include "lists.h"
+
 /* ==============================  */
 
 #endif
