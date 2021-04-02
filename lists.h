@@ -29,7 +29,7 @@ typedef struct envs_list
 /* Prototypes */
 size_t list_len(const list_t *h);
 void free_list(list_t *head);
-envs_list *add_node(envs_list, const char *);
+envs_list *add_node(envs_list **, const char *);
 envs_list *add_node_end(envs_list **, const char *);
 
 #endif /* LISTS_H */

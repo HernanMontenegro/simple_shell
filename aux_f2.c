@@ -35,3 +35,41 @@ char *_strcpy(char *src)
 
 	return (dest);
 }
+
+/**
+*/
+char *int_to_str(int n)
+{
+	char *res = NULL;
+	int i, len = 0, div = 1, negative = 0;
+
+	if (n < 0)
+	{
+		len++;
+		n *= -1;
+		negative = 1;
+	}
+
+	for (i = 0; (n / div) > 9; i++, len++)
+		div *= 10;
+
+	res = malloc((len + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+
+	if (negative == 1)
+	{
+		i = 1;
+		res[0] = '-';
+	}
+	else
+		i = 0;
+	for (; (n / div) > 9; i++)
+	{
+		res[i] = n / div;
+		div *= 10;
+	}
+	res[i] = '\0';
+
+	return (res);
+}
