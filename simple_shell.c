@@ -1,5 +1,7 @@
 #include "our_header.h"
 
+int last_child_ret = 0;
+
 /**
 *main - coso
 *
