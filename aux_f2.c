@@ -29,7 +29,7 @@ char *_strcpy(char *src)
 	if (!dest)
 		return (NULL);
 
-	for (i = 0; i < src_len; i++)
+	for (i = 0; i < (src_len - 1); i++)
 		dest[i] = src[i];
 	dest[i] = '\0';
 
