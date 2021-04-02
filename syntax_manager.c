@@ -13,9 +13,22 @@ int syntax_manager(char **input)
 
 	for (i = 0; input && input[i] != NULL; i++)
 	{
+		if (input[i][0] == '\0')
+			continue;
+
 		command = delete_comments(input[i]);
 		if (!command)
 			return (1);
+
+		/* Si esta vacio entonces continue; */
+		if (_strlen(command) == 0)
+		{
+			free(command);
+			continue;
+		}
+
+		printf("%s\n", command);
+
 		free(command);
 	}
 
@@ -35,9 +48,8 @@ char *delete_comments(char *str)
 
 	str_list = _split(str, '#');
 
-	_strcpy(str_list[0], str_aux);
+	str_aux = _strcpy(str_list[0]);
 
 	free_split(str_list);
-
 	return (str_aux);
 }

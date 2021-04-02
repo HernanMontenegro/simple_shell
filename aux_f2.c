@@ -19,15 +19,19 @@ void free_split(char **splitted)
 * @src: the source string
 * @dest: the destination string
 */
-void _strcpy(char *src, char *dest)
+char *_strcpy(char *src)
 {
 	int i;
 	int src_len = _strlen(src) + 1;
+	char *dest;
 
 	dest = malloc(src_len * sizeof(char));
 	if (!dest)
-		return;
+		return (NULL);
 
 	for (i = 0; i < src_len; i++)
 		dest[i] = src[i];
+	dest[i] = '\0';
+
+	return (dest);
 }

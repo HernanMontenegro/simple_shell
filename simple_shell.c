@@ -68,7 +68,10 @@ int infinite_loop(int fd, int read_site)
 		ret = syntax_manager(lines);
 		free_split(lines);
 		if (ret == 1)
+		{
+			printf("Retorno syntax_manager\n\n");
 			return (1);
+		}
 
 		if (fd != -1)
 			break;
