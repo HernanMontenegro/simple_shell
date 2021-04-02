@@ -4,20 +4,26 @@
 
 /* ============================ */
 /**
- * struct list_s - singly linked list
- * @str: string - (malloc'ed string)
- * @len: length of the string
- * @next: points to the next node
- *
- * Description: singly linked list node structure
- * for Holberton project
+* struct envs_list - singly linked list
+* @name: the variable name
+* @content: the variable content
+* @name_size: size of the variable name
+* @content_size: the size of the variable content
+* @end_index: the original string index after the variable found
+* @next: points to the next node
+* -------------------------------------------------------
+* Description: singly linked list node structure
+* for Holberton project
 */
-typedef struct list_s
+typedef struct envs_list
 {
-	char *str;
-	unsigned int len;
-	struct list_s *next;
-} list_t;
+	char *name;
+	char *content;
+	int name_size;
+	int content_size;
+	int end_index;
+	struct envs_list *next;
+} envs_list;
 /* ============================ */
 
 /* Prototypes */
