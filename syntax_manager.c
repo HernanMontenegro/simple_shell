@@ -33,7 +33,7 @@ int syntax_manager(char **input)
 			return (1);
 
 
-		/*printf("%s\n", command);*/
+		printf("%s\n", command);
 
 		free(command);
 	}
@@ -66,26 +66,13 @@ char *variable_translator(char *str)
 {
 	int tot_size = 0;
 	envs_list *list = NULL;
-	envs_list *aux = NULL;
+	char *new_str = NULL;
 
 	list = generate_var_nodes(str, &tot_size);
 	gen_var_content(list);
-
-	/*free(str);*/
-
-	aux = list;
-	for (; aux;)
-	{
-		if (aux->content != NULL)
-			printf("%s\n", aux->content);
-		else
-		{
-			printf("(nil)\n");
-		}
-		aux = aux->next;
-	}
-
+	new_str = var_big_bang(list, str, tot_size);
+	free(str);
 
 	free_list(list);
-	return (str);
+	return (new_str);
 }

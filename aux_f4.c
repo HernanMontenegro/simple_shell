@@ -1,4 +1,4 @@
-#include "our_header.c"
+#include "our_header.h"
 
 int calc_var_space(envs_list *head, int tot_size)
 {
@@ -16,10 +16,12 @@ int calc_var_space(envs_list *head, int tot_size)
 char *var_big_bang(envs_list *head, char *str, int tot_size)
 {
 	int i, j, k;
-	int total = calc_var_space(head, tot_size);
+	int total;
 	envs_list *aux = head;
 	char *universe;
-	char *content;
+	envs_list *pre_aux = NULL;
+
+	total = calc_var_space(head, tot_size);
 
 	universe = malloc((total + 1) * sizeof(char));
 	if (!universe) /* Black hole */
@@ -30,10 +32,20 @@ char *var_big_bang(envs_list *head, char *str, int tot_size)
 		/* Repleace with the variable content */
 		if (str[i] == '$')
 		{
-			content = aux->content;
-			for (k = 0; content && content[k] != '\0'; k++, j++)
-				universe[j] = content[k];
-			i = aux->end_index;
+			pre_aux = aux;
+			aux = aux->next;
+
+
+			if (pre_aux->name == NULL && pre_aux->content == NULL)
+			{
+				universe[j] = '$';
+				j++;
+				continue;
+			}
+
+			for (k = 0; pre_aux->content && pre_aux->content[k] != '\0'; k++, j++)
+				universe[j] = pre_aux->content[k];
+			i = pre_aux->end_index;
 		}
 		else
 		{
@@ -41,7 +53,7 @@ char *var_big_bang(envs_list *head, char *str, int tot_size)
 			j++;
 		}
 	}
-	universe[i] = '\0';
+	universe[j] = '\0';
 
 	return (universe);
 }

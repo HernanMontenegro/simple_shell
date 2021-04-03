@@ -52,6 +52,7 @@ char *int_to_str(int n)
 
 	for (i = 0; (n / div) > 9; i++, len++)
 		div *= 10;
+	len++;
 
 	res = malloc((len + 1) * sizeof(char));
 	if (!res)
@@ -64,10 +65,11 @@ char *int_to_str(int n)
 	}
 	else
 		i = 0;
-	for (; (n / div) > 9; i++)
+
+	for (; i < len; i++)
 	{
-		res[i] = n / div;
-		div *= 10;
+		res[i] = ((n / div) % 10) + '0';
+		div /= 10;
 	}
 	res[i] = '\0';
 
