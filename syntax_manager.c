@@ -39,7 +39,6 @@ int syntax_manager(char **input)
 		for (j = 0; cmd_splt[j] != NULL; j++)
 		{
 			printf("%s\n", cmd_splt[j]);
-			
 
 		}
 
@@ -84,4 +83,43 @@ char *variable_translator(char *str)
 
 	free_list(list);
 	return (new_str);
+}
+
+int or_operat(char *str)
+{
+	int i, ret_and;
+	char **cmd_splt_or = NULL;
+
+	cmd_splt_or = _split(str, "||");
+
+	for (i = 0; cmd_splt_or[i] != NULL; i++)
+	{
+		ret_and = and_operat(cmd_splt_or[i]);
+		if (ret_and == 0)
+			break;
+	}
+
+	free_split(cmd_splt_or);
+	return (0);
+}
+
+int and_operat(char *str)
+{
+	int i, ret;
+	char **cmd_splt_and = NULL;
+
+	cmd_splt_and = _split(str, "&&");
+
+	for (i = 0; cmd_splt_and[i] != NULL; i++)
+	{
+		ret = localize_cmd(cmd_splt_and[i]);
+		if (ret != 0)
+		{
+			free_split(cmd_splt_and);
+			return (ret);
+		}
+	}
+
+	free_split(cmd_splt_and);
+	return (0);
 }

@@ -27,5 +27,10 @@ int infinite_loop(int fd, int read_site);
 int syntax_manager(char **input);
 char *delete_comments(char *str);
 char *variable_translator(char *str);
+int or_operat(char *str);
+int and_operat(char *str);
+
+/* pre_launch.c  */
+int localize_cmd(char *str);
 
 #endif /* OUR_HEADER_H */
