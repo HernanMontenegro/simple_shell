@@ -150,7 +150,7 @@ char **_split(const char *s, char *c)
 		}
 
 		ram[j] = '\0';
-		i++;
+		i = i + _strlen(c);
 
 		res[line_i] = ram;
 	}

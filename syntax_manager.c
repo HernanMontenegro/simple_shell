@@ -120,5 +120,5 @@ int and_operat(char *str)
 	}
 
 	free_split(cmd_splt_and);
-	return (0);
+	return (1);
 }
