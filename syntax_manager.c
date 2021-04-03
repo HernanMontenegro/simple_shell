@@ -75,7 +75,8 @@ char *variable_translator(char *str)
 	aux = list;
 	for (; aux;)
 	{
-		printf("%s\n", aux->name);
+		if (aux->name != NULL)
+			printf("%s\n", aux->name);
 		aux = aux->next;
 	}
 
