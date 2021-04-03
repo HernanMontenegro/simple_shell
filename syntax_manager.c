@@ -69,14 +69,19 @@ char *variable_translator(char *str)
 	envs_list *aux = NULL;
 
 	list = generate_var_nodes(str, &tot_size);
+	gen_var_content(list);
 
 	/*free(str);*/
 
 	aux = list;
 	for (; aux;)
 	{
-		if (aux->name != NULL)
-			printf("%s\n", aux->name);
+		if (aux->content != NULL)
+			printf("%s\n", aux->content);
+		else
+		{
+			printf("(nil)\n");
+		}
 		aux = aux->next;
 	}
 

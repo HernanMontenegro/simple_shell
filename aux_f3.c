@@ -123,7 +123,7 @@ int check_var_delim(char c)
         return (0);
 }
 
-envs_list *gen_var_content(envs_list *head)
+void gen_var_content(envs_list *head)
 {
 	int i;
 	int bool;
@@ -140,7 +140,7 @@ envs_list *gen_var_content(envs_list *head)
 		}
 		for (i = 0; global_env[i] != NULL; i++)
 		{
-			aux_env = _split(gloabl_env[i], '=');
+			aux_env = _split(global_env[i], '=');
 			if (_strcmp(aux_env[0], aux->name) == 0)
 			{
 				bool = 1;
@@ -149,10 +149,15 @@ envs_list *gen_var_content(envs_list *head)
 		}
 
 		if (bool == 0)
-			break;
+		{
+			aux = aux->next;
+			continue;
+		}
 
 		aux->content = _strcpy(aux_env[1]);
 		aux->content_size = _strlen(aux_env[1]);
 		free_split(aux_env);
+
+		aux = aux->next;
 	}
 }
