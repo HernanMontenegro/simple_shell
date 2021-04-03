@@ -153,7 +153,7 @@ void gen_var_content(envs_list *head)
 		}
 		for (i = 0; global_env[i] != NULL; i++)
 		{
-			aux_env = _split(global_env[i], '=');
+			aux_env = _split(global_env[i], "=");
                         if (aux_env == NULL)
                                 return;
 			if (_strcmp(aux_env[0], aux->name) == 0)

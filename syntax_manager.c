@@ -34,7 +34,7 @@ int syntax_manager(char **input)
 			return (1);
 
 
-		cmd_splt = _split(command, ';');
+		cmd_splt = _split(command, ";");
 
 		for (j = 0; cmd_splt[j] != NULL; j++)
 		{
@@ -61,7 +61,7 @@ char *delete_comments(char *str)
 	char **str_list = NULL;
 	char *str_aux = NULL;
 
-	str_list = _split(str, '#');
+	str_list = _split(str, "#");
 
 	str_aux = _strcpy(str_list[0]);
 

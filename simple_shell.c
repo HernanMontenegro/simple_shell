@@ -68,8 +68,11 @@ int infinite_loop(int fd, int read_site)
 			return (1);
 		}
 
-		lines = _split(input, '\n');
+		printf("=====================================================================\n");
+		lines = _split(input, "\n");
 		free(input);
+		printf("=====================================================================\n");
+		
 
 		ret = syntax_manager(lines);
 		free_split(lines);
