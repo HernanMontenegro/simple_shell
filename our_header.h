@@ -3,6 +3,7 @@
 
 /* Globals varabols */
 extern int last_child_ret;
+extern char **global_env;
 
 /* Libraries to use */
 #include <stdio.h>

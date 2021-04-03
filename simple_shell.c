@@ -1,15 +1,19 @@
 #include "our_header.h"
 
 int last_child_ret = 0;
+char **global_env = NULL;
 
 /**
 *main - coso
 *
 Return: int
 */
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
 	int fd = -1, ret = 0, read_site = 1;
+
+	/* Fill global var */
+	global_env = env;
 
 	/* LEEMOS ARCHIVO */
 	if (ac == 2)
