@@ -105,7 +105,7 @@ char **_split(const char *s, char c)
 	{
 		for (j = 0; s[i + j] != c && s[i + j] != '\0'; j++)
 		{
- 		}
+ 		}NOOOOO
 
 		ram = malloc((j + 1) * sizeof(char));
 		if (ram == NULL)

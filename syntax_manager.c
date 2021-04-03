@@ -9,7 +9,8 @@
 int syntax_manager(char **input)
 {
 	char *command = NULL;
-	int i;
+	int i, j;
+	char **cmd_splt = NULL; /* Slpit by ; */
 
 	for (i = 0; input && input[i] != NULL; i++)
 	{
@@ -33,8 +34,16 @@ int syntax_manager(char **input)
 			return (1);
 
 
-		printf("%s\n", command);
+		cmd_splt = _split(command, ';');
 
+		for (j = 0; cmd_splt[j] != NULL; j++)
+		{
+			printf("%s\n", cmd_splt[j]);
+			
+
+		}
+
+		free_split(cmd_splt);
 		free(command);
 	}
 
