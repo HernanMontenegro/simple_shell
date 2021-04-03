@@ -13,6 +13,7 @@ int calc_lines(const char *, char c);
 void free_split(char **splitted);
 char *_strcpy(char *src);
 char *int_to_str(int n);
+int _strcmp(char *s1, char *s2);
 
 /* syntax_manager.c */
 int syntax_manager(char **input);

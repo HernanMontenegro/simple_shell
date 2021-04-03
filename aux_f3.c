@@ -24,7 +24,6 @@ void free_list(envs_list *head)
 
                 if (ram->content != NULL)
                         free(ram->content);
-		
                 free(ram);
 	}
 }
@@ -83,13 +82,13 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
                 if (str[i] == '$')
                 {
                         aux = int_to_str(getpid());
-                        add_node_end(&head, "$", aux, 1, _strlen(aux), i);
+                        add_node_end(&head, NULL, aux, 1, _strlen(aux), i);
                         continue;
                 }
                 else if (str[i] == '?')
                 {
                         aux = int_to_str(last_child_ret);
-                        add_node_end(&head, "?", aux, 1, _strlen(aux), i);
+                        add_node_end(&head, NULL, aux, 1, _strlen(aux), i);
                         continue;
                 }
                 else if (str[i] == '\0')
@@ -122,4 +121,38 @@ int check_var_delim(char c)
         else if (c == 95)
                 return (1);
         return (0);
+}
+
+envs_list *gen_var_content(envs_list *head)
+{
+	int i;
+	int bool;
+	envs_list *aux = head;
+	char **aux_env = NULL;
+
+	while (aux != NULL)
+	{
+		bool = 0;
+		if (!aux->name)
+		{
+			aux = aux->next;
+			continue;
+		}
+		for (i = 0; global_env[i] != NULL; i++)
+		{
+			aux_env = _split(gloabl_env[i], '=');
+			if (_strcmp(aux_env[0], aux->name) == 0)
+			{
+				bool = 1;
+				break;
+			}
+		}
+
+		if (bool == 0)
+			break;
+
+		aux->content = _strcpy(aux_env[1]);
+		aux->content_size = _strlen(aux_env[1]);
+		free_split(aux_env);
+	}
 }
