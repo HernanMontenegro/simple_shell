@@ -90,9 +90,9 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 * ----------------------------------
 * Return: a pointer to a pointer with the splitted str
 */
-char **_split(const char *s, char c)
+char **_split(const char *s, char *c)
 {
-	int line_i, i = 0, j;
+	int line_i, i = 0, j, k;
 	int line_count = calc_lines(s, c);
 	char **res;
 	char *ram;
@@ -103,9 +103,23 @@ char **_split(const char *s, char c)
 
 	for (line_i = 0; line_i < line_count; line_i++)
 	{
-		for (j = 0; s[i + j] != c && s[i + j] != '\0'; j++)
+		bool = 0;
+		for (j = 0; s[i + j] != '\0'; j++)
 		{
- 		}NOOOOO
+			for (k = 0; c[k] != '\0'; k++)
+			{
+				if (s[(i + j) + k] == c[k])
+					bool = 1;
+				else
+				{
+					bool = 0;
+					break;
+				}
+			}
+
+			if (bool == 1)
+				break;
+		}
 
 		ram = malloc((j + 1) * sizeof(char));
 		if (ram == NULL)
@@ -116,8 +130,24 @@ char **_split(const char *s, char c)
 			return (NULL);
 		}
 
-		for (j = 0; s[i] != c && s[i] != '\0'; i++, j++)
+		for (j = 0; s[i] != '\0'; i++, j++)
+		{
+			bool = 0;
+			for (k = 0; c[k] != '\0'; k++)
+			{
+				if (s[(i + j) + k] == c[k])
+					bool = 1;
+				else
+				{
+					bool = 0;
+					break;
+				}
+			}
+			if (bool == 1)
+				break;
 			ram[j] = s[i];
+		}
+		
 		ram[j] = '\0';
 		i++;
 
@@ -135,14 +165,26 @@ char **_split(const char *s, char c)
 * -----------------------------------------
 * Return: the number of times that character has been found
 */
-int calc_lines(const char *s, char c)
+int calc_lines(const char *s, char *c)
 {
-	int i;
+	int i, j;
 	int line = 1;
+	int bool;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (s[i] == c)
+		bool = 0;
+		for (j = 0; c[j] != '\0'; j++)
+		{
+			if (s[i + j] == c[j])
+				bool = 1;
+			else
+			{
+				bool = 0;
+				break;
+			}
+		}
+		if (bool == 1)
 			line++;
 	}
 
