@@ -38,8 +38,7 @@ int syntax_manager(char **input)
 
 		for (j = 0; cmd_splt[j] != NULL; j++)
 		{
-			printf("%s\n", cmd_splt[j]);
-
+			or_operat(cmd_splt[j]);
 		}
 
 		free_split(cmd_splt);

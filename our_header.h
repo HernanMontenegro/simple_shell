@@ -32,5 +32,7 @@ int and_operat(char *str);
 
 /* pre_launch.c  */
 int localize_cmd(char *str);
+char **split_args(char *s);
+int calc_args(const char *s);
 
 #endif /* OUR_HEADER_H */
