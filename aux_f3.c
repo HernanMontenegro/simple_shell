@@ -1,27 +1,4 @@
-#include "lists.h"
-
-/**
-* list_len - calculates the length of a list
-* @h: list element
-* --------------------------
-* Return: the length of the list
-*/
-size_t list_len(const envs_list *h)
-{
-	size_t count = 0;
-	envs_list *search = (envs_list *) h;
-
-	if (!h)
-		return (count);
-
-	while (search)
-	{
-		search = (*search).next;
-		count++;
-	}
-
-	return (count);
-}
+#include "our_header.h"
 
 /**
 * free_list - frees an entire list!!
@@ -42,63 +19,107 @@ void free_list(envs_list *head)
 
 		head = head->next;
 
-		free(ram->str);
-		free(ram);
+                if (ram->name != NULL)
+                        free(ram->name);
+
+                if (ram->content != NULL)
+                        free(ram->content);
+		
+                free(ram);
 	}
 }
 
 /**
-* add_node - adds a new node
-* @head: the head pointer reference
-* @str: string given
-* -------------------------------------
-* Return: a new node
-*/
-envs_list *add_node(envs_list **head, const char *str)
-{
-        envs_list *new_obj;
-
-        new_obj = malloc(sizeof(envs_list));
-        if (!new_obj)
-                return (NULL);
-        new_obj->str = strdup(str);
-        new_obj->len = _strlen(str);
-        new_obj->next = *head;
-
-        (*head) = new_obj;
-
-        return (new_obj);
-}
-
-/**
 * add_node_end - adds a node at the end
-* @head: head reference
+* @h: head reference
 * @str: string to add
 * -------------------------------------
 * Return: a new node
 */
-envs_list *add_node_end(envs_list **head, const char *str)
+envs_list *add_node_end(envs_list **h, char *n, char *c, int ne, int ce, int ed)
 {
         envs_list *new_obj = NULL, *previous = NULL;
 
         new_obj = malloc(sizeof(envs_list));
         if (!new_obj)
                 return (NULL);
-        new_obj->str = strdup(str);
-        new_obj->len = _strlen(str);
+        new_obj->name = n;
+        new_obj->content = c;
+        new_obj->name_size = ne;
+        new_obj->content_size = ce;
+        new_obj->end_index = ed;
         new_obj->next = NULL;
 
-        if (!*head)
+        if (!*h)
         {
-                *head = new_obj;
+                *h = new_obj;
                 return (new_obj);
         }
 
-        previous = *head;
+        previous = *h;
 
         while ((*previous).next)
                 previous = (*previous).next;
         previous->next = new_obj;
 
         return (new_obj);
+}
+
+envs_list *generate_var_nodes(char *str, int *tot_size)
+{
+        char *aux = NULL;
+        envs_list *head = NULL;
+        int i, cnt, j;
+
+        for (i = 0; str[i] != '\0'; i++)
+        {
+                if (str[i] != '$')
+                {
+                        *tot_size = *tot_size + 1;
+                        continue;
+                }
+                /* i = '$' || i = '?' */
+                i++;
+                if (str[i] == '$')
+                {
+                        aux = int_to_str(getpid());
+                        add_node_end(&head, "$", aux, 1, _strlen(aux), i);
+                        continue;
+                }
+                else if (str[i] == '?')
+                {
+                        aux = int_to_str(last_child_ret);
+                        add_node_end(&head, "?", aux, 1, _strlen(aux), i);
+                        continue;
+                }
+                else if (str[i] == '\0')
+                        break;
+                for (cnt = 0; check_var_delim(str[i + cnt]); cnt++)
+                        ; /* O.o  Cursed */
+                aux = malloc((cnt + 1) * sizeof(char));
+                if (!aux)
+                {
+                        free_list(head);
+                        return (NULL);
+                }
+                for (j = 0; check_var_delim(str[i]); i++, j++)
+                        aux[j] = str[i];
+                aux[j] = '\0';
+                i--; /* avoid getting away from the bounds of the array in the next cicle */
+                add_node_end(&head, aux, NULL, cnt, 0, i);
+        }
+        return (head);
+}
+
+int check_var_delim(char c)
+{
+        if (c >= 48 && c <= 57)
+                return (1);
+        else if (c >= 97 && c <= 122)
+                return (1);
+        else if (c >= 65 && c <= 90)
+                return (1);
+        else if (c == 95)
+                return (1);
+        return (0);
 }

@@ -27,7 +27,13 @@ int syntax_manager(char **input)
 			continue;
 		}
 
-		printf("%s\n", command);
+		/* Traslate variables */
+		command = variable_translator(command);
+		if (!command)
+			return (1);
+
+
+		/*printf("%s\n", command);*/
 
 		free(command);
 	}
@@ -59,67 +65,21 @@ char *delete_comments(char *str)
 char *variable_translator(char *str)
 {
 	int tot_size = 0;
+	envs_list *list = NULL;
+	envs_list *aux = NULL;
 
-	generate_var_nodes(str, &tot_size);
-}
+	list = generate_var_nodes(str, &tot_size);
 
-envs_list *generate_var_nodes(char *str, int *tot_size)
-{
-	char *aux = NULL
-	envs_list *head = NULL;
-	int i, cnt, j;
+	/*free(str);*/
 
-        for (i = 0; str[i] != '\0'; i++)
-        {
-                if (str[i] != '$')
-		{
-			*tot_size = *tot_size + 1;
-                        continue;
-                }
-		/* i = '$' || i = '?' */
-                i++;
-                if (str[i] == '$')
-                {
-			aux = int_to_str(getpid());
-			add_node_end(&head, "$", aux, 1, _strlen(aux), i);
-			continue;
-                }
-		else if (str[i] == '?')
-		{
-			aux = int_to_str(last_child_ret);
-			add_node_end(&head, "?", aux, 1, _strlen(aux), i);
-			continue;
-		}
-
-		for (cnt = 0; check_var_delim(str[i + cnt]); cnt++)
-			; /* O.o  Cursed */
-
-		aux = malloc((cnt + 1) * sizeof(char))
-		if (!aux)
-		{
-			free_list(head);
-			return (NULL);
-        	}
-
-		for (j = 0; check_var_delim(str[i]); i++, j++)
-			aux[j] = str[i];
-		aux[j] = '\0';
-
-		add_node_end(&head, aux, cnt, -1, NULL, i);
+	aux = list;
+	for (; aux;)
+	{
+		printf("%s\n", aux->name);
+		aux = aux->next;
 	}
 
-	return (head);
-}
 
-int check_var_delim(char c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	else if (c >= 97 && c <= 122)
-		return (1);
-	else if (c >= 65 && c <= 90)
-		return (1);
-	else if (c == 95)
-		return (1);
-	return (0);
+	free_list(list);
+	return (str);
 }
