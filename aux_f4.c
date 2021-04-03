@@ -1,5 +1,7 @@
 #include "our_header.h"
 
+/**
+*/
 int calc_var_space(envs_list *head, int tot_size)
 {
 	int total = tot_size;

@@ -121,6 +121,7 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
         return (head);
 }
 
+/***/
 int check_var_delim(char c)
 {
         if (c >= 48 && c <= 57)
@@ -134,6 +135,7 @@ int check_var_delim(char c)
         return (0);
 }
 
+/***/
 void gen_var_content(envs_list *head)
 {
 	int i;

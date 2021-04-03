@@ -1,8 +1,22 @@
 
-#ifndef LISTS_H
-#define LISTS_H
+#ifndef STRUCTS_H
+#define STRUCTS_H
 
 /* ============================ */
+/**
+* struct in_com - internal commands
+* @command: the command char pointer
+* @f: the pointer to a function
+* -----------------------------------------
+* Description: Manages the internal commands
+*/
+typedef struct in_com
+{
+	char *command;
+	void (*f)(int ac, char **av);
+
+} internal_commands;
+
 /**
 * struct envs_list - singly linked list
 * @name: the variable name
@@ -26,11 +40,4 @@ typedef struct envs_list
 } envs_list;
 /* ============================ */
 
-/* Prototypes */
-void free_list(envs_list *head);
-envs_list *add_node_end(envs_list **, char *, char *, int, int, int);
-envs_list *generate_var_nodes(char *str, int *tot_size);
-int check_var_delim(char c);
-void gen_var_content(envs_list *head);
-
-#endif /* LISTS_H */
+#endif /* STRUCTS_H */
