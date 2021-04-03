@@ -1,6 +1,9 @@
 #ifndef AUX_FUNCTIONS_H
 #define AUX_FUNCTIONS_H
 
+/* Marvellous  */
+#include "lists.h"
+
 /* ==========Prototypes========== */
 /* aux_f1.c */
 void *_calloc(char *p, int size);
@@ -19,9 +22,10 @@ int _strcmp(char *s1, char *s2);
 int syntax_manager(char **input);
 char *delete_comments(char *str);
 
-/* Marvellous  */
-#include "lists.h"
 
+/* aux_f4.c */
+int calc_var_space(envs_list *head, int tot_size);
+char *var_big_bang(envs_list *head, char *str, int tot_size);
 /* ==============================  */
 
 #endif
