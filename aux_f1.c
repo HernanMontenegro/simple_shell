@@ -136,7 +136,7 @@ char **_split(const char *s, char *c)
 			bool = 0;
 			for (k = 0; c[k] != '\0'; k++)
 			{
-				if (s[(i + j) + k] == c[k])
+				if (s[i + k] == c[k])
 					bool = 1;
 				else
 				{
@@ -148,14 +148,14 @@ char **_split(const char *s, char *c)
 				break;
 			ram[j] = s[i];
 		}
-		
+
 		ram[j] = '\0';
 		i++;
 
 		res[line_i] = ram;
 	}
-	res[line_i] = NULL;
 
+	res[line_i] = NULL;
 	return (res);
 }
 
@@ -188,6 +188,7 @@ int calc_lines(const char *s, char *c)
 		if (bool == 1)
 			line++;
 	}
+
 
 	return (line);
 }
