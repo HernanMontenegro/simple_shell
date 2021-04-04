@@ -1,5 +1,11 @@
 #include "our_header.h"
 
+/**
+ * cmd_exit - Exit internal command call advertiser
+ * @ac: Argument count
+ * @av: Arguments array
+ * ----------------------------------------
+ */
 void cmd_exit(int ac, char **av)
 {
 	abort_indicator = 1;
