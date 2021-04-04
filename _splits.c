@@ -15,6 +15,8 @@ char **_split(char *s, char *c)
 	char *ram;
 	int bool_commas = -1, type_commas = 0;
 
+	printf("Line_count: %i\n", line_count);
+
 	res = malloc((line_count + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
@@ -85,7 +87,7 @@ int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas
 			{
 				for (j = 1; s[i + j] != '\0'; j++)
 				{
-					if (s[j] == s[i])
+					if (s[i + j] == s[i])
 					{
 						next_commas = 1;
 						break;
@@ -98,11 +100,13 @@ int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas
 				}
 			}
 			else
+			{
 				if (*type_commas == s[i])
 				{
 					*bool_commas = *bool_commas * -1;
 					*type_commas = 0;
 				}
+			}
 		}
 	}
 	for (j = 0; c[j] != '\0'; j++)
