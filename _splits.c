@@ -15,8 +15,6 @@ char **_split(char *s, char *c)
 	char *ram;
 	int bool_commas = -1, type_commas = 0;
 
-	printf("Line_count: %i\n", line_count);
-
 	res = malloc((line_count + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
