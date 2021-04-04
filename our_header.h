@@ -32,6 +32,7 @@ int and_operat(char *str);
 
 /* pre_launch.c  */
 int localize_cmd(char *str);
+char **clean_arg(char **argv);
 char **split_args(char *s);
 int calc_args(const char *s);
 

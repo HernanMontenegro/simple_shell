@@ -6,6 +6,7 @@ int localize_cmd(char *str)
 	char **baby_av;
 
 	baby_av = split_args(str);
+	baby_av = clean_arg(baby_av);
 
 	printf("Argumentos: {");
 	for (i = 0; baby_av[i] != NULL; i++)
@@ -20,6 +21,40 @@ int localize_cmd(char *str)
 
 	free_split(baby_av);
 	return (0); /* POR AHORA */
+}
+
+char **clean_arg(char **argv)
+{
+	int i, j;
+	int len = 0;
+	char **clear = NULL;
+
+	for (i = 0; argv[i] != NULL; i++)
+	{
+		if (argv[i][0] != '\0')
+			len++;
+	}
+	printf("================================\n");
+	printf("LEN: %i\n", len);
+
+	clear = malloc((len + 1) * sizeof(char *));
+	if (!clear)
+		return (NULL);
+
+	for (i = 0, j = 0; argv[i] != NULL; i++)
+	{
+		if (argv[i][0] == '\0')
+			free(argv[i]);
+		else
+		{
+			clear[j] = argv[i];
+			j++;
+		}
+	}
+	clear[j] = NULL;
+	free(argv);
+
+	return (clear);
 }
 
 /**
