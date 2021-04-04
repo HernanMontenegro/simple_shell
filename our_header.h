@@ -14,6 +14,7 @@ extern int abort_indicator_status;
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 
 /* Our own libraries */
 #include "structs.h"
