@@ -108,6 +108,16 @@ char **_split(const char *s, char *c)
 		bool = 0;
 		for (j = 0; s[i + j] != '\0'; j++)
 		{
+			if (s[i + j] == '"')
+			{
+				if (!((i + j) != 0 && s[(i + j) - 1] == '\\'))
+				{
+					if (bool_commas)
+						bool_commas = 0;
+					else
+						bool_commas = 1;
+				}
+			}
 			for (k = 0; c[k] != '\0'; k++)
 			{
 				if (s[(i + j) + k] == c[k])
@@ -118,9 +128,11 @@ char **_split(const char *s, char *c)
 					break;
 				}
 			}
-
 			if (bool == 1)
-				break;
+			{
+				if (!bool_commas)
+						break;
+			}
 		}
 
 		ram = malloc((j + 1) * sizeof(char));
@@ -131,10 +143,21 @@ char **_split(const char *s, char *c)
 			free(res);
 			return (NULL);
 		}
+		bool_commas = 0;
 
 		for (j = 0; s[i] != '\0'; i++, j++)
 		{
 			bool = 0;
+			if (s[i] == '"')
+			{
+				if (!(i != 0 && s[i - 1] == '\\'))
+				{
+					if (bool_commas)
+						bool_commas = 0;
+					else
+						bool_commas = 1;
+				}
+			}
 			for (k = 0; c[k] != '\0'; k++)
 			{
 				if (s[i + k] == c[k])
@@ -146,7 +169,10 @@ char **_split(const char *s, char *c)
 				}
 			}
 			if (bool == 1)
-				break;
+			{
+				if (!bool_commas)
+						break;
+			}
 			ram[j] = s[i];
 		}
 
@@ -171,11 +197,21 @@ int calc_lines(const char *s, char *c)
 {
 	int i, j;
 	int line = 1;
-	int bool;
+	int bool, bool_commas = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
 		bool = 0;
+		if (s[i] == '"')
+		{
+			if (!(i != 0 && s[i - 1] == '\\'))
+			{
+				if (bool_commas)
+					bool_commas = 0;
+				else
+					bool_commas = 1;
+			}
+		}
 		for (j = 0; c[j] != '\0'; j++)
 		{
 			if (s[i + j] == c[j])
@@ -187,7 +223,10 @@ int calc_lines(const char *s, char *c)
 			}
 		}
 		if (bool == 1)
-			line++;
+		{
+			if (!bool_commas)
+					line++;
+		}
 	}
 
 
