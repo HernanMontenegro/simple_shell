@@ -12,7 +12,7 @@ int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas
 void *_calloc(char *p, int size);
 int _strlen(char *buff);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-/* Empty Slot */
+char *_getenv(char *env_name);
 /* Empty Slot */
 
 /* aux_f2.c */

@@ -18,7 +18,7 @@ int main(int ac, char **av, char **env)
 	/* Fill global var */
 	global_env = env;
 
-	/* LEEMOS ARCHIVO */
+	/* READ FILE */
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);

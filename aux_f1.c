@@ -83,3 +83,35 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (p);
 }
 
+/**
+ * _getenv - Get the content of an env var
+ * @env_name: the name of the env var
+ * ---------------------------------------
+ * Return: string env var content
+ */
+char *_getenv(char *env_name)
+{
+	int i;
+	int bool = 0;
+	char **aux = NULL;
+
+	for (i = 0; global_env[i] != NULL; i++)
+	{
+		bool = 0;
+		aux = _split(global_env[i], "=");
+		
+		/* Iterate till finding the var name we want */
+		if (_strcmp(aux[0], env_name) == 0)
+		{
+			bool = 1;
+			break;
+		}
+
+		free_split(aux);
+	}
+	if (bool == 0)
+		return (NULL);
+
+	/* Put the var content in the str directly */
+	return (aux[1]);
+}
