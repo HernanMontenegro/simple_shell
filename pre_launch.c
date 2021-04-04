@@ -65,7 +65,12 @@ char **clean_arg(char **argv)
 	return (clear);
 }
 
-
+/**
+ * built_in_cmd - Built in commands manager
+ * @baby_av: The cleanned baby to analize
+ * -------------------------
+ * Return: 1 if found an internal command, 0 if not
+ */
 int built_in_cmd(char **baby_av)
 {
 	int i = 0, ac = 0;
@@ -89,6 +94,12 @@ int built_in_cmd(char **baby_av)
 	return (0);
 }
 
+/**
+ * external_cmd - External commands manager
+ * @baby_av: The cleanned baby to analize
+ * -------------------------
+ * Return: 1 if found an external command, 0 if not
+ */
 int external_cmd(char **baby_av)
 {
 	char *aux = NULL;
@@ -132,6 +143,12 @@ int external_cmd(char **baby_av)
 	return (1);
 }
 
+/**
+ * serch_path - Search if exist an executable with a specific name
+ * @str: the name to find the PATH
+ * -------------------------------------------
+ * Return: The filled PATH founded, NULL otherwhise
+ */
 char *serch_path(char *str)
 {
 	int i = 0;
