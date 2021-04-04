@@ -15,6 +15,7 @@ extern char **global_env;
 /* Our own libraries */
 #include "structs.h"
 #include "aux_functions.h"
+#include "internal_cmds.h"
 
 /* Getline Protptyoes */
 int _getline(char **fill, int *n, int where_read);
