@@ -154,43 +154,29 @@ int check_var_delim(char c)
 */
 void gen_var_content(envs_list *head)
 {
-	int i;
-	int bool;
 	envs_list *aux = head;
-	char **aux_env = NULL;
+	char *aux_env = NULL;
 
 	while (aux != NULL)
 	{
-		bool = 0;
 		if (!aux->name)
 		{
 			aux = aux->next;
 			continue;
 		}
-		for (i = 0; global_env[i] != NULL; i++)
-		{
-			aux_env = _split(global_env[i], "=");
-                        if (aux_env == NULL)
-                                return;
-			if (_strcmp(aux_env[0], aux->name) == 0)
-			{
-				bool = 1;
-				break;
-			}
-                        free_split(aux_env);
-		}
+		
+		aux_env = _getenv(aux->name);
+		if (!aux_env)
+        {
+            aux = aux->next;
+            continue;
+        }
 
-		if (bool == 0)
-		{
-                        aux = aux->next;
-                        continue;
-                }
+		aux->content = _strcpy(aux_env);
+		aux->content_size = _strlen(aux_env);
+		free(aux_env);
 
-		aux->content = _strcpy(aux_env[1]);
-		aux->content_size = _strlen(aux_env[1]);
-		free_split(aux_env);
-
-                aux = aux->next;
+		aux = aux->next;
 	}
 }
 
