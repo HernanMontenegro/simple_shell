@@ -1,19 +1,25 @@
 #ifndef AUX_FUNCTIONS_H
 #define AUX_FUNCTIONS_H
 
+/* Split functions */
+char **_split(char *, char *c);
+int calc_lines(char *, char *c);
+void free_split(char **splitted);
+int check_split_line(char *s, int i, char *c, int *bool_commas);
+
 /* ==========Prototypes========== */
 /* aux_f1.c */
 void *_calloc(char *p, int size);
 int _strlen(char *buff);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char **_split(const char *, char *c);
-int calc_lines(const char *, char *c);
+/* Empty Slot */
+/* Empty Slot */
 
 /* aux_f2.c */
-void free_split(char **splitted);
 char *_strcpy(char *src);
 char *int_to_str(int n);
 int _strcmp(char *s1, char *s2);
+/* Empty Slot */
 /* Empty Slot */
 
 /* aux_f3.c */

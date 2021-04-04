@@ -21,7 +21,12 @@ int _getline(char **fill, int *n, int where_read);
 char *add_aux_to_fill(char *fill, char *aux, int aux_size);
 
 /* Simple Shell Prototypes  */
+/* function main */
 int infinite_loop(int fd, int read_site);
+/* Empty Slot */
+/* Empty Slot */
+/* Empty Slot */
+
 
 /* syntax_manager.c */
 int syntax_manager(char **input);
@@ -33,7 +38,10 @@ int and_operat(char *str);
 /* pre_launch.c  */
 int localize_cmd(char *str);
 char **clean_arg(char **argv);
-char **split_args(char *s);
-int calc_args(const char *s);
+/* Empty Slot */
+/* Empty Slot */
+/* Empty Slot */
+
+
 
 #endif /* OUR_HEADER_H */
