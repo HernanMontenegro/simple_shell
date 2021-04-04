@@ -77,7 +77,7 @@ int check_split_line(char *s, int i, char *c, int *bool_commas)
 	int j;
 	int bool = 0, next_commas = 0, ret = 0;
 	
-	if (s[i] == '"')
+	if (s[i] == '"' && s[i] == '\'')
 	{
 		if (!(i != 0 && s[i - 1] == '\\'))
 		{
@@ -85,7 +85,7 @@ int check_split_line(char *s, int i, char *c, int *bool_commas)
 			{
 				for (j = 0; s[i + j] != '\0'; j++)
 				{
-					if (s[j] == '"'){
+					if (s[j] == '"' && s[i] == '\''){
 						next_commas = 1;
 						break;
 					}
