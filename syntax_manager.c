@@ -105,7 +105,7 @@ int or_operat(char *str)
 	for (i = 0; cmd_splt_or[i] != NULL; i++)
 	{
 		ret_and = and_operat(cmd_splt_or[i]);
-		if (ret_and == 0)
+		if (ret_and == 1)
 			break;
 	}
 
@@ -132,7 +132,7 @@ int and_operat(char *str)
 		if (ret != 0)
 		{
 			free_split(cmd_splt_and);
-			return (ret);
+			return (0);
 		}
 	}
 
