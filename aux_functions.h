@@ -19,7 +19,7 @@ int _atoi(char *s);
 char *_strcpy(char *src);
 char *int_to_str(int n);
 int _strcmp(char *s1, char *s2);
-/* Empty Slot */
+char *_strcon(char *str1, char *str2);
 /* Empty Slot */
 
 /* aux_f3.c */

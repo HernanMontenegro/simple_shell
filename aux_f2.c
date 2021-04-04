@@ -88,3 +88,28 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (ret);
 }
+
+/**
+ *_strcmp - caracol
+ *@s1: *
+ *@s2: *
+ *
+ *Return: *
+*/
+char *_strcon(char *str1, char *str2)
+{
+		int i = 0, j = 0, len = 0;
+		char *aux;
+
+		len = _strlen(str1) + _strlen(str2);
+		aux = malloc((len + 1) * sizeof(char));
+
+		for (i = 0; str1 != NULL && str1[i] != '\0'; i++)
+		        aux[i] = str1[i];
+
+		for (j = 0; str2 != NULL && str2[j] != '\0'; i++, j++)
+		        aux[i] = str2[j];
+		aux[i] = '\0';
+
+		return (aux);
+}

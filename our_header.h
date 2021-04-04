@@ -5,6 +5,9 @@
 extern int last_child_ret;
 extern char **global_env;
 
+extern int abort_indicator;
+extern int abort_indicator_status;
+
 /* Standard libraries */
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,10 +42,9 @@ int and_operat(char *str);
 /* pre_launch.c  */
 int localize_cmd(char *str);
 char **clean_arg(char **argv);
-/* Empty Slot */
-/* Empty Slot */
-/* Empty Slot */
-
+int built_in_cmd(char **baby_av);
+int external_cmd(char **baby_av);
+char *serch_path(char *str);
 
 
 #endif /* OUR_HEADER_H */

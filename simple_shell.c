@@ -3,6 +3,9 @@
 int last_child_ret = 0;
 char **global_env = NULL;
 
+int abort_indicator = 0;
+int abort_indicator_status = 0;
+
 /**
  * main - entry point
  * @ac: argument count
@@ -61,6 +64,9 @@ int infinite_loop(int fd, int read_site)
 
 	while (1)
 	{
+		if (abort_indicator)
+		    exit(abort_indicator_status);
+
 		bytes_read = 0;
 		bytes_used_read = 0;
 		input = NULL;

@@ -94,6 +94,7 @@ char *_getenv(char *env_name)
 	int i;
 	int bool = 0;
 	char **aux = NULL;
+	char *save = NULL;
 
 	for (i = 0; global_env[i] != NULL; i++)
 	{
@@ -109,11 +110,15 @@ char *_getenv(char *env_name)
 
 		free_split(aux);
 	}
+
 	if (bool == 0)
 		return (NULL);
 
+	save = _strcpy(aux[1]);
+	free_split(aux);
+
 	/* Put the var content in the str directly */
-	return (aux[1]);
+	return (save);
 }
 
 /**
@@ -125,25 +130,20 @@ char *_getenv(char *env_name)
 int _atoi(char *s)
 {
 	int res = 0, sign = 1, i = 0;
+	int len = _strlen(s);
 
-	for (i = 0; s[i] != '\0'; i++)
+	for (i = (len - 1); i >= 0; i--)
 	{
-		int firstDigit_encounter = 0;
-
-		if(s[i] == ';')
-			break;
-		if(s[i] >= '0' && s[i] <= '9')
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			res = res * 10 + s[i] - '0';
-			firstDigit_encounter = 1;
-		}
-
-		if(firstDigit_encounter == 1)
-		{
-			if(s[i - 1] == '-')
-				sign = -1;
+			res += (s[i] - '0') * sign;
+			sign *= 10;
 		}
 	}
 
-	return sign * res;
+	if (s[0] == '-'){
+		res = res * -1;
+	}
+
+	return (res);
 }

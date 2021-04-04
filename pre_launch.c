@@ -8,22 +8,18 @@
  */ 
 int localize_cmd(char *str)
 {
-	int i;
 	char **baby_av;
 
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
 
-	printf("Argumentos: {");
-	for (i = 0; baby_av[i] != NULL; i++)
+	if (!(built_in_cmd(baby_av)))
 	{
-		printf("%s", baby_av[i]);
-		if (baby_av[i + 1] != NULL)
+		if (!(external_cmd(baby_av)))
 		{
-			printf(", ");
+			printf("Comando no encontrado\n");
 		}
 	}
-	printf("}\n");
 
 	free_split(baby_av);
 	return (0); /* POR AHORA */
@@ -65,4 +61,80 @@ char **clean_arg(char **argv)
 	free(argv);
 
 	return (clear);
+}
+
+
+int built_in_cmd(char **baby_av)
+{
+	int i = 0, ac = 0;
+	internal_commands list_com[] = {
+			{"exit", cmd_exit},
+			{NULL, NULL}
+	};
+
+	for (ac = 0; baby_av[ac] != NULL; ac++)
+			; /* UwU Cursed */
+
+	for (i = 0; list_com[i].command != NULL; i++)
+	{
+		if (_strcmp(baby_av[0], list_com[i].command) == 0)
+		{
+			list_com[i].f(ac, baby_av);
+			return (1);
+		}
+	}
+
+	return (0);
+}
+
+int external_cmd(char **baby_av)
+{
+	char *aux = NULL;
+	
+	aux = serch_path(baby_av[0]);
+	if(!aux)
+		return (0);
+	free(baby_av[0]);
+	baby_av[0] = aux;
+
+
+	printf("CREAER HIJO: %s\n", baby_av[0]);
+	/*HIJO*/
+
+	return (1);
+}
+
+char *serch_path(char *str)
+{
+	int i = 0;
+	char **path_list;
+	struct stat st;
+	char *path = NULL;
+	char *aux = NULL;
+	char *complete_cmd = NULL;
+
+	aux = _getenv("PATH");
+	path_list = _split(aux, ":");
+	free(aux);
+
+	for (i = 0; path_list[i] != NULL; i++)
+	{
+		path = _strcon("/", str);
+		complete_cmd = _strcon(path_list[i], path);
+		free(path);
+
+		if (stat(complete_cmd, &st) == 0)
+		{
+			free_split(path_list);
+			return (complete_cmd);
+		}
+
+		free(complete_cmd);
+	}
+	free_split(path_list);
+
+	if (stat(str, &st) == 0)
+	    return (_strcpy(str));
+
+	return (NULL);
 }
