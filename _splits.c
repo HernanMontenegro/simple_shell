@@ -13,7 +13,7 @@ char **_split(char *s, char *c)
 	int line_count = calc_lines(s, c);
 	char **res;
 	char *ram;
-	int bool_commas = -1;
+	int bool_commas = -1, type_commas = 0;
 
 	res = malloc((line_count + 1) * sizeof(char *));
 	if (!res)
@@ -23,7 +23,7 @@ char **_split(char *s, char *c)
 	{
 		for (j = 0; s[i + j] != '\0'; j++)
 		{
-			if (check_split_line(s , (i + j), c, &bool_commas))
+			if (check_split_line(s , (i + j), c, &bool_commas, &type_commas))
 				break;
 		}
 		ram = malloc((j + 1) * sizeof(char));
@@ -37,7 +37,7 @@ char **_split(char *s, char *c)
 		bool_commas = -1;
 		for (j = 0; s[i] != '\0'; i++, j++)
 		{
-			if (check_split_line(s , i, c, &bool_commas))
+			if (check_split_line(s , i, c, &bool_commas, &type_commas))
 				break;
 			ram[j] = s[i];
 		}
@@ -61,40 +61,48 @@ int calc_lines(char *s, char *c)
 {
 	int i;
 	int line = 1;
-	int bool_commas = -1;
+	int bool_commas = -1, type_commas = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (check_split_line(s , i, c, &bool_commas))
+		if (check_split_line(s , i, c, &bool_commas, &type_commas))
 			line++;
 	}
 
 	return (line);
 }
 
-int check_split_line(char *s, int i, char *c, int *bool_commas)
+int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas)
 {
 	int j;
 	int bool = 0, next_commas = 0, ret = 0;
 	
-	if (s[i] == '"' && s[i] == '\'')
+	if (s[i] == '"' || s[i] == '\'')
 	{
 		if (!(i != 0 && s[i - 1] == '\\'))
 		{
 			if ((*bool_commas) == -1)
 			{
-				for (j = 0; s[i + j] != '\0'; j++)
+				for (j = 1; s[i + j] != '\0'; j++)
 				{
-					if (s[j] == '"' && s[i] == '\''){
+					if (s[j] == s[i])
+					{
 						next_commas = 1;
 						break;
 					}
 				}
-				if (next_commas)
+				if (next_commas && *type_commas == 0)
+				{
 					*bool_commas = *bool_commas * -1;
+					*type_commas = s[i];
+				}
 			}
 			else
-				*bool_commas = *bool_commas * -1;
+				if (*type_commas == s[i])
+				{
+					*bool_commas = *bool_commas * -1;
+					*type_commas = 0;
+				}
 		}
 	}
 	for (j = 0; c[j] != '\0'; j++)
