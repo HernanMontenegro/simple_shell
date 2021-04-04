@@ -68,6 +68,11 @@ char *delete_comments(char *str)
 }
 
 /**
+ * variable_translator - Translate a variable with it's content.
+ * 						 More like a brain calling functions requiered
+ * @str: the source string containing a variable
+ * ------------------------------------------------
+ * Return: New string with var content
 */
 char *variable_translator(char *str)
 {
@@ -84,6 +89,12 @@ char *variable_translator(char *str)
 	return (new_str);
 }
 
+/**
+ * or_operat - Manages the "||" - OR operator
+ * @str: the string containing the OR operator
+ * ----------------------------------------------
+ * Return: 0 FOR NOW
+ */ 
 int or_operat(char *str)
 {
 	int i, ret_and;
@@ -102,6 +113,12 @@ int or_operat(char *str)
 	return (0);
 }
 
+/**
+ * and_operat - Manages the "&&" - AND operator
+ * @str: the string containing the AND operator
+ * ----------------------------------------------
+ * Return: 1 FOR NOW
+ */ 
 int and_operat(char *str)
 {
 	int i, ret;
