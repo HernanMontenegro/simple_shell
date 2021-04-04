@@ -18,11 +18,13 @@ int localize_cmd(char *str)
 		if (!(external_cmd(baby_av)))
 		{
 			printf("Comando no encontrado\n");
+			free_split(baby_av);
+			return (1);
 		}
 	}
 
 	free_split(baby_av);
-	return (0); /* POR AHORA */
+	return (last_child_ret);
 }
 
 /**
@@ -90,18 +92,27 @@ int built_in_cmd(char **baby_av)
 int external_cmd(char **baby_av)
 {
 	char *aux = NULL;
-	
+	int child_pid = 0;
+
 	aux = serch_path(baby_av[0]);
 	if(!aux)
 		return (0);
 	free(baby_av[0]);
 	baby_av[0] = aux;
 
+	child_pid = fork();
+	if(child_pid == 0)
+	[
+		if (execve(baby_av[0], baby_av, global_env) == -1)
+		{
+			perror("Error");
+			return (1);
+		}
+	]
+	else
+		last_child_ret = waitpid(child_pid);
 
-	printf("CREAER HIJO: %s\n", baby_av[0]);
-	/*HIJO*/
-
-	return (1);
+	return (last_child_ret);
 }
 
 char *serch_path(char *str)
