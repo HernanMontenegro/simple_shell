@@ -34,8 +34,6 @@ char **clean_arg(char **argv)
 		if (argv[i][0] != '\0')
 			len++;
 	}
-	printf("================================\n");
-	printf("LEN: %i\n", len);
 
 	clear = malloc((len + 1) * sizeof(char *));
 	if (!clear)
@@ -85,12 +83,15 @@ char **split_args(char *s)
 				if (!bool_commas)
 					break;
 			}
-			else if (s[i + j] == '"' && s[(i + j) - 1] != '\\')
+			else if (s[i + j] == '"')
 			{
-				if (bool_commas)
-					bool_commas = 0;
-				else
-					bool_commas = 1;
+				if (!(i != 0 && s[i - 1] == '\\'))
+				{
+					if (bool_commas)
+						bool_commas = 0;
+					else
+						bool_commas = 1;
+				}
 			}
 		}
 
@@ -112,12 +113,15 @@ char **split_args(char *s)
 				if (!bool_commas)
 					break;
 			}
-			else if (s[i] == '"' && i != 0 && s[i - 1] != '\\')
+			else if (s[i] == '"')
 			{
-				if (bool_commas)
-					bool_commas = 0;
-				else
-					bool_commas = 1;
+				if (!(i != 0 && s[i - 1] == '\\'))
+				{
+					if (bool_commas)
+						bool_commas = 0;
+					else
+						bool_commas = 1;
+				}
 			}
 
 			ram[j] = s[i];
@@ -152,12 +156,15 @@ int calc_args(const char *s)
 			if (!bool_commas)
 				line++;
 		}
-		else if (s[i] == '"' && s[i - 1] != '\\')
+		else if (s[i] == '"')
 		{
-			if (bool_commas)
-				bool_commas = 0;
-			else
-				bool_commas = 1;
+			if (!(i != 0 && s[i - 1] == '\\'))
+			{
+				if (bool_commas)
+					bool_commas = 0;
+				else
+					bool_commas = 1;
+			}
 		}
 
 	}

@@ -97,6 +97,7 @@ char **_split(const char *s, char *c)
 	char **res;
 	char *ram;
 	int bool;
+	int bool_commas = 0;
 
 	res = malloc((line_count + 1) * sizeof(char *));
 	if (!res)
