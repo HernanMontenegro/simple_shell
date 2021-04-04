@@ -4,9 +4,12 @@ int last_child_ret = 0;
 char **global_env = NULL;
 
 /**
-*main - coso
-*
-Return: int
+ * main - entry point
+ * @ac: argument count
+ * @av: arguments array
+ * @env: father environmental variables
+ * -----------------------------------------
+ * Return: 0 if worked, 1 if not
 */
 int main(int ac, char **av, char **env)
 {
@@ -40,7 +43,13 @@ int main(int ac, char **av, char **env)
 	return (ret);
 }
 
-
+/**
+ * infinite_loop - Execute until the program end asking user's input
+ * @fd: pass main file descriptor
+ * @read_site: where read?
+ * ------------------------------
+ * Return: syntax manager return, 1 if error happens
+ */ 
 int infinite_loop(int fd, int read_site)
 {
 	char prompt[] = "#cisfun$ ";

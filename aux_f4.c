@@ -1,6 +1,11 @@
 #include "our_header.h"
 
 /**
+ * calc_var_space - Calculate the space to insert var content
+ * @head: the var linked list
+ * @tot_size: previous space without the variable
+ * -------------------------------------------------
+ * Return: The total space requiered to insert the var content
 */
 int calc_var_space(envs_list *head, int tot_size)
 {
@@ -14,13 +19,19 @@ int calc_var_space(envs_list *head, int tot_size)
 }
 
 /**
+ * var_big_bang - Insert a var content in a string
+ * @head: var linked list
+ * @str: string given to modify
+ * @tot_size: previous string size not taking var content into account
+ * ----------------------------------------------------------
+ * Return: A new string with the var content inserted
 */
 char *var_big_bang(envs_list *head, char *str, int tot_size)
 {
 	int i, j, k;
 	int total;
-	envs_list *aux = head;
 	char *universe;
+	envs_list *aux = head;
 	envs_list *pre_aux = NULL;
 
 	total = calc_var_space(head, tot_size);

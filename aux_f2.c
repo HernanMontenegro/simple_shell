@@ -37,6 +37,10 @@ char *_strcpy(char *src)
 }
 
 /**
+ * int_to_str - convert an int to a string
+ * @n: the number given
+ * ----------------------------------
+ * Return: the new string
 */
 char *int_to_str(int n)
 {

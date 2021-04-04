@@ -1,5 +1,11 @@
 #include "our_header.h"
 
+/**
+ * localize_cmd - Localize if the input is a command
+ * @str: the string to check
+ * ----------------------------------
+ * Return: command exit status if is a command, 1 if not
+ */ 
 int localize_cmd(char *str)
 {
 	int i;
@@ -23,6 +29,12 @@ int localize_cmd(char *str)
 	return (0); /* POR AHORA */
 }
 
+/**
+ * clean_arg - Bless the string command array given, remove all strange chars
+ * @argv: the string command given
+ * ---------------------------------------
+ * Return: a new blessed string command, without impurities
+ */ 
 char **clean_arg(char **argv)
 {
 	int i, j;

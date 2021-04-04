@@ -64,6 +64,13 @@ envs_list *add_node_end(envs_list **h, char *n, char *c, int ne, int ce, int ed)
         return (new_obj);
 }
 
+/**
+ * generate_var_nodes - create a new node in our var list with it's info
+ * @str: the string to search for a variable
+ * @tot_size: pointer to an int that counts until a variable has been found
+ * -----------------------------------------------------
+ * Return: an entire linked list with a new node
+ */
 envs_list *generate_var_nodes(char *str, int *tot_size)
 {
         char *aux = NULL;
@@ -121,7 +128,12 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
         return (head);
 }
 
-/***/
+/**
+ * check_var_delim - Check if the given char is valid for a var
+ * @c: the given char
+ * --------------------------------------
+ * Return: 1 if is a valid char, 0 if not
+*/
 int check_var_delim(char c)
 {
         if (c >= 48 && c <= 57)
@@ -135,7 +147,11 @@ int check_var_delim(char c)
         return (0);
 }
 
-/***/
+/**
+ * gen_var_content - Create the variable content
+ * @head: the var linked list to generate content
+ * ------------------------------------------------
+*/
 void gen_var_content(envs_list *head)
 {
 	int i;
