@@ -55,7 +55,7 @@ int main(int ac, char **av, char **env)
  */ 
 int infinite_loop(int fd, int read_site)
 {
-	char prompt[] = "#cisfun$ ";
+	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
 	char *input = NULL;
 	int bytes_used_read = 0;
 	int bytes_read = 0;
