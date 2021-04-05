@@ -76,6 +76,8 @@ int built_in_cmd(char **baby_av)
 	int i = 0, ac = 0;
 	internal_commands list_com[] = {
 			{"exit", cmd_exit},
+			{"env", cmd_env},
+			{"setenv", cmd_setenv},
 			{"cd", cmd_cd},
 			{NULL, NULL}
 	};
