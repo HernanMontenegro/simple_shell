@@ -135,3 +135,13 @@ char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size)
 	free(buff);
 	return (p);
 }
+
+/**
+ * 
+*/ 
+int _print(__attribute__((unused))char *s)
+{
+	
+
+	return (0);
+}
