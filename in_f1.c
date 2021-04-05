@@ -35,16 +35,15 @@ void cmd_env(__attribute__((unused)) int ac,__attribute__((unused)) char **av)
 }
 
 /**
- * 
+ * cmd_setenv - Switch the value or create a new env var 
+ * @ac: arguments count
+ * @av: arguments array
+ * ------------------------------------------
  */
 void cmd_setenv(int ac, char **av)
 {
-	int i;
-	int bool = 0;
-	int global_env_len = 0;
-	char **curr_env = NULL;
-	char *aux1 = NULL;
-	char *aux2 = NULL;
+	int global_env_len = 0, target_i = 0;
+	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL;
 
 	if (ac != 3)
 	{
@@ -54,27 +53,17 @@ void cmd_setenv(int ac, char **av)
 	}
 
 	/* look if exist env var */
-	for (i = 0; global_env[i] != NULL; i++)
-	{
-		curr_env = _split(global_env[i], "=");
+	target_env = _getenv(av[1]);
+	target_i = get_env_index(av[1]);
 
-		if (_strcmp(curr_env[0], av[1]) == 0)
-		{
-			free_split(curr_env);
-			bool = 1;
-			break;
-		}
-
-		free_split(curr_env);
-	}
 	aux1 = _strcon(av[1], "=");
 	aux2 = _strcon(aux1, av[2]);
 	free(aux1);
 
-	if (bool)
+	if (target_env)
 	{
-		free(global_env[i]);
-		global_env[i] = aux2;
+		free(global_env[target_i]);
+		global_env[target_i] = aux2;
 	}
 	else
 	{
@@ -89,7 +78,10 @@ void cmd_setenv(int ac, char **av)
 }
 
 /**
- * 
+ * cmd_unsetenv - Remove a previous setted environmental var
+ * @ac: arguments count
+ * @av: arguments array
+ * ------------------------------------------
  */ 
 void cmd_unsetenv(int ac, char **av)
 {
@@ -150,8 +142,7 @@ void cmd_cd(int ac, char **av)
 {
 	int len_buff = 0;
 	char *aux = NULL, *cannon_meat = NULL;
-	char *path = NULL;
-	char *path_old = NULL;
+	char *path = NULL, *path_old = NULL;
 	char *av_env[] = {"setenv", "", "", NULL};
 
 	if (ac == 1)

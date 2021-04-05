@@ -36,6 +36,13 @@ char *var_big_bang(envs_list *head, char *str, int tot_size);
 char **copy_pstr(char **buff);
 char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size);
 int _print(char *str);
+
+/* aux_f5.c */
+int get_env_index(char *env_name);
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
 /* ==============================  */
 
 #endif
