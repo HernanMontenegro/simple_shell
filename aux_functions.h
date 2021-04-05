@@ -5,7 +5,8 @@
 char **_split(char *, char *c);
 int calc_lines(char *, char *c);
 void free_split(char **splitted);
-int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas);
+int check_split_line(char *, int, char *, int *, int *);
+int remove_commas(char **uwu);
 
 /* ==========Prototypes========== */
 /* aux_f1.c */

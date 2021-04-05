@@ -47,6 +47,8 @@ char **_split(char *s, char *c)
 		res[line_i] = ram;
 	}
 	res[line_i] = NULL;
+	if (!(remove_commas(res)))
+		free_split(res);
 	return (res);
 }
 
@@ -72,6 +74,9 @@ int calc_lines(char *s, char *c)
 	return (line);
 }
 
+/**
+ * Mierda 
+ */
 int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas)
 {
 	int j;
@@ -134,7 +139,44 @@ void free_split(char **splitted)
 {
 	int i;
 
+	if (!splitted)
+		return;
+	
 	for (i = 0; splitted && splitted[i] != NULL; i++)
 		free(splitted[i]);
 	free(splitted);
+
+	splitted = NULL;
+}
+
+int remove_commas(char **uwu)
+{
+	int i, j, k;
+	int len;
+	char *aux;
+
+	for (i = 0; uwu[i] != NULL; i++)
+	{
+		if (uwu[i][0] == '\'' || uwu[i][0] == '"')
+		{
+			len = _strlen(uwu[i]);
+			len -= 2;
+
+			aux = malloc((len +1) * sizeof(char));
+			if (!aux)
+				return (0);
+
+			for (j = 1, k = 0; uwu[i][j] != '\0'; j++)
+			{
+				if (uwu[i][j + 1] != '\0')
+					aux[k++] = uwu[i][j];
+			}
+			aux[k] = '\0';
+
+			free(uwu[i]);
+			uwu[i] = aux;
+		}
+	}
+
+	return (1);
 }
