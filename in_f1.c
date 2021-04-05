@@ -29,6 +29,9 @@ void cmd_env(__attribute__((unused)) int ac,__attribute__((unused)) char **av)
 		printf("%s\n", global_env[i]);
 }
 
+/**
+ * 
+ */
 void cmd_setenv(int ac, char **av)
 {
 	int i;
@@ -38,7 +41,7 @@ void cmd_setenv(int ac, char **av)
 	char *aux1 = NULL;
 	char *aux2 = NULL;
 
-	if (ac >= 4)
+	if (ac != 3)
 	{
 		printf("Too many arguments\n");
 		last_child_ret = -1;
@@ -77,6 +80,58 @@ void cmd_setenv(int ac, char **av)
 		global_env[global_env_len + 1] = NULL;
 	}
 
+	last_child_ret = 0;
+}
+
+/**
+ * 
+ */ 
+void cmd_unsetenv(int ac, char **av)
+{
+	int i, j;
+	char **curr_env = NULL;
+	char **new_global_env = NULL;
+	char *target_env = NULL;
+
+	if (ac != 2)
+	{
+		printf("Too many arguments\n");
+		last_child_ret = -1;
+		return;
+	}
+
+	target_env = _getenv(av[1]);
+	if (!target_env)
+	{
+		printf("404: %s Environmental variable not found\n", av[1]);
+		last_child_ret = -1;
+		return;
+	}
+	free(target_env);
+
+	new_global_env = malloc((p_strlen(global_env) + 1) * sizeof(char *));
+	if (!new_global_env)
+	{
+		last_child_ret = -1;
+		return;
+	}
+
+	for (i = 0, j = 0; global_env[i] != NULL; i++)
+	{
+		curr_env = _split(global_env[i], "=");
+		if (_strcmp(curr_env[0], av[1]) == 0)
+		{
+			free_split(curr_env);
+			continue;
+		}
+
+		new_global_env[j++] = _strcpy(global_env[i]);
+		free_split(curr_env);
+	}
+	free_split(global_env);
+	new_global_env[j] = NULL;
+	global_env = new_global_env;
+	
 	last_child_ret = 0;
 }
 
@@ -145,9 +200,7 @@ void cmd_cd(int ac, char **av)
 	cmd_setenv(3, av_env);
 
 	if (ac > 1 && av[1][0] == '-')
-	{
 		printf("%s\n", path);
-	}
 
 	free(path_old);
 	free(path);

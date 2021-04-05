@@ -78,6 +78,7 @@ int built_in_cmd(char **baby_av)
 			{"exit", cmd_exit},
 			{"env", cmd_env},
 			{"setenv", cmd_setenv},
+			{"unsetenv", cmd_unsetenv},
 			{"cd", cmd_cd},
 			{NULL, NULL}
 	};

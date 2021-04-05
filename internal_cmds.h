@@ -6,6 +6,7 @@
 void cmd_exit(int ac, char **av);
 void cmd_env(__attribute__((unused)) int ac,__attribute__((unused)) char **av);
 void cmd_setenv(int ac, char **av);
+void cmd_unsetenv(int ac, char **av);
 void cmd_cd(int ac, char **av);
 
 /* ==============================  */
