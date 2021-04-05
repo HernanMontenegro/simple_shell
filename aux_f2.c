@@ -113,3 +113,21 @@ char *_strcon(char *str1, char *str2)
 
 		return (aux);
 }
+
+/**
+* p_strlen - counts the length of a string
+* @buff: the buffer pointer
+* ---------------------------------
+* Return: the length of the string
+*/
+int p_strlen(char **buff)
+{
+	int len;
+
+	if (!buff)
+		return (0);
+	for (len = 0; buff[len] != NULL; len++)
+		; /* Cursed  */
+
+	return (len);
+}

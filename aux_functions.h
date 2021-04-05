@@ -21,7 +21,7 @@ char *_strcpy(char *src);
 char *int_to_str(int n);
 int _strcmp(char *s1, char *s2);
 char *_strcon(char *str1, char *str2);
-/* Empty Slot */
+int p_strlen(char **buff);
 
 /* aux_f3.c */
 void free_list(envs_list *head);
