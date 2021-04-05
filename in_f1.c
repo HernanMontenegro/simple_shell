@@ -149,7 +149,7 @@ void cmd_unsetenv(int ac, char **av)
 void cmd_cd(int ac, char **av)
 {
 	int len_buff = 0;
-	char *aux = NULL, cannon_meat = NULL;
+	char *aux = NULL, *cannon_meat = NULL;
 	char *path = NULL;
 	char *path_old = NULL;
 	char *av_env[] = {"setenv", "", "", NULL};
