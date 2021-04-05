@@ -35,7 +35,7 @@ int calc_var_space(envs_list *head, int tot_size);
 char *var_big_bang(envs_list *head, char *str, int tot_size);
 char **copy_pstr(char **buff);
 char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size);
-int _print(char *s);
+int _print(char *str);
 /* ==============================  */
 
 #endif

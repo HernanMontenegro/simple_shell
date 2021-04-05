@@ -139,9 +139,10 @@ char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size)
 /**
  * 
 */ 
-int _print(__attribute__((unused))char *s)
+int _print(__attribute__((unused))char *str)
 {
-	
+	int s_len = _strlen(s);
+	write(1, s, s_len);
 
-	return (0);
+	return (s_len);
 }
