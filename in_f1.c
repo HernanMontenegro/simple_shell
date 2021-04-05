@@ -24,9 +24,14 @@ void cmd_exit(int ac, char **av)
 void cmd_env(__attribute__((unused)) int ac,__attribute__((unused)) char **av)
 {
 	int i;
+	char *cannon_meat = NULL;
 
 	for (i = 0; global_env[i] != NULL; i++)
-		printf("%s\n", global_env[i]);
+	{
+		cannon_meat = _strcon(global_env[i], "\n");
+		_print(cannon_meat);
+		free(cannon_meat);
+	}
 }
 
 /**
@@ -43,7 +48,7 @@ void cmd_setenv(int ac, char **av)
 
 	if (ac != 3)
 	{
-		printf("Too many arguments\n");
+		_print("Too many arguments\n");
 		last_child_ret = -1;
 		return;
 	}
@@ -95,7 +100,7 @@ void cmd_unsetenv(int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("Too many arguments\n");
+		_print("Too many arguments\n");
 		last_child_ret = -1;
 		return;
 	}
@@ -103,7 +108,7 @@ void cmd_unsetenv(int ac, char **av)
 	target_env = _getenv(av[1]);
 	if (!target_env)
 	{
-		printf("404: %s Environmental variable not found\n", av[1]);
+		_print("404: Environmental variable not found\n");
 		last_child_ret = -1;
 		return;
 	}

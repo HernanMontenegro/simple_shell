@@ -141,8 +141,8 @@ char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size)
 */ 
 int _print(__attribute__((unused))char *str)
 {
-	int s_len = _strlen(s);
-	write(1, s, s_len);
+	int s_len = _strlen(str);
+	write(1, str, s_len);
 
 	return (s_len);
 }
