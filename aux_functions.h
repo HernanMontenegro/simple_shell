@@ -33,6 +33,7 @@ void gen_var_content(envs_list *head);
 /* aux_f4.c */
 int calc_var_space(envs_list *head, int tot_size);
 char *var_big_bang(envs_list *head, char *str, int tot_size);
+char **copy_pstr(char **buff);
 /* ==============================  */
 
 #endif

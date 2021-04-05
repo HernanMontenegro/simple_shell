@@ -19,7 +19,7 @@ int main(int ac, char **av, char **env)
 	int fd = -1, ret = 0, read_site = 1;
 
 	/* Fill global var */
-	global_env = env;
+	global_env = copy_pstr(env);
 
 	/* READ FILE */
 	if (ac == 2)
@@ -43,6 +43,7 @@ int main(int ac, char **av, char **env)
 	if (fd != -1)
 		close(fd);
 
+	free_split(global_env);
 	return (ret);
 }
 
@@ -65,7 +66,10 @@ int infinite_loop(int fd, int read_site)
 	while (1)
 	{
 		if (abort_indicator)
+		{
+			free_split(global_env);
 		    exit(abort_indicator_status);
+		}
 
 		bytes_read = 0;
 		bytes_used_read = 0;

@@ -70,3 +70,26 @@ char *var_big_bang(envs_list *head, char *str, int tot_size)
 
 	return (universe);
 }
+
+/**
+ * copy_pstr - copy **char
+ * @buff: **char
+ * ----------------------------------------------------------
+ * Return: **char
+*/
+char **copy_pstr(char **buff)
+{
+	int i = 0;
+	int len_buff = p_strlen(buff);
+	char **new_buff = NULL;
+
+	new_buff = malloc((len_buff + 1) * sizeof(char *));
+	if (!new_buff)
+		return (NULL);
+
+	for (i = 0; buff[i] != NULL; i++)
+		new_buff[i] = _strcpy(buff[i]);
+	new_buff[i] = NULL;
+
+	return (new_buff);
+}
