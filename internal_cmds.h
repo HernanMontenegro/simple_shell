@@ -4,6 +4,8 @@
 /* ==========Prototypes========== */
 /* in_f1.c */
 void cmd_exit(int ac, char **av);
+void cmd_setenv(int ac, char **av);
+void cmd_cd(int ac, char **av);
 
 /* ==============================  */
 
