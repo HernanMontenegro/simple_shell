@@ -17,7 +17,7 @@ int localize_cmd(char *str)
 	{
 		if (!(external_cmd(baby_av)))
 		{
-			printf("bash: %s: command not found\n", baby_av[0]);
+			_print("bash: command not found\n");
 			free_split(baby_av);
 			return (1);
 		}

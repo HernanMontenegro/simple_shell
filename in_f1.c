@@ -149,7 +149,7 @@ void cmd_unsetenv(int ac, char **av)
 void cmd_cd(int ac, char **av)
 {
 	int len_buff = 0;
-	char *aux = NULL;
+	char *aux = NULL, cannon_meat = NULL;
 	char *path = NULL;
 	char *path_old = NULL;
 	char *av_env[] = {"setenv", "", "", NULL};
@@ -161,7 +161,7 @@ void cmd_cd(int ac, char **av)
 	}
 	else if (ac > 2)
 	{
-		printf("Too many arguments\n");
+		_print("Too many arguments\n");
 		last_child_ret = -1;
 		return;
 	}
@@ -205,7 +205,11 @@ void cmd_cd(int ac, char **av)
 	cmd_setenv(3, av_env);
 
 	if (ac > 1 && av[1][0] == '-')
-		printf("%s\n", path);
+	{
+		cannon_meat = _strcon(path, "\n");
+		_print(cannon_meat);
+		free(cannon_meat);
+	}
 
 	free(path_old);
 	free(path);

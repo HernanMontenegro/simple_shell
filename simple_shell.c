@@ -94,7 +94,7 @@ int infinite_loop(int fd, int read_site)
 		free_split(lines);
 		if (ret == 1)
 		{
-			printf("Retorno syntax_manager\n\n");
+			_print("Retorno syntax_manager\n\n");
 			return (1);
 		}
 
