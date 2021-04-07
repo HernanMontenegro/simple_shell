@@ -45,8 +45,8 @@ int main(int ac, char **av, char **env)
 	if (fd != -1)
 		close(fd);
 
-	free_split(global_alias);
 	free_split(global_env);
+	free_split(global_alias);
 	return (ret);
 }
 

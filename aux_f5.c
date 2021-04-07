@@ -49,13 +49,13 @@ char **create_start_alias()
     int i = 0;
     char **aux = malloc(9 * sizeof(char *));
 
-    aux[i++] = "egrep='egrep --color=auto'";
-    aux[i++] = "fgrep='fgrep --color=auto'";
-    aux[i++] = "grep='grep --color=auto'";
-    aux[i++] = "l='ls -CF'";
-    aux[i++] = "la='ls -A'";
-    aux[i++] = "ll='ls -alF'";
-    aux[i++] = "ls='ls --color=auto'";
+    aux[i++] = _strcpy("egrep='egrep --color=auto'");
+    aux[i++] = _strcpy("fgrep='fgrep --color=auto'");
+    aux[i++] = _strcpy("grep='grep --color=auto'");
+    aux[i++] = _strcpy("l='ls -CF'");
+    aux[i++] = _strcpy("la='ls -A'");
+    aux[i++] = _strcpy("ll='ls -alF'");
+    aux[i++] = _strcpy("ls='ls --color=auto'");
     aux[i++] = NULL; 
 
     return (aux);
