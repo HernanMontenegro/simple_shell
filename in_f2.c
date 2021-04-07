@@ -59,21 +59,31 @@ void cmd_alias(int ac, char **av)
 
 void cmd_help(int ac, char **av)
 {
+    char *aux = NULL, *aux2 = NULL;
+
     if (ac == 1)
     {
         hp_help();
         return;
     }
-    else if (_strcmp(av[1], "exit"))
+    else if (_strcmp(av[1], "exit") == 0)
         hp_exit();
-    else if (_strcmp(av[1], "env"))
-        hp_env();
-    else if (_strcmp(av[1], "setenv"))
-        hp_setenv();
-    else if (_strcmp(av[1], "unsetenv"))
-        hp_unsetenv();
-    else if (_strcmp(av[1], "cd"))
+    else if (_strcmp(av[1], "cd") == 0)
         hp_cd();
-    else if (_strcmp(av[1], "alias"))
+    else if (_strcmp(av[1], "alias") == 0)
         hp_alias();
+    else if (_strcmp(av[1], "env") == 0)
+        hp_env();
+    else if (_strcmp(av[1], "setenv") == 0)
+        hp_setenv();
+    else if (_strcmp(av[1], "unsetenv") == 0)
+        hp_unsetenv();
+    else
+    {
+        aux = _strcon("bash: help: no help topics match '", av[1]);
+        aux2 =_strcon(aux, "'.");
+        _print_n(aux2);
+        free(aux);
+        free(aux2);
+    }
 }
