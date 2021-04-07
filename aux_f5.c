@@ -60,3 +60,63 @@ char **create_start_alias()
 
     return (aux);
 }
+
+/**
+ * 
+ * 
+*/
+char **change_command_alias(char **baby_av)
+{
+    int i = 0;
+    char **aux = NULL;
+    char **aux2 = NULL;
+    char **aux3 = NULL;
+
+    for (i = 0; global_alias[i] != NULL; i++)
+    {
+        aux = _split(global_alias[i], "=");
+        
+        if (_strcmp(aux[0], baby_av[0]) == 0)
+        {
+            aux2 = _split(aux[1], " ");
+
+            free(baby_av[0]);
+            baby_av[0] = _strcpy("");
+
+            aux3 = p_strcon(aux2, baby_av);
+            free_split(aux);
+            free_split(aux2);
+
+            if (aux3 == NULL)
+                return(baby_av);
+
+            return (aux3);
+        }
+        free_split(aux);
+    }
+
+    return (NULL);
+}
+
+/**
+ * 
+ * 
+*/
+char **p_strcon(char **p, char **p2)
+{
+    int i = 0, j;
+    int len = 0;
+    char **new_p = NULL;
+
+    len = p_strlen(p) + p_strlen(p2) + 1;
+    new_p = malloc(len * sizeof(char *));
+
+    for (j = 0; p[j] != NULL; j++)
+        new_p[i++] = _strcpy(p[j]);
+
+    for (j = 0; p2[j] != NULL; j++)
+        new_p[i++] = _strcpy(p2[j]);
+    new_p[i++] = NULL;
+
+    return (new_p);
+}

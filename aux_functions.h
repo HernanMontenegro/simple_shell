@@ -41,8 +41,8 @@ int _print(char *str);
 int get_env_index(char *env_name);
 void _print_n(char *str);
 char **create_start_alias();
-/* EMPTY SLOT */
-/* EMPTY SLOT */
+char **change_command_alias(char **baby_av);
+char **p_strcon(char **p, char **p2);
 /* ==============================  */
 
 #endif

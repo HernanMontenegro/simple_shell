@@ -9,9 +9,19 @@
 int localize_cmd(char *str)
 {
 	char **baby_av;
+	char **aux;
 
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
+
+	aux = change_command_alias(baby_av);
+	if (aux != NULL)
+	{
+		free_split(baby_av);
+		baby_av = aux;
+		baby_av = clean_arg(baby_av);
+	}
+
 
 	if (!(built_in_cmd(baby_av)))
 	{

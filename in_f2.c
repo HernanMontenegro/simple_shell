@@ -47,7 +47,7 @@ void cmd_alias(int ac, char **av)
         {
             alias_len = p_strlen(global_alias);
             global_alias = p_realloc(global_alias, alias_len, alias_len + 2);
-            global_alias[alias_len] = av[i];
+            global_alias[alias_len] = _strcpy(av[i]);
             global_alias[alias_len + 1] = NULL;
         }
 
