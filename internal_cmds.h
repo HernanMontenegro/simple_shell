@@ -9,6 +9,13 @@ void cmd_setenv(int ac, char **av);
 void cmd_unsetenv(int ac, char **av);
 void cmd_cd(int ac, char **av);
 
+/* in_f2.c */
+void cmd_alias(int ac, char **av);
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+
 /* ==============================  */
 
 #endif

@@ -2,6 +2,7 @@
 
 int last_child_ret = 0;
 char **global_env = NULL;
+char **global_alias = NULL;
 
 int abort_indicator = 0;
 int abort_indicator_status = 0;
@@ -20,6 +21,7 @@ int main(int ac, char **av, char **env)
 
 	/* Fill global var */
 	global_env = copy_pstr(env);
+	global_alias = create_start_alias();
 
 	/* READ FILE */
 	if (ac == 2)
@@ -43,6 +45,7 @@ int main(int ac, char **av, char **env)
 	if (fd != -1)
 		close(fd);
 
+	free_split(global_alias);
 	free_split(global_env);
 	return (ret);
 }
@@ -68,6 +71,7 @@ int infinite_loop(int fd, int read_site)
 		if (abort_indicator)
 		{
 			free_split(global_env);
+			free_split(global_alias);
 		    exit(abort_indicator_status);
 		}
 

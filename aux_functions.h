@@ -39,8 +39,8 @@ int _print(char *str);
 
 /* aux_f5.c */
 int get_env_index(char *env_name);
-/* EMPTY SLOT */
-/* EMPTY SLOT */
+void _print_n(char *str);
+char **create_start_alias();
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 /* ==============================  */

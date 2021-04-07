@@ -4,6 +4,7 @@
 /* Globals varabols */
 extern int last_child_ret;
 extern char **global_env;
+extern char **global_alias;
 
 extern int abort_indicator;
 extern int abort_indicator_status;

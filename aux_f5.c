@@ -25,3 +25,38 @@ int get_env_index(char *env_name)
 
     return (res);
 }
+
+/**
+ * _print_n - print a string with a new line at the end
+ * @str: the string to print
+ * -------------------------------
+*/
+void _print_n(char *str)
+{
+    char *aux = NULL;
+
+    aux = _strcon(str, "\n");
+    _print(aux);
+    free(aux);
+}
+
+/**
+ * 
+ * 
+*/
+char **create_start_alias()
+{
+    int i = 0;
+    char **aux = malloc(9 * sizeof(char *));
+
+    aux[i++] = "egrep='egrep --color=auto'";
+    aux[i++] = "fgrep='fgrep --color=auto'";
+    aux[i++] = "grep='grep --color=auto'";
+    aux[i++] = "l='ls -CF'";
+    aux[i++] = "la='ls -A'";
+    aux[i++] = "ll='ls -alF'";
+    aux[i++] = "ls='ls --color=auto'";
+    aux[i++] = NULL; 
+
+    return (aux);
+}

@@ -80,6 +80,7 @@ int built_in_cmd(char **baby_av)
 			{"setenv", cmd_setenv},
 			{"unsetenv", cmd_unsetenv},
 			{"cd", cmd_cd},
+			{"alias", cmd_alias},
 			{NULL, NULL}
 	};
 
