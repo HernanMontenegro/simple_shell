@@ -6,7 +6,7 @@
 */
 void cmd_alias(int ac, char **av)
 {
-    int i;
+    int i, j;
     int alias_len = 0;
     char *aux = NULL;
     char **aux2 = NULL;
@@ -29,15 +29,12 @@ void cmd_alias(int ac, char **av)
         checker = _split(av[i], "=");
         if (!checker[1])
         {
-            printf("1 ===================================\n");
-            for (i = 0; global_alias[i] != NULL; i++)
+            for (j = 0; global_alias[j] != NULL; j++)
             {
-                printf("2 ===================================\n");
-                aux2 = _split(global_alias[i], "=");
+                aux2 = _split(global_alias[j], "=");
                 if (_strcmp(checker[0], aux2[0]) == 0)
                 {
-                    printf("3 ===================================\n");
-                    aux = _strcon("alias ", global_alias[i]);
+                    aux = _strcon("alias ", global_alias[j]);
                     _print_n(aux);
                     free(aux);
                     free_split(aux2);
