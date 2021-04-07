@@ -73,6 +73,7 @@ void cmd_setenv(int ac, char **av)
 		global_env[global_env_len] = aux2;
 		global_env[global_env_len + 1] = NULL;
 	}
+	free(target_env);
 
 	last_child_ret = 0;
 }
@@ -185,7 +186,7 @@ void cmd_cd(int ac, char **av)
 	free(path);
 
 	path = _calloc(path, len_buff);
-	path = getcwd(path, len_buff);
+	getcwd(path, len_buff);
 
 	av_env[1] = "OLDPWD";
 	av_env[2] = path_old;
