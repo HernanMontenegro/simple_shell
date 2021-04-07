@@ -21,6 +21,7 @@ extern int abort_indicator_status;
 #include "structs.h"
 #include "aux_functions.h"
 #include "internal_cmds.h"
+#include "help.h"
 
 /* Getline Protptyoes */
 int _getline(char **fill, int *n, int where_read);

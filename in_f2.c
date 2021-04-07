@@ -47,7 +47,7 @@ void cmd_alias(int ac, char **av)
         {
             alias_len = p_strlen(global_alias);
             global_alias = p_realloc(global_alias, alias_len, alias_len + 2);
-            global_alias[alias_len] = _strcpy(av[i]);
+            global_alias[alias_len] = av[i];
             global_alias[alias_len + 1] = NULL;
         }
 
@@ -55,4 +55,25 @@ void cmd_alias(int ac, char **av)
     }
     
     last_child_ret = 0;
+}
+
+void cmd_help(int ac, char **av)
+{
+    if (ac == 1)
+    {
+        hp_help();
+        return;
+    }
+    else if (_strcmp(av[1], "exit"))
+        hp_exit();
+    else if (_strcmp(av[1], "env"))
+        hp_env();
+    else if (_strcmp(av[1], "setenv"))
+        hp_setenv();
+    else if (_strcmp(av[1], "unsetenv"))
+        hp_unsetenv();
+    else if (_strcmp(av[1], "cd"))
+        hp_cd();
+    else if (_strcmp(av[1], "alias"))
+        hp_alias();
 }

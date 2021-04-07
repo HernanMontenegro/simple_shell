@@ -91,6 +91,7 @@ int built_in_cmd(char **baby_av)
 			{"unsetenv", cmd_unsetenv},
 			{"cd", cmd_cd},
 			{"alias", cmd_alias},
+			{"help", cmd_help},
 			{NULL, NULL}
 	};
 
