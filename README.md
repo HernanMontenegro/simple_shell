@@ -23,19 +23,20 @@ First of all, a Shell in computing, is a computer program wich exposes an operat
 
 We used Bash as our Shell father to execute our own Shell program made in C. Our Shell can handle those following tasks:
 - Start reading a file  with:
-    >[filename] ./hsh
+    >./hsh [filename] 
 - Start by 'echo' output:
     > echo "/bin/ls" | ./hsh
 - Uses the PATH environment variable
 - Built-ins commands
 - Special characters like:
-    > ", ', `, \, *, &, #
+    > ", ', \, |, &, #
 - Commands with arguments
 - Exit built-in with arguments
 - Ctrl+C shortcut
 - View, Set and Unset environmental variables
 - cd command
 - ; command separator
+- help built-in command
 
 #### Technologies
 
