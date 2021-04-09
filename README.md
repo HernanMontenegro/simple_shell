@@ -1,6 +1,6 @@
 # Simple_Shell
 
-![](https://photos.google.com/u/4/search/_tra_/photo/AF1QipN4PhxNhPnWaYQc7amLi7yF7bd2eBPzHM-3_MZH?hl=es)
+<img src="https://photos.google.com/u/4/search/_tra_/photo/AF1QipN4PhxNhPnWaYQc7amLi7yF7bd2eBPzHM-3_MZH?hl=es">
 
 > A simple UNIX command interpreted made by two mad guys.
 
@@ -59,7 +59,7 @@ And execute the following file:
 ```
 Now you will see this:
 
-![](https://photos.google.com/u/4/search/_tra_/photo/AF1QipPS3KqC9AEM5PgofC7R6B2RB1OIeE_iAed4opxW)
+<img src="https://photos.google.com/u/4/search/_tra_/photo/AF1QipPS3KqC9AEM5PgofC7R6B2RB1OIeE_iAed4opxW">
 
 Great! that means you done everything right.
 
