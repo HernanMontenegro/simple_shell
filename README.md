@@ -117,7 +117,7 @@ Hernan Montenegro
 - Twitch Game Development Streams - [DreadZitoDev](https://dreadzitodev.itch.io)
 - Website - comming soon...
 
-Tomas Martinez
+Tomás Martínez
 - With love
 
 [Back To The Top](#Simple_Shell)
