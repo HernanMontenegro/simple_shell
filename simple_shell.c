@@ -7,6 +7,8 @@ char **global_alias = NULL;
 int abort_indicator = 0;
 int abort_indicator_status = 0;
 
+void sighandler(int signum);
+
 /**
  * main - entry point
  * @ac: argument count
@@ -18,6 +20,8 @@ int abort_indicator_status = 0;
 int main(int ac, char **av, char **env)
 {
 	int fd = -1, ret = 0, read_site = 1;
+
+	signal(SIGINT, sighandler);
 
 	/* Fill global var */
 	global_env = copy_pstr(env);
@@ -107,4 +111,11 @@ int infinite_loop(int fd, int read_site)
 	}
 
 	return (ret);
+}
+
+
+void sighandler(int signum) {
+	char prompt[] = "\n\033[0;32m#cisfun$ \033[1;37m";
+
+	write(1, &prompt, sizeof(prompt) / sizeof(char));
 }
