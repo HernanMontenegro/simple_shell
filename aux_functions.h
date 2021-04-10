@@ -1,12 +1,19 @@
 #ifndef AUX_FUNCTIONS_H
 #define AUX_FUNCTIONS_H
 
-/* Split functions */
+/* _splits.c */
 char **_split(char *, char *c);
 int calc_lines(char *, char *c);
 void free_split(char **splitted);
 int check_split_line(char *, int, char *, int *, int *);
 int remove_commas(char **uwu);
+
+/* _splits2.c */
+void comms_pross(int *bool_comms, int *i, int *j, int *nxt_comms, int *t_comms);
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
 
 /* ==========Prototypes========== */
 /* aux_f1.c */
@@ -52,5 +59,4 @@ int parent_wait(int child_pid, int *status);
 /* EMPTY SLOT */
 
 /* ==============================  */
-
 #endif

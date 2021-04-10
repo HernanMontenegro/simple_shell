@@ -63,7 +63,7 @@ char *add_aux_to_fill(char *fill, char *aux, int aux_size)
 	new_size = fill_len + aux_size + 1;
 	fill = _realloc(fill, fill_len, new_size);
 
-	for (i = fill_len, j = 0; i < (new_size -1); i++, j++)
+	for (i = fill_len, j = 0; i < (new_size - 1); i++, j++)
 		fill[i] = aux[j];
 	fill[i] = '\0';
 

@@ -1,3 +1,6 @@
+
+
+
 #include "our_header.h"
 
 /**
@@ -10,20 +13,20 @@
 char **_split(char *s, char *c)
 {
 	int line_i, i = 0, j;
-	int line_count = calc_lines(s, c);
+	int line_count;
 	char **res;
 	char *ram;
 	int bool_commas = -1, type_commas = 0;
 
+	line_count = calc_lines(s, c);
 	res = malloc((line_count + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
-
 	for (line_i = 0; line_i < line_count; line_i++)
 	{
 		for (j = 0; s[i + j] != '\0'; j++)
 		{
-			if (check_split_line(s , (i + j), c, &bool_commas, &type_commas))
+			if (check_split_line(s, (i + j), c, &bool_commas, &type_commas))
 				break;
 		}
 		ram = malloc((j + 1) * sizeof(char));
@@ -37,13 +40,12 @@ char **_split(char *s, char *c)
 		bool_commas = -1;
 		for (j = 0; s[i] != '\0'; i++, j++)
 		{
-			if (check_split_line(s , i, c, &bool_commas, &type_commas))
+			if (check_split_line(s, i, c, &bool_commas, &type_commas))
 				break;
 			ram[j] = s[i];
 		}
 		ram[j] = '\0';
 		i = i + _strlen(c);
-
 		res[line_i] = ram;
 	}
 	res[line_i] = NULL;
@@ -67,50 +69,31 @@ int calc_lines(char *s, char *c)
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (check_split_line(s , i, c, &bool_commas, &type_commas))
+		if (check_split_line(s, i, c, &bool_commas, &type_commas))
 			line++;
 	}
-
 	return (line);
 }
 
 /**
- * Mierda 
- */
-int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas)
+ * check_split_line - check the line syntax with commas or not
+ * @s: string to check
+ * @i: index of the string
+ * @c: string to delimitate
+ * @bool_comm: the string has commas?
+ * @type_comm: which type of commas has te string?
+ * -----------------------------------------------------------
+ * Return: 1 if the string has commas, 0 if not
+*/
+int check_split_line(char *s, int i, char *c, int *bool_comm, int *type_comm)
 {
 	int j;
 	int bool = 0, next_commas = 0, ret = 0;
-	
+
 	if (s[i] == '"' || s[i] == '\'')
 	{
 		if (!(i != 0 && s[i - 1] == '\\'))
-		{
-			if ((*bool_commas) == -1)
-			{
-				for (j = 1; s[i + j] != '\0'; j++)
-				{
-					if (s[i + j] == s[i])
-					{
-						next_commas = 1;
-						break;
-					}
-				}
-				if (next_commas && *type_commas == 0)
-				{
-					*bool_commas = *bool_commas * -1;
-					*type_commas = s[i];
-				}
-			}
-			else
-			{
-				if (*type_commas == s[i])
-				{
-					*bool_commas = *bool_commas * -1;
-					*type_commas = 0;
-				}
-			}
-		}
+			comms_pross(bool_comm, &i, &j, &next_commas, &type_comm);
 	}
 	for (j = 0; c[j] != '\0'; j++)
 	{
@@ -124,7 +107,7 @@ int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas
 	}
 	if (bool == 1)
 	{
-		if ((*bool_commas) == -1)
+		if ((*bool_comms) == -1)
 				ret = 1;
 	}
 	return (ret);
@@ -133,7 +116,7 @@ int check_split_line(char *s, int i, char *c, int *bool_commas, int *type_commas
 /**
 * free_split - frees a splitted string
 * @splitted: the splitted string
-* @line: the lines to split
+* ---------------------------------------
 */
 void free_split(char **splitted)
 {
@@ -141,7 +124,7 @@ void free_split(char **splitted)
 
 	if (!splitted)
 		return;
-	
+
 	for (i = 0; splitted && splitted[i] != NULL; i++)
 		free(splitted[i]);
 	free(splitted);
@@ -149,6 +132,12 @@ void free_split(char **splitted)
 	splitted = NULL;
 }
 
+/**
+* remove_commas - remove commas in the input string
+* @uwu: the splitted string
+* ---------------------------------------
+* Return: 1 if everything works, 0 if not
+*/
 int remove_commas(char **uwu)
 {
 	int i, j, k;
@@ -162,7 +151,7 @@ int remove_commas(char **uwu)
 			len = _strlen(uwu[i]);
 			len -= 2;
 
-			aux = malloc((len +1) * sizeof(char));
+			aux = malloc((len + 1) * sizeof(char));
 			if (!aux)
 				return (0);
 
