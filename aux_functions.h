@@ -43,6 +43,14 @@ void _print_n(char *str);
 char **create_start_alias();
 char **change_command_alias(char **baby_av);
 char **p_strcon(char **p, char **p2);
+
+/* aux_f6.c */
+int str_char_check(char *str, char c);
+int parent_wait(int child_pid, int *status);
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+/* EMPTY SLOT */
+
 /* ==============================  */
 
 #endif

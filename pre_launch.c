@@ -10,6 +10,7 @@ int localize_cmd(char *str)
 {
 	char **baby_av;
 	char **aux;
+	char *aux_error = NULL;
 
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
@@ -22,12 +23,13 @@ int localize_cmd(char *str)
 		baby_av = clean_arg(baby_av);
 	}
 
-
 	if (!(built_in_cmd(baby_av)))
 	{
 		if (!(external_cmd(baby_av)))
 		{
-			_print("bash: command not found\n");
+			aux_error = _strcon(baby_av[0], ": command not found\n");
+			_print(aux_error);
+			free(aux_error);
 			free_split(baby_av);
 			return (1);
 		}
@@ -128,6 +130,12 @@ int external_cmd(char **baby_av)
 	free(baby_av[0]);
 	baby_av[0] = aux;
 
+	if (!(str_char_check(baby_av[0], '/')))
+	{
+		last_child_ret = 1;
+		return (0);
+	}
+
 	child_pid = fork();
 	if (child_pid == -1 )
 	{
@@ -144,17 +152,7 @@ int external_cmd(char **baby_av)
 		}
 	}
 	else
-	{
-		if (waitpid(child_pid, &status, 0) == -1)
-		{
-			perror("Waitpid failed");
-			return (0);
-		}
-		if (WIFEXITED(status))
-		{
-			last_child_ret = WEXITSTATUS(status);
-		}
-	}
+		return (parent_wait(child_pid, &status));
 
 	return (1);
 }
