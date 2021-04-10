@@ -1,6 +1,3 @@
-
-
-
 #include "our_header.h"
 
 /**
@@ -65,11 +62,11 @@ int calc_lines(char *s, char *c)
 {
 	int i;
 	int line = 1;
-	int bool_commas = -1, type_commas = 0;
+	int bool_comm = -1, type_commas = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (check_split_line(s, i, c, &bool_commas, &type_commas))
+		if (check_split_line(s, i, c, &bool_comm, &type_commas))
 			line++;
 	}
 	return (line);
@@ -93,7 +90,7 @@ int check_split_line(char *s, int i, char *c, int *bool_comm, int *type_comm)
 	if (s[i] == '"' || s[i] == '\'')
 	{
 		if (!(i != 0 && s[i - 1] == '\\'))
-			comms_pross(bool_comm, &i, &j, &next_commas, &type_comm);
+			comms_pross(s, bool_comm, &i, &next_commas, type_comm);
 	}
 	for (j = 0; c[j] != '\0'; j++)
 	{
@@ -107,8 +104,8 @@ int check_split_line(char *s, int i, char *c, int *bool_comm, int *type_comm)
 	}
 	if (bool == 1)
 	{
-		if ((*bool_comms) == -1)
-				ret = 1;
+		if ((*bool_comm) == -1)
+			ret = 1;
 	}
 	return (ret);
 }
