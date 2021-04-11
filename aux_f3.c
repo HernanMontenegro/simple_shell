@@ -87,33 +87,21 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
 			*tot_size = *tot_size + 1;
 			continue;
 		}
-		/* i = '$' || i = '?' */
 		i++;
-		if (str[i] == '$')
+		if (str[i] == '$' || str[i] == '?')
 		{
-			aux = int_to_str(getpid());
+			if (str[i] == '$')
+				aux = int_to_str(getpid());
+			else
+				aux = int_to_str(last_child_ret);
 			add_node_end(&head, NULL, aux, 1, _strlen(aux), i);
-			continue;
-		}
-		else if (str[i] == '?')
-		{
-			aux = int_to_str(last_child_ret);
-			add_node_end(&head, NULL, aux, 1, _strlen(aux), i);
-			continue;
-		}
-		else if (str[i] == '\0')
-		{
-			add_node_end(&head, NULL, NULL, 0, 1, i);
-			i--; /* avoid getting away from the bounds of the array in the next cicle */
 			continue;
 		}
 		for (cnt = 0; check_var_delim(str[i + cnt]); cnt++)
 			; /* O.o  Cursed */
-
-		if (cnt == 0)
+		if (cnt == 0 || str[i] == '\0')
 		{
-			add_node_end(&head, NULL, NULL, 0, 1, i);
-			i--; /* avoid getting away from the bounds of the array in the next cicle */
+			add_node_end(&head, NULL, NULL, 0, 1, i--);
 			continue;
 		}
 		aux = malloc((cnt + 1) * sizeof(char));
@@ -125,10 +113,8 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
 		for (j = 0; check_var_delim(str[i]); i++, j++)
 			aux[j] = str[i];
 		aux[j] = '\0';
-		i--; /* avoid getting away from the bounds of the array in the next cicle */
-		add_node_end(&head, aux, NULL, cnt, 0, i);
+		add_node_end(&head, aux, NULL, cnt, 0, --i);
 	}
-
 	return (head);
 }
 
