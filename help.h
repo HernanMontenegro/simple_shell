@@ -3,15 +3,15 @@
 
 /* ==========Prototypes========== */
 /* help_f1.c */
-void hp_help();
-void hp_exit();
-void hp_cd();
-void hp_alias();
-void hp_env();
+void hp_help(void);
+void hp_exit(void);
+void hp_cd(void);
+void hp_alias(void);
+void hp_env(void);
 
 /* help_f2.c */
-void hp_setenv();
-void hp_unsetenv();
+void hp_setenv(void);
+void hp_unsetenv(void);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 /* EMPTY SLOT */
