@@ -29,7 +29,7 @@ void free_list(envs_list *head)
 }
 
 /**
-* add_node_end - adds a node at the end
+* add_node - adds a node at the end
 * @h: head reference
 * @n: var name
 * @c: var content
@@ -39,7 +39,7 @@ void free_list(envs_list *head)
 * -------------------------------------
 * Return: a new node in the list
 */
-envs_list *add_node_end(envs_list **h, char *n, char *c, int ne, int ce, int ed)
+envs_list *add_node(envs_list **h, char *n, char *c, int ne, int ce, int ed)
 {
 	envs_list *new_obj = NULL, *previous = NULL;
 
@@ -94,14 +94,14 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
 				aux = int_to_str(getpid());
 			else
 				aux = int_to_str(last_child_ret);
-			add_node_end(&head, NULL, aux, 1, _strlen(aux), i);
+			add_node(&head, NULL, aux, 1, _strlen(aux), i);
 			continue;
 		}
 		for (cnt = 0; check_var_delim(str[i + cnt]); cnt++)
 			; /* O.o  Cursed */
 		if (cnt == 0 || str[i] == '\0')
 		{
-			add_node_end(&head, NULL, NULL, 0, 1, i--);
+			add_node(&head, NULL, NULL, 0, 1, i--);
 			continue;
 		}
 		aux = malloc((cnt + 1) * sizeof(char));
@@ -113,7 +113,7 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
 		for (j = 0; check_var_delim(str[i]); i++, j++)
 			aux[j] = str[i];
 		aux[j] = '\0';
-		add_node_end(&head, aux, NULL, cnt, 0, --i);
+		add_node(&head, aux, NULL, cnt, 0, --i);
 	}
 	return (head);
 }

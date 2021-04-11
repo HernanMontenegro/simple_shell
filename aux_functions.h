@@ -32,7 +32,7 @@ int p_strlen(char **buff);
 
 /* aux_f3.c */
 void free_list(envs_list *head);
-envs_list *add_node_end(envs_list **, char *, char *, int, int, int);
+envs_list *add_node(envs_list **, char *, char *, int, int, int);
 envs_list *generate_var_nodes(char *str, int *tot_size);
 int check_var_delim(char c);
 void gen_var_content(envs_list *head);
