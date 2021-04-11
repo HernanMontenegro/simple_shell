@@ -60,7 +60,7 @@ int main(int ac, char **av, char **env)
  * @read_site: where read?
  * ------------------------------
  * Return: syntax manager return, 1 if error happens
- */
+ */ 
 int infinite_loop(int fd, int read_site)
 {
 	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
@@ -76,7 +76,7 @@ int infinite_loop(int fd, int read_site)
 		{
 			free_split(global_env);
 			free_split(global_alias);
-			exit(abort_indicator_status);
+		        exit(abort_indicator_status);
 		}
 
 		bytes_read = 0;
@@ -113,10 +113,12 @@ int infinite_loop(int fd, int read_site)
 	return (ret);
 }
 
-
-void sighandler(__attribute__((unused)) int signum)
-{
+/**
+ * sighandler - writes the prompt with colors
+ * @signum: get user keyboard input
+ * ----------------------------------------
+*/
+void sighandler(__attribute__((unused)) int signum) {
 	char prompt[] = "\n\033[0;32m#cisfun$ \033[1;37m";
-
 	write(1, &prompt, sizeof(prompt) / sizeof(char));
 }
