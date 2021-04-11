@@ -11,8 +11,8 @@ void cmd_cd(int ac, char **av);
 
 /* in_f2.c */
 void cmd_alias(int ac, char **av);
+int get_index_alias(char *str);
 void cmd_help(int ac, char **av);
-/* EMPTY SLOT */
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 

@@ -5,7 +5,7 @@
  * @str: the string to check
  * ----------------------------------
  * Return: command exit status if is a command, 1 if not
- */ 
+ */
 int localize_cmd(char *str)
 {
 	char **baby_av;
@@ -44,7 +44,7 @@ int localize_cmd(char *str)
  * @argv: the string command given
  * ---------------------------------------
  * Return: a new blessed string command, without impurities
- */ 
+*/
 char **clean_arg(char **argv)
 {
 	int i, j;
@@ -87,18 +87,18 @@ int built_in_cmd(char **baby_av)
 {
 	int i = 0, ac = 0;
 	internal_commands list_com[] = {
-			{"exit", cmd_exit},
-			{"env", cmd_env},
-			{"setenv", cmd_setenv},
-			{"unsetenv", cmd_unsetenv},
-			{"cd", cmd_cd},
-			{"alias", cmd_alias},
-			{"help", cmd_help},
-			{NULL, NULL}
+		{"exit", cmd_exit},
+		{"env", cmd_env},
+		{"setenv", cmd_setenv},
+		{"unsetenv", cmd_unsetenv},
+		{"cd", cmd_cd},
+		{"alias", cmd_alias},
+		{"help", cmd_help},
+		{NULL, NULL}
 	};
 
 	for (ac = 0; baby_av[ac] != NULL; ac++)
-			; /* UwU Cursed */
+		; /* UwU Cursed */
 
 	for (i = 0; list_com[i].command != NULL; i++)
 	{
@@ -125,7 +125,7 @@ int external_cmd(char **baby_av)
 	int status;
 
 	aux = serch_path(baby_av[0]);
-	if(!aux)
+	if (!aux)
 		return (0);
 	free(baby_av[0]);
 	baby_av[0] = aux;
@@ -137,13 +137,13 @@ int external_cmd(char **baby_av)
 	}
 
 	child_pid = fork();
-	if (child_pid == -1 )
+	if (child_pid == -1)
 	{
-        perror("Fork failed");
-        return (0);
-    }
+		perror("Fork failed");
+		return (0);
+	}
 
-	if(child_pid == 0)
+	if (child_pid == 0)
 	{
 		if (execve(baby_av[0], baby_av, global_env) == -1)
 		{
@@ -193,7 +193,7 @@ char *serch_path(char *str)
 	free_split(path_list);
 
 	if (stat(str, &st) == 0)
-	    return (_strcpy(str));
+		return (_strcpy(str));
 
 	return (NULL);
 }
