@@ -3,7 +3,8 @@
 /**
 * _strcpy - copies a string
 * @src: the source string
-* @dest: the destination string
+*
+* Return: A pointer to the copy of str
 */
 char *_strcpy(char *src)
 {
@@ -76,6 +77,7 @@ char *int_to_str(int n)
 int _strcmp(char *s1, char *s2)
 {
 	int i, s1C = _strlen(s1), s2C = _strlen(s2), con = 0, ret = 0;
+
 	if (s1C > s2C)
 		con = s1C;
 	else
@@ -90,28 +92,28 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
- *_strcmp - caracol
- *@s1: *
- *@s2: *
+ *_strcon - Concatenate two strings
+ *@str1: Str to concatenate
+ *@str2: Str to concatenate
  *
- *Return: *
+ *Return: A pointer that has the concatenation
 */
 char *_strcon(char *str1, char *str2)
 {
-		int i = 0, j = 0, len = 0;
-		char *aux;
+	int i = 0, j = 0, len = 0;
+	char *aux;
 
-		len = _strlen(str1) + _strlen(str2);
+	len = _strlen(str1) + _strlen(str2);
 		aux = malloc((len + 1) * sizeof(char));
 
-		for (i = 0; str1 != NULL && str1[i] != '\0'; i++)
-		        aux[i] = str1[i];
+	for (i = 0; str1 != NULL && str1[i] != '\0'; i++)
+		aux[i] = str1[i];
 
-		for (j = 0; str2 != NULL && str2[j] != '\0'; i++, j++)
-		        aux[i] = str2[j];
-		aux[i] = '\0';
+	for (j = 0; str2 != NULL && str2[j] != '\0'; i++, j++)
+		aux[i] = str2[j];
+	aux[i] = '\0';
 
-		return (aux);
+	return (aux);
 }
 
 /**

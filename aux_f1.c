@@ -100,7 +100,7 @@ char *_getenv(char *env_name)
 	{
 		bool = 0;
 		aux = _split(global_env[i], "=");
-		
+
 		/* Iterate till finding the var name we want */
 		if (_strcmp(aux[0], env_name) == 0)
 		{
@@ -141,9 +141,8 @@ int _atoi(char *s)
 		}
 	}
 
-	if (s[0] == '-'){
+	if (s[0] == '-')
 		res = res * -1;
-	}
 
 	return (res);
 }
