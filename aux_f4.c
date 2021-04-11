@@ -47,8 +47,6 @@ char *var_big_bang(envs_list *head, char *str, int tot_size)
 		{
 			pre_aux = aux;
 			aux = aux->next;
-
-
 			if (pre_aux->name == NULL && pre_aux->content == NULL)
 			{
 				universe[j] = '$';
@@ -137,12 +135,15 @@ char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size)
 }
 
 /**
- * 
-*/ 
-int _print(__attribute__((unused))char *str)
+ * _print - prints a string given
+ * @str: the string to print
+ * ---------------------------------------
+ * Return: the length o the string
+*/
+int _print(char *str)
 {
 	int s_len = _strlen(str);
-	write(1, str, s_len);
 
+	write(1, str, s_len);
 	return (s_len);
 }
