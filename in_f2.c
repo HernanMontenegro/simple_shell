@@ -21,7 +21,8 @@ void cmd_alias(int ac, char **av)
 	for (i = 1; av[i] != NULL; i++)
 	{
 		checker = _split(av[i], "=");
-		index_alias = get_index_alias(av[i]);
+		index_alias = get_index_alias(checker[0]);
+
 		if (!checker[1] && index_alias != -1)
 		{
 			aux = _strcon("alias ", global_alias[index_alias]);
@@ -37,7 +38,7 @@ void cmd_alias(int ac, char **av)
 		{
 			alias_len = p_strlen(global_alias);
 			global_alias = p_realloc(global_alias, alias_len, alias_len + 2);
-			global_alias[alias_len] = av[i];
+			global_alias[alias_len] = _strcpy(av[i]);
 			global_alias[alias_len + 1] = NULL;
 		}
 		free_split(checker);
@@ -54,11 +55,17 @@ void cmd_alias(int ac, char **av)
 int get_index_alias(char *str)
 {
 	int i;
+	char **aux = NULL;
 
 	for (i = 0; global_alias[i] != NULL; i++)
 	{
-		if (_strcmp(global_alias[i], str) == 0)
+		aux = _split(global_alias[i], "=");
+		if (_strcmp(aux[0], str) == 0)
+		{
+			free_split(aux);
 			return (i);
+		}
+		free_split(aux);
 	}
 
 	return (-1);
