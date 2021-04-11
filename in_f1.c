@@ -9,19 +9,20 @@
 void cmd_exit(int ac, char **av)
 {
 	abort_indicator = 1;
-    if (ac == 2)
-    	abort_indicator_status = _atoi(av[1]);
-    else
-    	abort_indicator_status = 0;
+
+	if (ac == 2)
+		abort_indicator_status = _atoi(av[1]);
+	else
+		abort_indicator_status = 0;
 }
 
 /**
- * cmd_exit - Exit internal command call advertiser
+ * cmd_env - Manage the env built-in command
  * @ac: Argument count
  * @av: Arguments array
  * ----------------------------------------
  */
-void cmd_env(__attribute__((unused)) int ac,__attribute__((unused)) char **av)
+void cmd_env(__attribute__((unused)) int ac, __attribute__((unused)) char **av)
 {
 	int i;
 	char *cannon_meat = NULL;
@@ -35,7 +36,7 @@ void cmd_env(__attribute__((unused)) int ac,__attribute__((unused)) char **av)
 }
 
 /**
- * cmd_setenv - Switch the value or create a new env var 
+ * cmd_setenv - Switch the value or create a new env var
  * @ac: arguments count
  * @av: arguments array
  * ------------------------------------------
@@ -83,7 +84,7 @@ void cmd_setenv(int ac, char **av)
  * @ac: arguments count
  * @av: arguments array
  * ------------------------------------------
- */ 
+ */
 void cmd_unsetenv(int ac, char **av)
 {
 	int i, j;
@@ -97,7 +98,6 @@ void cmd_unsetenv(int ac, char **av)
 		last_child_ret = -1;
 		return;
 	}
-
 	target_env = _getenv(av[1]);
 	if (!target_env)
 	{
@@ -106,14 +106,12 @@ void cmd_unsetenv(int ac, char **av)
 		return;
 	}
 	free(target_env);
-
 	new_global_env = malloc((p_strlen(global_env) + 1) * sizeof(char *));
 	if (!new_global_env)
 	{
 		last_child_ret = -1;
 		return;
 	}
-
 	for (i = 0, j = 0; global_env[i] != NULL; i++)
 	{
 		curr_env = _split(global_env[i], "=");
@@ -122,35 +120,29 @@ void cmd_unsetenv(int ac, char **av)
 			free_split(curr_env);
 			continue;
 		}
-
 		new_global_env[j++] = _strcpy(global_env[i]);
 		free_split(curr_env);
 	}
 	free_split(global_env);
 	new_global_env[j] = NULL;
 	global_env = new_global_env;
-	
 	last_child_ret = 0;
 }
 
 /**
- * cmd_exit - CD internal command call advertiser
+ * cmd_cd - CD internal command call advertiser
  * @ac: Argument count
  * @av: Arguments array
  * ----------------------------------------
  */
 void cmd_cd(int ac, char **av)
 {
-	int len_buff = 0;
-	char *aux = NULL, *cannon_meat = NULL;
-	char *path = NULL, *path_old = NULL;
-	char *av_env[] = {"setenv", "", "", NULL};
+int len_buff = 0;
+char *path = NULL, *path_old = NULL;
+char *e[] = {"setenv", "OLDPWD", "", NULL}, *r[] = {"setenv", "PWD", "", NULL};
 
 	if (ac == 1)
-	{
 		path = _getenv("HOME");
-		path_old = _getenv("PWD");
-	}
 	else if (ac > 2)
 	{
 		_print("Too many arguments\n");
@@ -160,49 +152,28 @@ void cmd_cd(int ac, char **av)
 	else if (ac == 2)
 	{
 		if (av[1][0] == '-')
-		{
 			path = _getenv("OLDPWD");
-			path_old = _getenv("PWD");
-		}
 		else
-		{
 			path = _strcpy(av[1]);
-			path_old = _getenv("PWD");
-		}
 	}
-
 	if (chdir(path) == -1)
 	{
 		last_child_ret = 1;
 		free(path);
-		free(path_old);
 		perror("Error");
 		return;
 	}
-	aux = _getenv("PWD");
-	len_buff = _strlen(path) + _strlen(aux) + 10;
-
-	free(aux);
+	path_old = _getenv("PWD");
+	len_buff = _strlen(path) + _strlen(path_old) + 10;
 	free(path);
-
 	path = _calloc(path, len_buff);
 	getcwd(path, len_buff);
-
-	av_env[1] = "OLDPWD";
-	av_env[2] = path_old;
-	cmd_setenv(3, av_env);
-
-	av_env[1] = "PWD";
-	av_env[2] = path;
-	cmd_setenv(3, av_env);
-
+	e[2] = path_old;
+	cmd_setenv(3, e);
+	r[2] = path;
+	cmd_setenv(3, r);
 	if (ac > 1 && av[1][0] == '-')
-	{
-		cannon_meat = _strcon(path, "\n");
-		_print(cannon_meat);
-		free(cannon_meat);
-	}
-
+		_print_n(path);
 	free(path_old);
 	free(path);
 	last_child_ret = 0;
