@@ -56,7 +56,14 @@ int str_char_check(char *str, char c);
 int parent_wait(int child_pid, int *status, char ***env);
 void _magic(int ac, char **av, char ***env, char ***alias);
 void _setenv(char *name, char *value, char ***env);
-/* EMPTY SLOT */
+void counter_plus_plus(char ***env);
+
+/* aux_f7.c */
+char *_super_con_err(char *baby_av, char ***env);
+/* empty slot */
+/* empty slot */
+/* empty slot */
+/* empty slot */
 
 /* ==============================  */
 #endif

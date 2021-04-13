@@ -14,10 +14,14 @@ int syntax_manager(char **input, char ***env, char ***alias)
 	int i, j;
 	char **cmd_splt = NULL; /* Slpit by ; */
 
+	if (input[0][0] == '\0')
+		counter_plus_plus(env);
+
 	for (i = 0; input && input[i] != NULL; i++)
 	{
 		if (input[i][0] == '\0')
 			continue;
+		counter_plus_plus(env);
 
 		command = delete_comments(input[i]);
 		if (!command)

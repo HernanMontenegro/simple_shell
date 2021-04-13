@@ -12,8 +12,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 {
 	char **baby_av;
 	char **aux;
-	char *aux_error = NULL;
-	char *aux2 = NULL;
+	char *aux_error = NULL, *aux2 = NULL;
 	int last_child_ret = 0;
 
 	baby_av = _split(str, " ");
@@ -31,7 +30,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 	{
 		if (!(external_cmd(baby_av, env)))
 		{
-			aux_error = _strcon(baby_av[0], ": command not found\n");
+			aux_error = _super_con_err(baby_av[0], env);
 			_print(aux_error);
 			free(aux_error);
 			free_split(baby_av);

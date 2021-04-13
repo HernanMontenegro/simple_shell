@@ -98,3 +98,22 @@ void _setenv(char *name, char *value, char ***env)
 	}
 	free(target_env);
 }
+
+/**
+*counter_plus_plus - variable counter++
+*@env: global variables
+*-------------------------------------------
+*/
+void counter_plus_plus(char ***env)
+{
+	int counter = 0;
+	char *aux;
+
+	aux = _getenv("counter", *env);
+	counter = _atoi(aux);
+	free(aux);
+	counter++;
+	aux = int_to_str(counter);
+	_setenv("counter", aux, env);
+	free(aux);
+}

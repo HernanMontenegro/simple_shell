@@ -25,6 +25,8 @@ int main(int ac, char **av, char **env)
 	_setenv("last_child_ret", "0", &global_env);
 	_setenv("abort_indicator", "0", &global_env);
 	_setenv("abort_indicator_status", "0", &global_env);
+	_setenv("counter", "0", &global_env);
+	_setenv("prog_name", av[0], &global_env);
 
 	/* READ FILE */
 	if (ac == 2)
