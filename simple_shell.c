@@ -69,15 +69,16 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
 	char *input = NULL, **lines = NULL;
 	int bytes_used_read = 0;
-	int bytes_read = 0, ret = 0;
+	int bytes_read = 0, ret = 0, abort_indicator_status = 0;
 
 	while (1)
 	{
-		if (get_int_env("abort_indicator", env))
+		if (get_int_env("abort_indicator", env) == 1)
 		{
+			abort_indicator_status = get_int_env("abort_indicator_status", env);
 			free_split(*env);
 			free_split(*alias);
-			exit(get_int_env("abort_indicator_status", env));
+			exit(abort_indicator_status);
 		}
 		bytes_read = 0;
 		bytes_used_read = 0;
