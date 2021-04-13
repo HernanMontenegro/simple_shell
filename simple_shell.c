@@ -67,60 +67,42 @@ int main(int ac, char **av, char **env)
 int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 {
 	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
-	char *input = NULL, *aux = NULL, *aux2 = NULL;
+	char *input = NULL, **lines = NULL;
 	int bytes_used_read = 0;
-	int bytes_read = 0;
-	int ret = 0;
-	int abort_indicator_status = 0;
-	int abort_indicator = 0;
-	char **lines = NULL;
+	int bytes_read = 0, ret = 0;
 
 	while (1)
 	{
-		aux2 = _getenv("abort_indicator", *env);
-		abort_indicator = _atoi(aux2);
-		free(aux2);
-		if (abort_indicator)
+		if (get_int_env("abort_indicator", env))
 		{
-			aux = _getenv("abort_indicator_status", *env);
 			free_split(*env);
 			free_split(*alias);
-			abort_indicator_status = _atoi(aux);
-			free(aux);
-			exit(abort_indicator_status);
+			exit(get_int_env("abort_indicator_status", env));
 		}
-
 		bytes_read = 0;
 		bytes_used_read = 0;
 		input = NULL;
 		lines = NULL;
-
-		/* Print prompt */
 		if (fd == -1)
-		write(1, &prompt, sizeof(prompt) / sizeof(char));
-
+			write(1, &prompt, sizeof(prompt) / sizeof(char));
 		bytes_read = _getline(&input, &bytes_used_read, read_site);
 		if (bytes_read == -1)
 		{
 			free(input);
 			return (1);
 		}
-
 		lines = _split(input, "\n");
 		free(input);
-
-		ret = syntax_manager(lines, env, alias);
+		ret = syntax_manager(lines, fd, env, alias);
 		free_split(lines);
 		if (ret == 1)
 		{
 			_print("Retorno syntax_manager\n\n");
 			return (1);
 		}
-
 		if (fd != -1)
 			break;
 	}
-
 	return (ret);
 }
 

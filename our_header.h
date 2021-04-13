@@ -28,7 +28,7 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias);
 
 
 /* syntax_manager.c */
-int syntax_manager(char **input, char ***env, char ***alias);
+int syntax_manager(char **input, int fd, char ***env, char ***alias);
 char *delete_comments(char *str);
 char *variable_translator(char *str, char ***env);
 int or_operat(char *str, char ***env, char ***alias);

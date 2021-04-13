@@ -3,54 +3,47 @@
 /**
 * syntax_manager - manages the syntax in our shell
 * @input: the input str
+* @fd: file descriptor
 * @env: global env variables
 * @alias: global alias variable
 * -------------------------------
 * Return: 0 if worked, 1 if not
 */
-int syntax_manager(char **input, char ***env, char ***alias)
+int syntax_manager(char **input, int fd, char ***env, char ***alias)
 {
-	char *command = NULL;
 	int i, j;
-	char **cmd_splt = NULL; /* Slpit by ; */
+	char **cmd_splt = NULL, *command = NULL; /* Slpit by ; */
 
 	if (input[0][0] == '\0')
 		counter_plus_plus(env);
 
 	for (i = 0; input && input[i] != NULL; i++)
 	{
+		if (fd != -1)
+			counter_plus_plus(env);
 		if (input[i][0] == '\0')
 			continue;
-		counter_plus_plus(env);
-
+		if (fd == -1)
+			counter_plus_plus(env);
 		command = delete_comments(input[i]);
 		if (!command)
 			return (1);
-
 		/* Si esta vacio entonces continue; */
 		if (_strlen(command) == 0)
 		{
 			free(command);
 			continue;
 		}
-
 		/* Traslate variables */
 		command = variable_translator(command, env);
 		if (!command)
 			return (1);
-
-
 		cmd_splt = _split(command, ";");
-
 		for (j = 0; cmd_splt[j] != NULL; j++)
-		{
 			or_operat(cmd_splt[j], env, alias);
-		}
-
 		free_split(cmd_splt);
 		free(command);
 	}
-
 	return (0);
 }
 
