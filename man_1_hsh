@@ -1,26 +1,23 @@
 .Dd 13/4/2021
-.Dt hsh 1
-.Sh HSH
+.Dt hsh (1)
+.Sh HSH (1)
 .Nm hsh
 .Nm - Holberton Shell
 .Sh SYNOPSIS
-.Nm
+hsh
 .Op filename
 
 .Op path or pwd
-/
-.Nm
+/hsh
 
 .Op command
-|
-.Nm
+| hsh
 
 .Sh DESCRIPTION
     hsh is a command lenguage interpreter that executes commands from the
     standard input string, or a specified file. Commands should been written
     in bash command lenguage.
     
-    .br
     hsh executes from a father shell for collecting the requiered information
     as environment variables, files given or standard input string.
     
@@ -127,10 +124,10 @@ hsh
 
 
 .Sh INPUT FILES
-    The input file shall be a text file, except that line lengths
-    shall be unlimited. If the input file consists solely of zero or
-    more blank lines and comments, sh shall exit with a zero exit
-    status.
+    The input file shall be a text file.
+
+.Sh BUGS
+    None ;)
 
 .Sh AUTHORS
     Hernan Montenegro
