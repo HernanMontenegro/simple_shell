@@ -18,6 +18,12 @@ int localize_cmd(char *str, char ***env, char ***alias)
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
 
+	if (baby_av[0] == NULL)
+	{
+		free_split(baby_av);
+		return (0);
+	}
+
 	aux = change_command_alias(baby_av, *alias);
 	if (aux != NULL)
 	{
