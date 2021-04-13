@@ -56,15 +56,24 @@ void cmd_env(int ac, char **av, char ***env, char ***alias)
 void cmd_setenv(int ac, char **av, char ***env, char ***alias)
 {
 	int global_env_len = 0, target_i = 0;
-	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL;
+	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
 
 	_magic(ac, av, env, alias);
 
-	if (ac != 3)
+	if (ac > 3)
 	{
 		_print("Too many arguments\n");
 		_setenv("last_child_ret", "-1", env);
 		return;
+	}
+	else if (ac == 2)
+		aux3 = _strcpy("");
+	else if (ac == 3)
+		aux3 = av[2];
+	else
+	{	_print("Poor arguments\n");
+		_setenv("last_child_ret", "-1", env);
+		return;	
 	}
 
 	/* look if exist env var */
@@ -72,8 +81,9 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias)
 	target_i = get_env_index(av[1], *env);
 
 	aux1 = _strcon(av[1], "=");
-	aux2 = _strcon(aux1, av[2]);
+	aux2 = _strcon(aux1, aux3);
 	free(aux1);
+	free(aux3);
 
 	if (target_env)
 	{
