@@ -74,7 +74,7 @@ envs_list *add_node(envs_list **h, char *n, char *c, int ne, int ce, int ed)
  * -----------------------------------------------------
  * Return: an entire linked list with a new node
  */
-envs_list *generate_var_nodes(char *str, int *tot_size)
+envs_list *generate_var_nodes(char *str, int *tot_size, char ***env)
 {
 	char *aux = NULL;
 	envs_list *head = NULL;
@@ -93,7 +93,7 @@ envs_list *generate_var_nodes(char *str, int *tot_size)
 			if (str[i] == '$')
 				aux = int_to_str(getpid());
 			else
-				aux = int_to_str(last_child_ret);
+				aux = _getenv("last_child_ret", *env);
 			add_node(&head, NULL, aux, 1, _strlen(aux), i);
 			continue;
 		}
@@ -142,7 +142,7 @@ int check_var_delim(char c)
  * @head: the var linked list to generate content
  * ------------------------------------------------
 */
-void gen_var_content(envs_list *head)
+void gen_var_content(envs_list *head, char ***env)
 {
 	envs_list *aux = head;
 	char *aux_env = NULL;
@@ -155,7 +155,7 @@ void gen_var_content(envs_list *head)
 			continue;
 		}
 
-		aux_env = _getenv(aux->name);
+		aux_env = _getenv(aux->name, *env);
 		if (!aux_env)
 		{
 			aux = aux->next;

@@ -13,7 +13,7 @@
 typedef struct in_com
 {
 	char *command;
-	void (*f)(int ac, char **av);
+	void (*f)(int ac, char **av, char ***env, char ***alias);
 
 } internal_commands;
 

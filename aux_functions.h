@@ -20,7 +20,7 @@ void comms_pross(char *, int *, int *, int *, int *);
 void *_calloc(char *p, int size);
 int _strlen(char *buff);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_getenv(char *env_name);
+char *_getenv(char *env_name, char **env);
 int _atoi(char *s);
 
 /* aux_f2.c */
@@ -33,9 +33,9 @@ int p_strlen(char **buff);
 /* aux_f3.c */
 void free_list(envs_list *head);
 envs_list *add_node(envs_list **, char *, char *, int, int, int);
-envs_list *generate_var_nodes(char *str, int *tot_size);
+envs_list *generate_var_nodes(char *str, int *tot_size, char ***env);
 int check_var_delim(char c);
-void gen_var_content(envs_list *head);
+void gen_var_content(envs_list *head, char ***env);
 
 /* aux_f4.c */
 int calc_var_space(envs_list *head, int tot_size);
@@ -45,17 +45,17 @@ char **p_realloc(char **buff, unsigned int old_size, unsigned int new_size);
 int _print(char *str);
 
 /* aux_f5.c */
-int get_env_index(char *env_name);
+int get_env_index(char *env_name, char **env);
 void _print_n(char *str);
 char **create_start_alias();
-char **change_command_alias(char **baby_av);
+char **change_command_alias(char **baby_av, char **alias);
 char **p_strcon(char **p, char **p2);
 
 /* aux_f6.c */
 int str_char_check(char *str, char c);
-int parent_wait(int child_pid, int *status);
-/* EMPTY SLOT */
-/* EMPTY SLOT */
+int parent_wait(int child_pid, int *status, char ***env);
+void _magic(int ac, char **av, char ***env, char ***alias);
+void _setenv(char *name, char *value, char ***env);
 /* EMPTY SLOT */
 
 /* ==============================  */

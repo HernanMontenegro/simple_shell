@@ -6,7 +6,7 @@
 * -------------------------------
 * Return: 0 if worked, 1 if not
 */
-int syntax_manager(char **input)
+int syntax_manager(char **input, char ***env, char ***alias)
 {
 	char *command = NULL;
 	int i, j;
@@ -29,7 +29,7 @@ int syntax_manager(char **input)
 		}
 
 		/* Traslate variables */
-		command = variable_translator(command);
+		command = variable_translator(command, env);
 		if (!command)
 			return (1);
 
@@ -38,7 +38,7 @@ int syntax_manager(char **input)
 
 		for (j = 0; cmd_splt[j] != NULL; j++)
 		{
-			or_operat(cmd_splt[j]);
+			or_operat(cmd_splt[j], env, alias);
 		}
 
 		free_split(cmd_splt);
@@ -74,14 +74,14 @@ char *delete_comments(char *str)
  * ------------------------------------------------
  * Return: New string with var content
 */
-char *variable_translator(char *str)
+char *variable_translator(char *str, char ***env)
 {
 	int tot_size = 0;
 	envs_list *list = NULL;
 	char *new_str = NULL;
 
-	list = generate_var_nodes(str, &tot_size);
-	gen_var_content(list);
+	list = generate_var_nodes(str, &tot_size, env);
+	gen_var_content(list, env);
 	new_str = var_big_bang(list, str, tot_size);
 	free(str);
 
@@ -95,7 +95,7 @@ char *variable_translator(char *str)
  * ----------------------------------------------
  * Return: 0 FOR NOW
  */
-int or_operat(char *str)
+int or_operat(char *str, char ***env, char ***alias)
 {
 	int i, ret_and;
 	char **cmd_splt_or = NULL;
@@ -104,7 +104,7 @@ int or_operat(char *str)
 
 	for (i = 0; cmd_splt_or[i] != NULL; i++)
 	{
-		ret_and = and_operat(cmd_splt_or[i]);
+		ret_and = and_operat(cmd_splt_or[i], env, alias);
 		if (ret_and == 1)
 			break;
 	}
@@ -119,7 +119,7 @@ int or_operat(char *str)
  * ----------------------------------------------
  * Return: 1 FOR NOW
  */
-int and_operat(char *str)
+int and_operat(char *str, char ***env, char ***alias)
 {
 	int i, ret;
 	char **cmd_splt_and = NULL;
@@ -128,7 +128,7 @@ int and_operat(char *str)
 
 	for (i = 0; cmd_splt_and[i] != NULL; i++)
 	{
-		ret = localize_cmd(cmd_splt_and[i]);
+		ret = localize_cmd(cmd_splt_and[i], env, alias);
 		if (ret != 0)
 		{
 			free_split(cmd_splt_and);

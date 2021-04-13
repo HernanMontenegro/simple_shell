@@ -6,16 +6,18 @@
  * ----------------------------------
  * Return: command exit status if is a command, 1 if not
  */
-int localize_cmd(char *str)
+int localize_cmd(char *str, char ***env, char ***alias)
 {
 	char **baby_av;
 	char **aux;
 	char *aux_error = NULL;
+	char *aux2 = NULL;
+	int last_child_ret = 0;
 
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
 
-	aux = change_command_alias(baby_av);
+	aux = change_command_alias(baby_av, *alias);
 	if (aux != NULL)
 	{
 		free_split(baby_av);
@@ -23,9 +25,9 @@ int localize_cmd(char *str)
 		baby_av = clean_arg(baby_av);
 	}
 
-	if (!(built_in_cmd(baby_av)))
+	if (!(built_in_cmd(baby_av, env, alias)))
 	{
-		if (!(external_cmd(baby_av)))
+		if (!(external_cmd(baby_av, env)))
 		{
 			aux_error = _strcon(baby_av[0], ": command not found\n");
 			_print(aux_error);
@@ -36,6 +38,10 @@ int localize_cmd(char *str)
 	}
 
 	free_split(baby_av);
+
+	aux2 = _getenv("last_child_ret", *env);
+	last_child_ret = _atoi(aux2);
+	free(aux2);
 	return (last_child_ret);
 }
 
@@ -83,7 +89,7 @@ char **clean_arg(char **argv)
  * -------------------------
  * Return: 1 if found an internal command, 0 if not
  */
-int built_in_cmd(char **baby_av)
+int built_in_cmd(char **baby_av, char ***env, char ***alias)
 {
 	int i = 0, ac = 0;
 	internal_commands list_com[] = {
@@ -104,7 +110,7 @@ int built_in_cmd(char **baby_av)
 	{
 		if (_strcmp(baby_av[0], list_com[i].command) == 0)
 		{
-			list_com[i].f(ac, baby_av);
+			list_com[i].f(ac, baby_av, env, alias);
 			return (1);
 		}
 	}
@@ -118,13 +124,13 @@ int built_in_cmd(char **baby_av)
  * -------------------------
  * Return: 1 if found an external command, 0 if not
  */
-int external_cmd(char **baby_av)
+int external_cmd(char **baby_av, char ***env)
 {
 	char *aux = NULL;
 	pid_t child_pid = 0;
 	int status;
 
-	aux = serch_path(baby_av[0]);
+	aux = serch_path(baby_av[0], env);
 	if (!aux)
 		return (0);
 	free(baby_av[0]);
@@ -132,7 +138,7 @@ int external_cmd(char **baby_av)
 
 	if (!(str_char_check(baby_av[0], '/')))
 	{
-		last_child_ret = 1;
+		_setenv("last_child_ret", "1", env);
 		return (0);
 	}
 
@@ -145,14 +151,14 @@ int external_cmd(char **baby_av)
 
 	if (child_pid == 0)
 	{
-		if (execve(baby_av[0], baby_av, global_env) == -1)
+		if (execve(baby_av[0], baby_av, *env) == -1)
 		{
 			perror("Error");
 			return (1);
 		}
 	}
 	else
-		return (parent_wait(child_pid, &status));
+		return (parent_wait(child_pid, &status, env));
 
 	return (1);
 }
@@ -163,7 +169,7 @@ int external_cmd(char **baby_av)
  * -------------------------------------------
  * Return: The filled PATH founded, NULL otherwhise
  */
-char *serch_path(char *str)
+char *serch_path(char *str, char ***env)
 {
 	int i = 0;
 	char **path_list;
@@ -172,7 +178,7 @@ char *serch_path(char *str)
 	char *aux = NULL;
 	char *complete_cmd = NULL;
 
-	aux = _getenv("PATH");
+	aux = _getenv("PATH", *env);
 	path_list = _split(aux, ":");
 	free(aux);
 

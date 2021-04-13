@@ -89,17 +89,17 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * ---------------------------------------
  * Return: string env var content
  */
-char *_getenv(char *env_name)
+char *_getenv(char *env_name, char **env)
 {
 	int i;
 	int bool = 0;
 	char **aux = NULL;
 	char *save = NULL;
 
-	for (i = 0; global_env[i] != NULL; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
 		bool = 0;
-		aux = _split(global_env[i], "=");
+		aux = _split(env[i], "=");
 
 		/* Iterate till finding the var name we want */
 		if (_strcmp(aux[0], env_name) == 0)

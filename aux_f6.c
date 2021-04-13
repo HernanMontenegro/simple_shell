@@ -31,15 +31,69 @@ int str_char_check(char *str, char c)
  * ------------------------------------------
  *Return: 1 if everything was right, 0 if not
 */
-int parent_wait(int child_pid, int *status)
+int parent_wait(int child_pid, int *status, char ***env)
 {
+	char *aux = NULL;
+
 	if (waitpid(child_pid, status, 0) == -1)
 	{
 		perror("Waitpid failed");
 		return (0);
 	}
 	if (WIFEXITED(*status))
-		last_child_ret = WEXITSTATUS(*status);
+	{
+		aux = int_to_str(WEXITSTATUS(*status));
+		_setenv("last_child_ret", aux, env);
+		free(aux);
+	}
 
 	return (1);
+}
+
+/**
+* _magic - used
+*@ac: none
+*@av: none
+*@env: none
+*@alias: none
+*/
+void _magic(__attribute__((unused)) int ac, __attribute__((unused)) char **av,
+__attribute__((unused)) char ***env, __attribute__((unused)) char ***alias)
+{
+}
+
+/**
+ * _setenv - Switch the value or create a new env var
+ * @name: name of variable
+ * @value: value of variable
+ * @env: global env
+ * ------------------------------------------
+ */
+void _setenv(char *name, char *value, char ***env)
+{
+	int global_env_len = 0, target_i = 0;
+	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL;
+
+	/* look if exist env var */
+	target_env = _getenv(name, *env);
+	target_i = get_env_index(name, *env);
+
+	aux1 = _strcon(name, "=");
+	aux2 = _strcon(aux1, value);
+	free(aux1);
+
+	if (target_env)
+	{
+		free((*env)[target_i]);
+		(*env)[target_i] = aux2;
+	}
+	else
+	{
+		global_env_len = p_strlen(*env);
+		*env = p_realloc(*env, global_env_len, global_env_len + 2);
+
+		(*env)[global_env_len] = aux2;
+		(*env)[global_env_len + 1] = NULL;
+	}
+	free(target_env);
 }

@@ -6,44 +6,46 @@
  * @av: argument array
  * -------------------------------------
 */
-void cmd_alias(int ac, char **av)
+void cmd_alias(int ac, char **av, char ***env, char ***alias)
 {
 	int i, alias_len = 0, index_alias = -1;
 	char *aux = NULL, **checker = NULL;
 
+	_magic(ac, av, env, alias);
+
 	if (ac == 1)
-		for (i = 0; global_alias[i] != NULL; i++)
+		for (i = 0; (*alias)[i] != NULL; i++)
 		{
-			aux = _strcon("alias ", global_alias[i]);
+			aux = _strcon("alias ", (*alias)[i]);
 			_print_n(aux);
 			free(aux);
 		}
 	for (i = 1; av[i] != NULL; i++)
 	{
 		checker = _split(av[i], "=");
-		index_alias = get_index_alias(checker[0]);
+		index_alias = get_index_alias(checker[0], alias);
 
 		if (!checker[1] && index_alias != -1)
 		{
-			aux = _strcon("alias ", global_alias[index_alias]);
+			aux = _strcon("alias ", (*alias)[index_alias]);
 			_print_n(aux);
 			free(aux);
 		}
 		else if (index_alias != -1)
 		{
-			free(global_alias[index_alias]);
-			global_alias[index_alias] = _strcpy(av[i]);
+			free((*alias)[index_alias]);
+			(*alias)[index_alias] = _strcpy(av[i]);
 		}
 		else
 		{
-			alias_len = p_strlen(global_alias);
-			global_alias = p_realloc(global_alias, alias_len, alias_len + 2);
-			global_alias[alias_len] = _strcpy(av[i]);
-			global_alias[alias_len + 1] = NULL;
+			alias_len = p_strlen(*alias);
+			(*alias) = p_realloc(*alias, alias_len, alias_len + 2);
+			(*alias)[alias_len] = _strcpy(av[i]);
+			(*alias)[alias_len + 1] = NULL;
 		}
 		free_split(checker);
 	}
-	last_child_ret = 0;
+	_setenv("last_child_ret", "0", env);
 }
 
 /**
@@ -52,14 +54,14 @@ void cmd_alias(int ac, char **av)
  * ------------------------------------
  * Return: the index of the alias, -1 if fails
 */
-int get_index_alias(char *str)
+int get_index_alias(char *str, char ***alias)
 {
 	int i;
 	char **aux = NULL;
 
-	for (i = 0; global_alias[i] != NULL; i++)
+	for (i = 0; (*alias)[i] != NULL; i++)
 	{
-		aux = _split(global_alias[i], "=");
+		aux = _split((*alias)[i], "=");
 		if (_strcmp(aux[0], str) == 0)
 		{
 			free_split(aux);
@@ -77,10 +79,11 @@ int get_index_alias(char *str)
  * @av: argument array
  * -------------------------------------
 */
-void cmd_help(int ac, char **av)
+void cmd_help(int ac, char **av, char ***env, char ***alias)
 {
 	char *aux = NULL, *aux2 = NULL;
 
+	_magic(ac, av, env, alias);
 	if (ac == 1)
 	{
 		hp_help();
