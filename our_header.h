@@ -9,6 +9,7 @@ extern char **global_alias;
 extern int abort_indicator;
 extern int abort_indicator_status;
 
+
 /* Standard libraries */
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,25 +30,25 @@ char *add_aux_to_fill(char *fill, char *aux, int aux_size);
 
 /* Simple Shell Prototypes  */
 /* function main */
-int infinite_loop(int fd, int read_site);
+int infinite_loop(int fd, int read_site, char ***env, char ***alias);
 /* Empty Slot */
 /* Empty Slot */
 /* Empty Slot */
 
 
 /* syntax_manager.c */
-int syntax_manager(char **input);
+int syntax_manager(char **input, char ***env, char ***alias);
 char *delete_comments(char *str);
-char *variable_translator(char *str);
-int or_operat(char *str);
-int and_operat(char *str);
+char *variable_translator(char *str, char ***env);
+int or_operat(char *str, char ***env, char ***alias);
+int and_operat(char *str, char ***env, char ***alias);
 
 /* pre_launch.c  */
-int localize_cmd(char *str);
+int localize_cmd(char *str, char ***env, char ***alias);
 char **clean_arg(char **argv);
-int built_in_cmd(char **baby_av);
-int external_cmd(char **baby_av);
-char *serch_path(char *str);
+int built_in_cmd(char **baby_av, char ***env, char ***alias);
+int external_cmd(char **baby_av, char ***env);
+char *serch_path(char *str, char ***env);
 
 
 #endif /* OUR_HEADER_H */

@@ -1,12 +1,5 @@
 #include "our_header.h"
 
-int last_child_ret = 0;
-char **global_env = NULL;
-char **global_alias = NULL;
-
-int abort_indicator = 0;
-int abort_indicator_status = 0;
-
 void sighandler(int signum);
 
 /**
@@ -20,12 +13,18 @@ void sighandler(int signum);
 int main(int ac, char **av, char **env)
 {
 	int fd = -1, ret = 0, read_site = 1;
+	char **global_env = NULL;
+	char **global_alias = NULL;
 
 	signal(SIGINT, sighandler);
 
 	/* Fill global var */
 	global_env = copy_pstr(env);
 	global_alias = create_start_alias();
+
+	_setenv("last_child_ret", "0", &global_env);
+	_setenv("abort_indicator", "0", &global_env);
+	_setenv("abort_indicator_status", "0", &global_env);
 
 	/* READ FILE */
 	if (ac == 2)
@@ -44,7 +43,7 @@ int main(int ac, char **av, char **env)
 		read_site = 0;
 	}
 
-	ret = infinite_loop(fd, read_site);
+	ret = infinite_loop(fd, read_site, &global_env, &global_alias);
 
 	if (fd != -1)
 		close(fd);
@@ -61,21 +60,29 @@ int main(int ac, char **av, char **env)
  * ------------------------------
  * Return: syntax manager return, 1 if error happens
  */ 
-int infinite_loop(int fd, int read_site)
+int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 {
 	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
-	char *input = NULL;
+	char *input = NULL, *aux = NULL, *aux2 = NULL;
 	int bytes_used_read = 0;
 	int bytes_read = 0;
 	int ret = 0;
+	int abort_indicator_status = 0;
+	int abort_indicator = 0;
 	char **lines = NULL;
 
 	while (1)
 	{
+		aux2 = _getenv("abort_indicator", *env);
+		abort_indicator = _atoi(aux2);
+		free(aux2);
 		if (abort_indicator)
 		{
-			free_split(global_env);
-			free_split(global_alias);
+			aux = _getenv("abort_indicator_status", *env);
+			free_split(*env);
+			free_split(*alias);
+			abort_indicator_status = _atoi(aux);
+			free(aux);
 		        exit(abort_indicator_status);
 		}
 
@@ -98,7 +105,7 @@ int infinite_loop(int fd, int read_site)
 		lines = _split(input, "\n");
 		free(input);
 
-		ret = syntax_manager(lines);
+		ret = syntax_manager(lines, env, alias);
 		free_split(lines);
 		if (ret == 1)
 		{

@@ -6,14 +6,14 @@
  * --------------------------------------------
  * Return: the index where the var is located
 */
-int get_env_index(char *env_name)
+int get_env_index(char *env_name, char **env)
 {
 	int i, res = 0;
 	char **aux = NULL;
 
-	for (i = 0; global_env[i] != NULL; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
-		aux = _split(global_env[i], "=");
+		aux = _split(env[i], "=");
 		if (_strcmp(aux[0], env_name) == 0)
 		{
 			free_split(aux);
@@ -68,16 +68,16 @@ char **create_start_alias()
  * -----------------------------------------
  * Return: converted baby_av if found an alias
 */
-char **change_command_alias(char **baby_av)
+char **change_command_alias(char **baby_av, char **alias)
 {
 	int i = 0;
 	char **aux = NULL;
 	char **aux2 = NULL;
 	char **aux3 = NULL;
 
-	for (i = 0; global_alias[i] != NULL; i++)
+	for (i = 0; alias[i] != NULL; i++)
 	{
-		aux = _split(global_alias[i], "=");
+		aux = _split(alias[i], "=");
 
 		if (_strcmp(aux[0], baby_av[0]) == 0)
 		{
