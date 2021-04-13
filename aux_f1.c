@@ -86,6 +86,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 /**
  * _getenv - Get the content of an env var
  * @env_name: the name of the env var
+ * @env: global env variables
  * ---------------------------------------
  * Return: string env var content
  */

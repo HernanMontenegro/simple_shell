@@ -3,6 +3,8 @@
 /**
 * syntax_manager - manages the syntax in our shell
 * @input: the input str
+* @env: global env variables
+* @alias: global alias variable
 * -------------------------------
 * Return: 0 if worked, 1 if not
 */
@@ -71,6 +73,7 @@ char *delete_comments(char *str)
  * variable_translator - Translate a variable with it's content.
  *						More like a brain calling functions requiered
  * @str: the source string containing a variable
+ * @env: global env variables
  * ------------------------------------------------
  * Return: New string with var content
 */
@@ -92,6 +95,8 @@ char *variable_translator(char *str, char ***env)
 /**
  * or_operat - Manages the "||" - OR operator
  * @str: the string containing the OR operator
+ * @env: global env variables
+ * @alias: global alias variable
  * ----------------------------------------------
  * Return: 0 FOR NOW
  */
@@ -116,6 +121,8 @@ int or_operat(char *str, char ***env, char ***alias)
 /**
  * and_operat - Manages the "&&" - AND operator
  * @str: the string containing the AND operator
+ * @env: global env variables
+ * @alias: global alias variable
  * ----------------------------------------------
  * Return: 1 FOR NOW
  */

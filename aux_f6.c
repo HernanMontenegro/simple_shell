@@ -28,6 +28,7 @@ int str_char_check(char *str, char c)
  * parent_wait - manage the wait of the parent process
  * @child_pid: the child proccess file descriptor id
  * @status: pointer to status variable
+ * @env: global env variable
  * ------------------------------------------
  *Return: 1 if everything was right, 0 if not
 */

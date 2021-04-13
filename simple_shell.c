@@ -57,9 +57,11 @@ int main(int ac, char **av, char **env)
  * infinite_loop - Execute until the program end asking user's input
  * @fd: pass main file descriptor
  * @read_site: where read?
+ * @env: global env variables
+ * @alias: global alias variable
  * ------------------------------
  * Return: syntax manager return, 1 if error happens
- */ 
+ */
 int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 {
 	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
@@ -83,7 +85,7 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 			free_split(*alias);
 			abort_indicator_status = _atoi(aux);
 			free(aux);
-		        exit(abort_indicator_status);
+			exit(abort_indicator_status);
 		}
 
 		bytes_read = 0;
@@ -125,7 +127,9 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
  * @signum: get user keyboard input
  * ----------------------------------------
 */
-void sighandler(__attribute__((unused)) int signum) {
+void sighandler(__attribute__((unused)) int signum)
+{
 	char prompt[] = "\n\033[0;32m#cisfun$ \033[1;37m";
+
 	write(1, &prompt, sizeof(prompt) / sizeof(char));
 }

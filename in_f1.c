@@ -4,6 +4,8 @@
  * cmd_exit - Exit internal command call advertiser
  * @ac: Argument count
  * @av: Arguments array
+ * @env: global env variables
+ * @alias: global alias variable
  * ----------------------------------------
  */
 void cmd_exit(int ac, char **av, char ***env, char ***alias)
@@ -24,6 +26,8 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias)
  * cmd_env - Manage the env built-in command
  * @ac: Argument count
  * @av: Arguments array
+ * @env: global env variables
+ * @alias: global alias variable
  * ----------------------------------------
  */
 void cmd_env(int ac, char **av, char ***env, char ***alias)
@@ -45,6 +49,8 @@ void cmd_env(int ac, char **av, char ***env, char ***alias)
  * cmd_setenv - Switch the value or create a new env var
  * @ac: arguments count
  * @av: arguments array
+ * @env: global env variables
+ * @alias: global alias variable
  * ------------------------------------------
  */
 void cmd_setenv(int ac, char **av, char ***env, char ***alias)
@@ -91,17 +97,17 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias)
  * cmd_unsetenv - Remove a previous setted environmental var
  * @ac: arguments count
  * @av: arguments array
+ * @env: global env variables
+ * @alias: global alias variable
  * ------------------------------------------
  */
 void cmd_unsetenv(int ac, char **av, char ***env, char ***alias)
 {
 	int i, j;
-	char **curr_env = NULL;
-	char **new_global_env = NULL;
+	char **curr_env = NULL, **new_global_env = NULL;
 	char *target_env = NULL;
 
 	_magic(ac, av, env, alias);
-
 	if (ac != 2)
 	{
 		_print("Too many arguments\n");
@@ -143,6 +149,8 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias)
  * cmd_cd - CD internal command call advertiser
  * @ac: Argument count
  * @av: Arguments array
+ * @env: global env variables
+ * @alias: global alias variable
  * ----------------------------------------
  */
 void cmd_cd(int ac, char **av, char ***env, char ***alias)

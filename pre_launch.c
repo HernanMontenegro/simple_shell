@@ -3,6 +3,8 @@
 /**
  * localize_cmd - Localize if the input is a command
  * @str: the string to check
+ * @env: global env variables
+ * @alias: global alias variable
  * ----------------------------------
  * Return: command exit status if is a command, 1 if not
  */
@@ -86,6 +88,8 @@ char **clean_arg(char **argv)
 /**
  * built_in_cmd - Built in commands manager
  * @baby_av: The cleanned baby to analize
+ * @env: global env variables
+ * @alias: global alias variable
  * -------------------------
  * Return: 1 if found an internal command, 0 if not
  */
@@ -121,6 +125,7 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias)
 /**
  * external_cmd - External commands manager
  * @baby_av: The cleanned baby to analize
+ * @env: global env variables
  * -------------------------
  * Return: 1 if found an external command, 0 if not
  */
@@ -166,6 +171,7 @@ int external_cmd(char **baby_av, char ***env)
 /**
  * serch_path - Search if exist an executable with a specific name
  * @str: the name to find the PATH
+ * @env: global env variables
  * -------------------------------------------
  * Return: The filled PATH founded, NULL otherwhise
  */

@@ -4,6 +4,8 @@
  * cmd_alias - alias built-in command
  * @ac: argument count
  * @av: argument array
+ * @env: global env variables
+ * @alias: global alias variable
  * -------------------------------------
 */
 void cmd_alias(int ac, char **av, char ***env, char ***alias)
@@ -43,7 +45,6 @@ void cmd_alias(int ac, char **av, char ***env, char ***alias)
 			(*alias)[alias_len] = _strcpy(av[i]);
 			(*alias)[alias_len + 1] = NULL;
 		}
-		free_split(checker);
 	}
 	_setenv("last_child_ret", "0", env);
 }
@@ -51,6 +52,7 @@ void cmd_alias(int ac, char **av, char ***env, char ***alias)
 /**
  * get_index_alias - get index of an alias
  * @str: the alias to find the index
+ * @alias: global alias variable
  * ------------------------------------
  * Return: the index of the alias, -1 if fails
 */
@@ -77,6 +79,8 @@ int get_index_alias(char *str, char ***alias)
  * cmd_help - alias built-in command
  * @ac: argument count
  * @av: argument array
+ * @env: global env variables
+ * @alias: global alias variable
  * -------------------------------------
 */
 void cmd_help(int ac, char **av, char ***env, char ***alias)

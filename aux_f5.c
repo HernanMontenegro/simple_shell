@@ -3,6 +3,7 @@
 /**
  * get_env_index - Find the env name index
  * @env_name: the env variable to look for
+ * @env: global env variable
  * --------------------------------------------
  * Return: the index where the var is located
 */
@@ -65,6 +66,7 @@ char **create_start_alias()
 /**
  * change_command_alias - search command in an alias
  * @baby_av: user input arg
+ * @alias: global alias variable
  * -----------------------------------------
  * Return: converted baby_av if found an alias
 */

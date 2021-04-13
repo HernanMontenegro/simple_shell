@@ -71,6 +71,7 @@ envs_list *add_node(envs_list **h, char *n, char *c, int ne, int ce, int ed)
  * generate_var_nodes - create a new node in our var list with it's info
  * @str: the string to search for a variable
  * @tot_size: pointer to an int that counts until a variable has been found
+ * @env: global env variable
  * -----------------------------------------------------
  * Return: an entire linked list with a new node
  */
@@ -140,6 +141,7 @@ int check_var_delim(char c)
 /**
  * gen_var_content - Create the variable content
  * @head: the var linked list to generate content
+ * @env: global variables
  * ------------------------------------------------
 */
 void gen_var_content(envs_list *head, char ***env)
