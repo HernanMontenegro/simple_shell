@@ -69,7 +69,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias)
 	else if (ac == 2)
 		aux3 = _strcpy("");
 	else if (ac == 3)
-		aux3 = av[2];
+		aux3 = _strcpy(av[2]);
 	else
 	{	_print("Poor arguments\n");
 		_setenv("last_child_ret", "-1", env);
