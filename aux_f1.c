@@ -97,7 +97,7 @@ char *_getenv(char *env_name, char **env)
 	char **aux = NULL;
 	char *save = NULL;
 
-	for (i = 0; env[i] != NULL; i++)
+	for (i = 0; env && env[i] != NULL; i++)
 	{
 		bool = 0;
 		aux = _split(env[i], "=");

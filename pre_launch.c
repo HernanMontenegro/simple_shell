@@ -224,6 +224,9 @@ char *serch_path(char *str, char ***env)
 	char *complete_cmd = NULL;
 
 	aux = _getenv("PATH", *env);
+	if (aux == NULL)
+		return (NULL);
+
 	path_list = _split(aux, ":");
 	free(aux);
 
