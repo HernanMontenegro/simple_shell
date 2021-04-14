@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <dirent.h>
 
 /* Our own libraries */
 #include "structs.h"

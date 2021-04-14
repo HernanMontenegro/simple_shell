@@ -49,3 +49,20 @@ int get_int_env(char *name, char ***env)
 
 	return (num);
 }
+
+/**
+*
+*/
+int check_dir(char *dir_path)
+{
+	DIR *dir = NULL;
+
+	dir = opendir(dir_path);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+
+	return (0);
+}

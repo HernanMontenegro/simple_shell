@@ -61,7 +61,7 @@ void counter_plus_plus(char ***env);
 /* aux_f7.c */
 char *_super_con_err(char *baby_av, char ***env);
 int get_int_env(char *name, char ***env);
-/* empty slot */
+int check_dir(char *dir);
 /* empty slot */
 /* empty slot */
 

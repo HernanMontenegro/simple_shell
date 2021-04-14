@@ -13,7 +13,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 	char **baby_av;
 	char **aux;
 	char *aux_error = NULL, *aux2 = NULL;
-	int last_child_ret = 0;
+	int last_child_ret = 0, ret = 0;
 
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
@@ -34,7 +34,8 @@ int localize_cmd(char *str, char ***env, char ***alias)
 
 	if (!(built_in_cmd(baby_av, env, alias)))
 	{
-		if (!(external_cmd(baby_av, env)))
+		ret = external_cmd(baby_av, env);
+		if (ret != 1)
 		{
 			aux_error = _super_con_err(baby_av[0], env);
 			perror(aux_error);
@@ -145,7 +146,7 @@ int external_cmd(char **baby_av, char ***env)
 		bool = 1;
 	else
 	{
-		if (stat(baby_av[0], &st) == 0 && st.st_mode & S_IXUSR)
+		if (stat(baby_av[0], &st) == 0)
 			bool = 0;
 		else
 			bool = 1;
@@ -158,6 +159,11 @@ int external_cmd(char **baby_av, char ***env)
 			return (0);
 		free(baby_av[0]);
 		baby_av[0] = aux;
+	}
+
+	if (check_dir(baby_av[0]))
+	{
+		return (2);
 	}
 
 	child_pid = fork();
@@ -207,7 +213,7 @@ char *serch_path(char *str, char ***env)
 		complete_cmd = _strcon(path_list[i], path);
 		free(path);
 
-		if (stat(complete_cmd, &st) == 0 && st.st_mode & S_IXUSR)
+		if (stat(complete_cmd, &st) == 0)
 		{
 			free_split(path_list);
 			return (complete_cmd);
