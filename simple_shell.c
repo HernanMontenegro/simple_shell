@@ -42,10 +42,10 @@ int main(int ac, char **av, char **env)
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
 		{
-			aux_error = _super_con_err("Can't open ", o_en);
+			aux_error = _super_con_err("Can't open ", &our_env);
 			aux = _strcon(aux_error, av[1]);
 			_print_2_n(aux);
-			_setenv("LAST_CHILD_RET", "127", o_en);
+			_setenv("LAST_CHILD_RET", "127", &our_env);
 			free(aux);
 			free(aux_error);
 			return (127);
