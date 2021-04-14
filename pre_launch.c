@@ -37,7 +37,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 		if (!(external_cmd(baby_av, env)))
 		{
 			aux_error = _super_con_err(baby_av[0], env);
-			_print(aux_error);
+			perror(aux_error);
 			free(aux_error);
 			free_split(baby_av);
 			return (1);
@@ -136,7 +136,7 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias)
  */
 int external_cmd(char **baby_av, char ***env)
 {
-	char *aux = NULL;
+	char *aux = NULL, *aux_error = NULL;
 	struct stat st;
 	pid_t child_pid = 0;
 	int status, bool = 1;
@@ -170,8 +170,10 @@ int external_cmd(char **baby_av, char ***env)
 	{
 		if (execve(baby_av[0], baby_av, *env) == -1)
 		{
-			perror("Error");
-			return (1);
+			aux_error = _super_con_err(baby_av[0], env);
+			perror(aux_error);
+			free(aux_error);
+			exit (1);
 		}
 	}
 	else

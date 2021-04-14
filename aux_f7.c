@@ -28,10 +28,7 @@ char *_super_con_err(char *baby_av, char ***env)
 	con2 = _strcon(con1, baby_av);
 	free(con1);
 
-	con1 = _strcon(con2, ": not found\n");
-	free(con2);
-
-	return (con1);
+	return (con2);
 }
 
 /**
