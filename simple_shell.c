@@ -16,6 +16,7 @@ int main(int ac, char **av, char **env)
 	char **global_env = NULL;
 	char **our_env = NULL;
 	char **global_alias = NULL;
+	char *aux_error = NULL, *aux = NULL;
 
 	signal(SIGINT, sighandler);
 
@@ -31,7 +32,7 @@ int main(int ac, char **av, char **env)
 	_setenv("LAST_CHILD_RET", "0", &our_env);
 	_setenv("ABORT_INDICATOR", "0", &our_env);
 	_setenv("ABORT_INDICATOR_STATUS", "0", &our_env);
-	_setenv("COUNTER", "1", &our_env);
+	_setenv("COUNTER", "0", &our_env);
 	_setenv("PROG_NAME", av[0], &our_env);
 	
 	
@@ -41,8 +42,13 @@ int main(int ac, char **av, char **env)
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
 		{
-			perror("Error");
-			return (1);
+			aux_error = _super_con_err("Can't open ", o_en);
+			aux = _strcon(aux_error, av[1]);
+			_print_2_n(aux);
+			_setenv("LAST_CHILD_RET", "127", o_en);
+			free(aux);
+			free(aux_error);
+			return (127);
 		}
 		read_site = fd;
 	}
@@ -52,6 +58,7 @@ int main(int ac, char **av, char **env)
 		read_site = 0;
 	}
 
+	_setenv("COUNTER", "1", &our_env);
 	ret = infinite_loop(fd, read_site, &global_env, &global_alias, &our_env);
 
 	if (fd != -1)
