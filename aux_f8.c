@@ -1,5 +1,8 @@
 #include "our_header.h"
 
+/**
+*
+*/
 int check_num(char *str)
 {
     int i;
@@ -11,4 +14,17 @@ int check_num(char *str)
     }
 
     return (1);
+}
+
+/**
+*
+*/
+void _set_PWD(char ***env)
+{
+    char cwd[PATH_MAX];
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+    {
+        _setenv("PWD", cwd, env);
+    }
 }

@@ -22,6 +22,7 @@ int main(int ac, char **av, char **env)
 	global_env = copy_pstr(env);
 	global_alias = create_start_alias();
 
+	_set_PWD(&global_env);
 	_setenv("last_child_ret", "0", &global_env);
 	_setenv("abort_indicator", "0", &global_env);
 	_setenv("abort_indicator_status", "0", &global_env);

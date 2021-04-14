@@ -67,7 +67,7 @@ void _print_2_n(char *str);
 
 /* aux_f8.c */
 int check_num(char *str);
-/* empty slot */
+void _set_PWD(char ***env);
 /* empty slot */
 /* empty slot */
 /* empty slot */
