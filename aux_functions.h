@@ -65,5 +65,12 @@ int check_dir(char *dir);
 int _print_2(char *str);
 void _print_2_n(char *str);
 
+/* aux_f8.c */
+int check_num(char *str);
+/* empty slot */
+/* empty slot */
+/* empty slot */
+/* empty slot */
+
 /* ==============================  */
 #endif

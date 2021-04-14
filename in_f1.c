@@ -11,12 +11,13 @@
 void cmd_exit(int ac, char **av, char ***env, char ***alias)
 {
 	char *aux = NULL, *aux_error = NULL;
+	int calc = 0;
 
 	_magic(ac, av, env, alias);
 
 	if (ac == 2)
 	{
-		if (_atoi(av[1]) < 0 || _atoi(av[1]) > 255)
+		if (!(check_num(av[1])) || _atoi(av[1]) < 0 || _atoi(av[1]) > INT_MAX)
 		{
 			aux_error = _super_con_err("exit", env);
 			aux = _strcon(aux_error, ": Illegal number: ");
@@ -28,7 +29,11 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias)
 			_setenv("last_child_ret", "2", env);
 			return;
 		}
-		_setenv("abort_indicator_status", av[1], env);
+		calc = _atoi(av[1]);
+		calc = calc - ((calc / 256) * 256);
+		aux = int_to_str(calc);
+		_setenv("abort_indicator_status", aux, env);
+		free(aux);
 	}
 	else
 	{
