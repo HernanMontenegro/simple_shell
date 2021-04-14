@@ -62,7 +62,7 @@ void counter_plus_plus(char ***env);
 char *_super_con_err(char *baby_av, char ***env);
 int get_int_env(char *name, char ***env);
 int check_dir(char *dir);
-/* empty slot */
+int _print_2(char *str);
 /* empty slot */
 
 /* ==============================  */

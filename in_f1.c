@@ -10,6 +10,8 @@
  */
 void cmd_exit(int ac, char **av, char ***env, char ***alias)
 {
+	char *aux = NULL;
+
 	_magic(ac, av, env, alias);
 
 	_setenv("abort_indicator", "1", env);
@@ -17,7 +19,11 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias)
 	if (ac == 2)
 		_setenv("abort_indicator_status", av[1], env);
 	else
-		_setenv("abort_indicator_status", "0", env);
+	{
+		aux = _getenv("last_child_ret", *env);
+		_setenv("abort_indicator_status", aux, env);
+		free(aux);
+	}
 
 	_setenv("last_child_ret", "1", env);
 }

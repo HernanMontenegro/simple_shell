@@ -35,11 +35,11 @@ int localize_cmd(char *str, char ***env, char ***alias)
 	if (!(built_in_cmd(baby_av, env, alias)))
 	{
 		ret = external_cmd(baby_av, env);
-		if (ret != 1)
+		if (ret == 0)
 		{
 			aux_error = _super_con_err(baby_av[0], env);
 			aux2 = _strcon(aux_error, ": not found\n");
-			_print(aux2);
+			_print_2(aux2);
 			free(aux2);
 			free(aux_error);
 			free_split(baby_av);
@@ -161,15 +161,18 @@ int external_cmd(char **baby_av, char ***env)
 			free(aux2);
 			return (0);
 		}
-		free(baby_av[0]);
-		baby_av[0] = aux;
+	}
+	else
+	{
+		aux = _strcpy(baby_av[0]);
 	}
 
-	if (check_dir(baby_av[0]))
+	if (check_dir(aux))
 	{
 		aux2 = int_to_str(127);
 		_setenv("last_child_ret", aux2, env);
 		free(aux2);
+		free(aux);
 		return (0);
 	}
 
@@ -181,9 +184,9 @@ int external_cmd(char **baby_av, char ***env)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(baby_av[0], baby_av, *env) == -1)
+		if (execve(aux, baby_av, *env) == -1)
 		{
-			aux_error = _super_con_err(baby_av[0], env);
+			aux_error = _super_con_err(aux, env);
 			perror(aux_error);
 			free(aux_error);
 			exit (126);
@@ -195,9 +198,10 @@ int external_cmd(char **baby_av, char ***env)
 		aux2 = int_to_str(output);
 		_setenv("last_child_ret", aux2, env);
 		free(aux2);
+		free(aux);
 		if (output == 0)
 			return (1);
-		return (0);
+		return (2);
 	}
 		
 	return (1);

@@ -66,3 +66,17 @@ int check_dir(char *dir_path)
 
 	return (0);
 }
+
+/**
+ * _print - prints a string given 2
+ * @str: the string to print
+ * ---------------------------------------
+ * Return: the length o the string
+*/
+int _print_2(char *str)
+{
+	int s_len = _strlen(str);
+
+	write(2, str, s_len);
+	return (s_len);
+}
