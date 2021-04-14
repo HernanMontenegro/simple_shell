@@ -80,3 +80,17 @@ int _print_2(char *str)
 	write(2, str, s_len);
 	return (s_len);
 }
+
+/**
+ * _print_n - print a string with a new line at the end 2
+ * @str: the string to print
+ * -------------------------------
+*/
+void _print_2_n(char *str)
+{
+	char *aux = NULL;
+
+	aux = _strcon(str, "\n");
+	_print_2(aux);
+	free(aux);
+}

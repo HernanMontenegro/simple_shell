@@ -63,7 +63,7 @@ char *_super_con_err(char *baby_av, char ***env);
 int get_int_env(char *name, char ***env);
 int check_dir(char *dir);
 int _print_2(char *str);
-/* empty slot */
+void _print_2_n(char *str);
 
 /* ==============================  */
 #endif
