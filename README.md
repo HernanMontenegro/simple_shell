@@ -8,7 +8,7 @@
 
 ---
 
-### Table of Contents
+### Index
 Quick acess to
 
 - [Description](#description)
