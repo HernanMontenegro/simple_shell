@@ -1,6 +1,6 @@
 # Simple_Shell
 
-<img style = "width: 30%" src = "./Images/baby_shell.png">
+<img style = "width: 40%" src = "./Images/baby_shell.png">
 
 > A simple UNIX command interpreted made by two mad guys.
 
