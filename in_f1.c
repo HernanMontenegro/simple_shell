@@ -166,6 +166,11 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	_magic(ac, av, env, alias, o_en);
 	if (ac != 2)
 	{
+		aux_error = _super_con_err("unsetenv", o_en);
+		aux = _strcon(aux_error, ": 2 parameters expected error");
+		_print_2_n(aux);
+		free(aux);
+		free(aux_error);
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
