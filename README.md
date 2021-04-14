@@ -1,5 +1,7 @@
 # Simple_Shell
 
+<img src = "./Images/baby_shell.png">
+
 > A simple UNIX command interpreted made by two mad guys.
 
 ---
@@ -180,11 +182,7 @@ Copyright (c) [2021] [Hernan Montenegro, Tomas Martinez]
 
 ## Author Info
 Hernan Montenegro
-- itch.io - [DreadZitoDev](https://dreadzitodev.itch.io)
-- Twitch Game Development Streams - [DreadZitoDev](https://dreadzitodev.itch.io)
-- Website - comming soon...
 
 Tomás Martínez
-- With love
 
 [Back To The Top](#Simple_Shell)
