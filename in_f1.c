@@ -246,7 +246,14 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	_magic(ac, av, env, alias, o_en);
 	if (ac == 1)
+	{
 		path = _getenv("HOME", *env);
+		if (path == NULL)
+		{
+			_setenv("LAST_CHILD_RET", "0", o_en);
+			return;
+		}
+	}
 	else if (ac > 2)
 	{
 		_print("Too many arguments\n");
