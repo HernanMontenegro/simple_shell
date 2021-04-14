@@ -104,11 +104,16 @@ void counter_plus_plus(char ***env)
 	int counter = 0;
 	char *aux;
 
-	aux = _getenv("counter", *env);
+	aux = _getenv("COUNTER", *env);
+	if (aux == NULL)
+	{
+		_setenv("COUNTER", "0", env);
+		return;
+	}
 	counter = _atoi(aux);
 	free(aux);
 	counter++;
 	aux = int_to_str(counter);
-	_setenv("counter", aux, env);
+	_setenv("COUNTER", aux, env);
 	free(aux);
 }

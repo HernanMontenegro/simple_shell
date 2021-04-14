@@ -23,12 +23,14 @@ int main(int ac, char **av, char **env)
 	global_alias = create_start_alias();
 
 	_set_PWD(&global_env);
-	_setenv("last_child_ret", "0", &global_env);
-	_setenv("abort_indicator", "0", &global_env);
-	_setenv("abort_indicator_status", "0", &global_env);
-	_setenv("counter", "0", &global_env);
-	_setenv("prog_name", av[0], &global_env);
-
+	/*
+	_setenv("LAST_CHILD_RET", "0", &global_env);
+	_setenv("ABORT_INDICATOR", "0", &global_env);
+	_setenv("ABORT_INDICATOR_STATUS", "0", &global_env);
+	_setenv("COUNTER", "0", &global_env);
+	_setenv("PROG_NAME", av[0], &global_env);
+	*/
+	
 	/* READ FILE */
 	if (ac == 2)
 	{
@@ -95,9 +97,9 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 			_print("Retorno syntax_manager\n\n");
 			return (1);
 		}
-		if (get_int_env("abort_indicator", env) == 1)
+		if (get_int_env("ABORT_INDICATOR", env) == 1)
 		{
-			abort_indicator_status = get_int_env("abort_indicator_status", env);
+			abort_indicator_status = get_int_env("ABORT_INDICATOR_STATUS", env);
 			free_split(*env);
 			free_split(*alias);
 			exit(abort_indicator_status);
@@ -105,7 +107,7 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 		if (fd != -1)
 			break;
 	}
-	return (get_int_env("last_child_ret", env));
+	return (get_int_env("LAST_CHILD_RET", env));
 }
 
 /**

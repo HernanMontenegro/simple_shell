@@ -13,11 +13,11 @@ char *_super_con_err(char *baby_av, char ***env)
 	char *con1 = NULL;
 	char *con2 = NULL;
 
-	aux = _getenv("prog_name", *env);
+	aux = _getenv("PROG_NAME", *env);
 	con1 = _strcon(aux, ": ");
 	free(aux);
 
-	aux = _getenv("counter", *env);
+	aux = _getenv("COUNTER", *env);
 	con2 = _strcon(con1, aux);
 	free(con1);
 	free(aux);
@@ -44,6 +44,10 @@ int get_int_env(char *name, char ***env)
 	int num = 0;
 
 	aux = _getenv(name, *env);
+	if (aux == NULL)
+	{
+		return (0);
+	}
 	num = _atoi(aux);
 	free(aux);
 

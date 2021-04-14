@@ -94,7 +94,7 @@ envs_list *generate_var_nodes(char *str, int *tot_size, char ***env)
 			if (str[i] == '$')
 				aux = int_to_str(getpid());
 			else
-				aux = _getenv("last_child_ret", *env);
+				aux = _getenv("LAST_CHILD_RET", *env);
 			add_node(&head, NULL, aux, 1, _strlen(aux), i);
 			continue;
 		}

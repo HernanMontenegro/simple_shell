@@ -49,7 +49,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 
 	free_split(baby_av);
 
-	return (get_int_env("last_child_ret", env));
+	return (get_int_env("LAST_CHILD_RET", env));
 }
 
 /**
@@ -157,7 +157,7 @@ int external_cmd(char **baby_av, char ***env)
 		if (!aux)
 		{
 			aux2 = int_to_str(127);
-			_setenv("last_child_ret", aux2, env);
+			_setenv("LAST_CHILD_RET", aux2, env);
 			free(aux2);
 			return (0);
 		}
@@ -170,7 +170,7 @@ int external_cmd(char **baby_av, char ***env)
 	if (check_dir(aux))
 	{
 		aux2 = int_to_str(127);
-		_setenv("last_child_ret", aux2, env);
+		_setenv("LAST_CHILD_RET", aux2, env);
 		free(aux2);
 		free(aux);
 		return (0);
@@ -196,7 +196,7 @@ int external_cmd(char **baby_av, char ***env)
 	{
 		output = parent_wait(child_pid, &status);
 		aux2 = int_to_str(output);
-		_setenv("last_child_ret", aux2, env);
+		_setenv("LAST_CHILD_RET", aux2, env);
 		free(aux2);
 		free(aux);
 		if (output == 0)

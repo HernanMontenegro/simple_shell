@@ -46,7 +46,7 @@ void cmd_alias(int ac, char **av, char ***env, char ***alias)
 			(*alias)[alias_len + 1] = NULL;
 		}
 	}
-	_setenv("last_child_ret", "0", env);
+	_setenv("LAST_CHILD_RET", "0", env);
 }
 
 /**

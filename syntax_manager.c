@@ -43,7 +43,7 @@ int syntax_manager(char **input, int fd, char ***env, char ***alias)
 		{
 			or_operat(cmd_splt[j], env, alias);
 		
-			if (get_int_env("abort_indicator", env))
+			if (get_int_env("ABORT_INDICATOR", env))
 			{
 				free_split(cmd_splt);
 				free(command);
@@ -116,7 +116,7 @@ int or_operat(char *str, char ***env, char ***alias)
 	for (i = 0; cmd_splt_or[i] != NULL; i++)
 	{
 		ret_and = and_operat(cmd_splt_or[i], env, alias);
-		if (get_int_env("abort_indicator", env))
+		if (get_int_env("ABORT_INDICATOR", env))
 		{
 			free_split(cmd_splt_or);
 			return (1);
@@ -147,7 +147,7 @@ int and_operat(char *str, char ***env, char ***alias)
 	for (i = 0; cmd_splt_and[i] != NULL; i++)
 	{
 		ret = localize_cmd(cmd_splt_and[i], env, alias);
-		if (get_int_env("abort_indicator", env))
+		if (get_int_env("ABORT_INDICATOR", env))
 		{
 			free_split(cmd_splt_and);
 			return (1);

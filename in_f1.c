@@ -32,18 +32,18 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias)
 		calc = _atoi(av[1]);
 		calc = calc - ((calc / 256) * 256);
 		aux = int_to_str(calc);
-		_setenv("abort_indicator_status", aux, env);
+		_setenv("ABORT_INDICATOR_STATUS", aux, env);
 		free(aux);
 	}
 	else
 	{
 		aux = _getenv("last_child_ret", *env);
-		_setenv("abort_indicator_status", aux, env);
+		_setenv("ABORT_INDICATOR_STATUS", aux, env);
 		free(aux);
 	}
 
-	_setenv("abort_indicator", "1", env);
-	_setenv("last_child_ret", "0", env);
+	_setenv("ABORT_INDICATOR", "1", env);
+	_setenv("LAST_CHILD_RET", "0", env);
 }
 
 /**
@@ -87,7 +87,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias)
 	if (ac > 3)
 	{
 		_print("Too many arguments\n");
-		_setenv("last_child_ret", "-1", env);
+		_setenv("LAST_CHILD_RET", "-1", env);
 		return;
 	}
 	else if (ac == 2)
@@ -96,7 +96,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias)
 		aux3 = _strcpy(av[2]);
 	else
 	{	_print("Poor arguments\n");
-		_setenv("last_child_ret", "-1", env);
+		_setenv("LAST_CHILD_RET", "-1", env);
 		return;	
 	}
 
@@ -124,7 +124,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias)
 	}
 	free(target_env);
 
-	_setenv("last_child_ret", "0", env);
+	_setenv("LAST_CHILD_RET", "0", env);
 }
 
 /**
@@ -145,21 +145,21 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias)
 	if (ac != 2)
 	{
 		_print("Too many arguments\n");
-		_setenv("last_child_ret", "-1", env);
+		_setenv("LAST_CHILD_RET", "-1", env);
 		return;
 	}
 	target_env = _getenv(av[1], *env);
 	if (!target_env)
 	{
 		_print("404: Environmental variable not found\n");
-		_setenv("last_child_ret", "-1", env);
+		_setenv("LAST_CHILD_RET", "-1", env);
 		return;
 	}
 	free(target_env);
 	new_global_env = malloc((p_strlen(*env) + 1) * sizeof(char *));
 	if (!new_global_env)
 	{
-		_setenv("last_child_ret", "-1", env);
+		_setenv("LAST_CHILD_RET", "-1", env);
 		return;
 	}
 	for (i = 0, j = 0; (*env)[i] != NULL; i++)
@@ -176,7 +176,7 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias)
 	free_split(*env);
 	new_global_env[j] = NULL;
 	*env = new_global_env;
-	_setenv("last_child_ret", "0", env);
+	_setenv("LAST_CHILD_RET", "0", env);
 }
 
 /**
@@ -198,7 +198,7 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias)
 	else if (ac > 2)
 	{
 		_print("Too many arguments\n");
-		_setenv("last_child_ret", "-1", env);
+		_setenv("LAST_CHILD_RET", "-1", env);
 		return;
 	}
 	else if (ac == 2)
@@ -210,7 +210,7 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias)
 	}
 	if (chdir(path) == -1)
 	{
-		_setenv("last_child_ret", "1", env);
+		_setenv("LAST_CHILD_RET", "1", env);
 		free(path);
 		perror("Error");
 		return;
@@ -226,5 +226,5 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias)
 		_print_n(path);
 	free(path_old);
 	free(path);
-	_setenv("last_child_ret", "0", env);
+	_setenv("LAST_CHILD_RET", "0", env);
 }
