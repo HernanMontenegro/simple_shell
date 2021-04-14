@@ -101,6 +101,11 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		aux3 = _strcpy(av[2]);
 	else
 	{
+		aux_error = _super_con_err("setenv", o_en);
+		aux = _strcon(aux_error, ": Error expect at least 2 parameters");
+		_print_2_n(aux);
+		free(aux);
+		free(aux_error);
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;	
 	}
