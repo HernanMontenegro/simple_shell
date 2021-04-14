@@ -145,7 +145,7 @@ int external_cmd(char **baby_av, char ***env)
 		bool = 1;
 	else
 	{
-		if (stat(baby_av[0], &st) == 0)
+		if (stat(baby_av[0], &st) == 0 && st.st_mode & S_IXUSR)
 			bool = 0;
 		else
 			bool = 1;
@@ -207,7 +207,7 @@ char *serch_path(char *str, char ***env)
 		complete_cmd = _strcon(path_list[i], path);
 		free(path);
 
-		if (stat(complete_cmd, &st) == 0)
+		if (stat(complete_cmd, &st) == 0 && st.st_mode & S_IXUSR)
 		{
 			free_split(path_list);
 			return (complete_cmd);
