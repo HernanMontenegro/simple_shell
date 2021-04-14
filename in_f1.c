@@ -38,7 +38,7 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias)
 	}
 
 	_setenv("abort_indicator", "1", env);
-	_setenv("last_child_ret", "1", env);
+	_setenv("last_child_ret", "0", env);
 }
 
 /**
