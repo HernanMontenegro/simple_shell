@@ -87,6 +87,11 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	if (ac > 3)
 	{
+		aux_error = _super_con_err("setenv", o_en);
+		aux = _strcon(aux_error, ": Error no more than 3 parameters");
+		_print_2_n(aux);
+		free(aux);
+		free(aux_error);
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
@@ -96,6 +101,11 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		aux3 = _strcpy(av[2]);
 	else
 	{
+		aux_error = _super_con_err("setenv", o_en);
+		aux = _strcon(aux_error, ": Error expect at least 2 parameters");
+		_print_2_n(aux);
+		free(aux);
+		free(aux_error);
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;	
 	}
@@ -105,7 +115,29 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	target_i = get_env_index(av[1], *env);
 
 	aux1 = _strcon(av[1], "=");
+	if (aux1 == NULL)
+	{
+		aux_error = _super_con_err("setenv", o_en);
+		aux = _strcon(aux_error, ": Cannot run due to lack of memory");
+		_print_2_n(aux);
+		_setenv("LAST_CHILD_RET", "1", o_en);
+		free(aux);
+		free(aux_error);
+		free(target_env);
+		return;
+	}
 	aux2 = _strcon(aux1, aux3);
+	if (aux2 == NULL)
+	{
+		aux_error = _super_con_err("setenv", o_en);
+		aux = _strcon(aux_error, ": Cannot run due to lack of memory");
+		_print_2_n(aux);
+		_setenv("LAST_CHILD_RET", "1", o_en);
+		free(aux);
+		free(aux_error);
+		free(target_env);
+		return;
+	}
 	free(aux1);
 	free(aux3);
 
