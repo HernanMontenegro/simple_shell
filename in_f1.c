@@ -242,7 +242,7 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int len_buff = 0;
-	char *path = NULL, *path_old = NULL;
+	char *path = NULL, *path_old = NULL, *aux_error = NULL, *aux = NULL;
 	char cwd[PATH_MAX];
 
 	_magic(ac, av, env, alias, o_en);
@@ -281,9 +281,16 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	}
 	if (chdir(path) == -1)
 	{
-		_setenv("LAST_CHILD_RET", "1", o_en);
+		_setenv("LAST_CHILD_RET", "2", o_en);
+		
+		aux_error = _super_con_err("cd", o_en);
+		aux = _strcon(aux_error, ": can't cd to ");
+		free(aux_error);
+		aux_error = _strcon(aux, path);
+		_print_2_n(aux_error);
+		free(aux);
+		free(aux_error);
 		free(path);
-		perror("Error");
 		return;
 	}
 	path_old = _getenv("PWD", *env);
