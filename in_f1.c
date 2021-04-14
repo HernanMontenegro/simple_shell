@@ -86,7 +86,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	if (ac > 3)
 	{
-		_setenv("LAST_CHILD_RET", "1", o_en);
+		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
 	else if (ac == 2)
@@ -117,6 +117,18 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	{
 		global_env_len = p_strlen(*env);
 		*env = p_realloc(*env, global_env_len, global_env_len + 2);
+
+		if (*env == NULL)
+		{
+			aux_error = _super_con_err("setenv", o_en);
+			aux = _strcon(aux_error, ": Error changing environment variable");
+			_print_2_n(aux);
+			_setenv("LAST_CHILD_RET", "1", o_en);
+			free(aux);
+			free(aux_error);
+			free(target_env);
+			return;
+		}
 
 		(*env)[global_env_len] = aux2;
 		(*env)[global_env_len + 1] = NULL;
