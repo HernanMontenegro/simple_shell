@@ -95,7 +95,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	else if (ac == 3)
 		aux3 = _strcpy(av[2]);
 	else
-	{	_print("Poor arguments\n");
+	{
 		_setenv("LAST_CHILD_RET", "-1", o_en);
 		return;	
 	}
@@ -144,14 +144,12 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	_magic(ac, av, env, alias, o_en);
 	if (ac != 2)
 	{
-		_print("Too many arguments\n");
 		_setenv("LAST_CHILD_RET", "-1", o_en);
 		return;
 	}
 	target_env = _getenv(av[1], *env);
 	if (!target_env)
 	{
-		_print("404: Environmental variable not found\n");
 		_setenv("LAST_CHILD_RET", "-1", o_en);
 		return;
 	}
