@@ -140,16 +140,13 @@ int external_cmd(char **baby_av, char ***env)
 	pid_t child_pid = 0;
 	int status;
 
-	aux = serch_path(baby_av[0], env);
-	if (!aux)
-		return (0);
-	free(baby_av[0]);
-	baby_av[0] = aux;
-
 	if (!(str_char_check(baby_av[0], '/')))
 	{
-		_setenv("last_child_ret", "1", env);
-		return (0);
+		aux = serch_path(baby_av[0], env);
+		if (!aux)
+			return (0);
+		free(baby_av[0]);
+		baby_av[0] = aux;
 	}
 
 	child_pid = fork();
