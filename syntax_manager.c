@@ -73,6 +73,9 @@ char *delete_comments(char *str)
 	char **str_list = NULL;
 	char *str_aux = NULL;
 
+	if (str[0] == '#')
+		return (_strcpy(""));
+		
 	str_list = _split(str, " #");
 
 	str_aux = _strcpy(str_list[0]);
