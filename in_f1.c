@@ -86,8 +86,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	if (ac > 3)
 	{
-		_print("Too many arguments\n");
-		_setenv("LAST_CHILD_RET", "-1", o_en);
+		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
 	else if (ac == 2)
@@ -96,7 +95,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		aux3 = _strcpy(av[2]);
 	else
 	{
-		_setenv("LAST_CHILD_RET", "-1", o_en);
+		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;	
 	}
 
@@ -139,25 +138,30 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int i, j;
 	char **curr_env = NULL, **new_global_env = NULL;
-	char *target_env = NULL;
+	char *target_env = NULL, *aux_error = NULL, *aux = NULL;
 
 	_magic(ac, av, env, alias, o_en);
 	if (ac != 2)
 	{
-		_setenv("LAST_CHILD_RET", "-1", o_en);
+		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
 	target_env = _getenv(av[1], *env);
 	if (!target_env)
 	{
-		_setenv("LAST_CHILD_RET", "-1", o_en);
+		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
 	free(target_env);
 	new_global_env = malloc((p_strlen(*env) + 1) * sizeof(char *));
 	if (!new_global_env)
 	{
-		_setenv("LAST_CHILD_RET", "-1", o_en);
+		aux_error = _super_con_err("unsetenv", o_en);
+		aux = _strcon(aux_error, ": Error deleting environment variable");
+		_print_2_n(aux);
+		_setenv("LAST_CHILD_RET", "1", o_en);
+		free(aux);
+		free(aux_error);
 		return;
 	}
 	for (i = 0, j = 0; (*env)[i] != NULL; i++)
