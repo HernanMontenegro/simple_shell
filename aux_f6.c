@@ -28,14 +28,11 @@ int str_char_check(char *str, char c)
  * parent_wait - manage the wait of the parent process
  * @child_pid: the child proccess file descriptor id
  * @status: pointer to status variable
- * @env: global env variable
  * ------------------------------------------
  *Return: 1 if everything was right, 0 if not
 */
-int parent_wait(int child_pid, int *status, char ***env)
+int parent_wait(int child_pid, int *status)
 {
-	char *aux = NULL;
-
 	if (waitpid(child_pid, status, 0) == -1)
 	{
 		perror("Waitpid failed");
@@ -43,9 +40,7 @@ int parent_wait(int child_pid, int *status, char ***env)
 	}
 	if (WIFEXITED(*status))
 	{
-		aux = int_to_str(WEXITSTATUS(*status));
-		_setenv("last_child_ret", aux, env);
-		free(aux);
+		return(WEXITSTATUS(*status));
 	}
 
 	return (1);

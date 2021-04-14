@@ -53,7 +53,7 @@ char **p_strcon(char **p, char **p2);
 
 /* aux_f6.c */
 int str_char_check(char *str, char c);
-int parent_wait(int child_pid, int *status, char ***env);
+int parent_wait(int child_pid, int *status);
 void _magic(int ac, char **av, char ***env, char ***alias);
 void _setenv(char *name, char *value, char ***env);
 void counter_plus_plus(char ***env);

@@ -13,7 +13,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 	char **baby_av;
 	char **aux;
 	char *aux_error = NULL, *aux2 = NULL;
-	int last_child_ret = 0, ret = 0;
+	int ret = 0;
 
 	baby_av = _split(str, " ");
 	baby_av = clean_arg(baby_av);
@@ -38,7 +38,9 @@ int localize_cmd(char *str, char ***env, char ***alias)
 		if (ret != 1)
 		{
 			aux_error = _super_con_err(baby_av[0], env);
-			perror(aux_error);
+			aux2 = _strcon(aux_error, ": not found\n");
+			_print(aux2);
+			free(aux2);
 			free(aux_error);
 			free_split(baby_av);
 			return (1);
@@ -47,10 +49,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 
 	free_split(baby_av);
 
-	aux2 = _getenv("last_child_ret", *env);
-	last_child_ret = _atoi(aux2);
-	free(aux2);
-	return (last_child_ret);
+	return (get_int_env("last_child_ret", env));
 }
 
 /**
@@ -137,10 +136,10 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias)
  */
 int external_cmd(char **baby_av, char ***env)
 {
-	char *aux = NULL, *aux_error = NULL;
+	char *aux = NULL, *aux2 = NULL, *aux_error = NULL;
 	struct stat st;
 	pid_t child_pid = 0;
-	int status, bool = 1;
+	int status, bool = 1, output = 0;
 
 	if (!(str_char_check(baby_av[0], '/')))
 		bool = 1;
@@ -156,14 +155,22 @@ int external_cmd(char **baby_av, char ***env)
 	{
 		aux = serch_path(baby_av[0], env);
 		if (!aux)
+		{
+			aux2 = int_to_str(127);
+			_setenv("last_child_ret", aux2, env);
+			free(aux2);
 			return (0);
+		}
 		free(baby_av[0]);
 		baby_av[0] = aux;
 	}
 
 	if (check_dir(baby_av[0]))
 	{
-		return (2);
+		aux2 = int_to_str(127);
+		_setenv("last_child_ret", aux2, env);
+		free(aux2);
+		return (0);
 	}
 
 	child_pid = fork();
@@ -179,11 +186,20 @@ int external_cmd(char **baby_av, char ***env)
 			aux_error = _super_con_err(baby_av[0], env);
 			perror(aux_error);
 			free(aux_error);
-			exit (1);
+			exit (126);
 		}
 	}
 	else
-		return (parent_wait(child_pid, &status, env));
+	{
+		output = parent_wait(child_pid, &status);
+		aux2 = int_to_str(output);
+		_setenv("last_child_ret", aux2, env);
+		free(aux2);
+		if (output == 0)
+			return (1);
+		return (0);
+	}
+		
 	return (1);
 }
 
