@@ -104,7 +104,7 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 		if (fd != -1)
 			break;
 	}
-	return (get_int_env("last_child_ret", env));
+	return (ret);
 }
 
 /**
