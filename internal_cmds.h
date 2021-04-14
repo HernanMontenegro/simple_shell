@@ -14,7 +14,7 @@ void cmd_alias(int ac, char **av, char ***env, char ***alias, char ***o_en);
 int get_index_alias(char *str, char ***alias);
 void cmd_help(int ac, char **av, char ***env, char ***alias, char ***o_en);
 void cmd_oen(int ac, char **av, char ***env, char ***alias, char ***o_en);
-/* EMPTY SLOT */
+void cmd_uwu(int ac, char **av, char ***env, char ***alias, char ***o_en);
 
 /* ==============================  */
 

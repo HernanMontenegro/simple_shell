@@ -110,6 +110,7 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias, char ***o_en)
 		{"cd", cmd_cd},
 		{"alias", cmd_alias},
 		{"help", cmd_help},
+		{"uwu", cmd_uwu},
 		{NULL, NULL}
 	};
 

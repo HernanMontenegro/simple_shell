@@ -139,3 +139,23 @@ void cmd_oen(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		free(cannon_meat);
 	}
 }
+
+void cmd_uwu(__attribute__((unused))int ac, __attribute__((unused))char **av,
+__attribute__((unused))char ***env,__attribute__((unused))char ***alias,
+__attribute__((unused))char ***o_en)
+{
+	_print_n("     ******       ******");
+	_print_n("   **********   **********");
+	_print_n(" ************* *************");
+	_print_n("*****************************");
+	_print_n("*****************************");
+	_print_n("*****************************");
+	_print_n(" ***************************");
+	_print_n("   ***********************");
+	_print_n("     *******************");
+	_print_n("       ***************");
+	_print_n("         ***********");
+	_print_n("           *******");
+	_print_n("             ***");
+	_print_n("              *");
+}
