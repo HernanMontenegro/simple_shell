@@ -87,6 +87,11 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	if (ac > 3)
 	{
+		aux_error = _super_con_err("setenv", o_en);
+		aux = _strcon(aux_error, ": Error no more than 3 parameters");
+		_print_2_n(aux);
+		free(aux);
+		free(aux_error);
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
