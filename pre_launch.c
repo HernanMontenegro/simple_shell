@@ -137,10 +137,21 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias)
 int external_cmd(char **baby_av, char ***env)
 {
 	char *aux = NULL;
+	struct stat st;
 	pid_t child_pid = 0;
-	int status;
+	int status, bool = 1;
 
 	if (!(str_char_check(baby_av[0], '/')))
+		bool = 1;
+	else
+	{
+		if (stat(baby_av[0], &st) == 0)
+			bool = 0;
+		else
+			bool = 1;
+	}
+
+	if (bool)
 	{
 		aux = serch_path(baby_av[0], env);
 		if (!aux)
@@ -155,7 +166,6 @@ int external_cmd(char **baby_av, char ***env)
 		perror("Fork failed");
 		return (0);
 	}
-
 	if (child_pid == 0)
 	{
 		if (execve(baby_av[0], baby_av, *env) == -1)
@@ -166,7 +176,6 @@ int external_cmd(char **baby_av, char ***env)
 	}
 	else
 		return (parent_wait(child_pid, &status, env));
-
 	return (1);
 }
 
@@ -205,9 +214,6 @@ char *serch_path(char *str, char ***env)
 		free(complete_cmd);
 	}
 	free_split(path_list);
-
-	if (stat(str, &st) == 0)
-		return (_strcpy(str));
 
 	return (NULL);
 }
