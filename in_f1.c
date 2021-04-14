@@ -86,7 +86,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	if (ac > 3)
 	{
-		_setenv("LAST_CHILD_RET", "0", o_en);
+		_setenv("LAST_CHILD_RET", "1", o_en);
 		return;
 	}
 	else if (ac == 2)
