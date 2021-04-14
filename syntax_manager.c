@@ -40,7 +40,16 @@ int syntax_manager(char **input, int fd, char ***env, char ***alias)
 			return (1);
 		cmd_splt = _split(command, ";");
 		for (j = 0; cmd_splt[j] != NULL; j++)
+		{
 			or_operat(cmd_splt[j], env, alias);
+		
+			if (get_int_env("abort_indicator", env))
+			{
+				free_split(cmd_splt);
+				free(command);
+				return (0);
+			}
+		}
 		free_split(cmd_splt);
 		free(command);
 	}
@@ -107,6 +116,11 @@ int or_operat(char *str, char ***env, char ***alias)
 	for (i = 0; cmd_splt_or[i] != NULL; i++)
 	{
 		ret_and = and_operat(cmd_splt_or[i], env, alias);
+		if (get_int_env("abort_indicator", env))
+		{
+			free_split(cmd_splt_or);
+			return (1);
+		}
 		if (ret_and == 1)
 			break;
 	}
@@ -133,6 +147,11 @@ int and_operat(char *str, char ***env, char ***alias)
 	for (i = 0; cmd_splt_and[i] != NULL; i++)
 	{
 		ret = localize_cmd(cmd_splt_and[i], env, alias);
+		if (get_int_env("abort_indicator", env))
+		{
+			free_split(cmd_splt_and);
+			return (1);
+		}
 		if (ret != 0)
 		{
 			free_split(cmd_splt_and);
