@@ -107,7 +107,7 @@ void counter_plus_plus(char ***env)
 	aux = _getenv("COUNTER", *env);
 	if (aux == NULL)
 	{
-		_setenv("COUNTER", "0", env);
+		/*_setenv("COUNTER", "0", env);*/
 		return;
 	}
 	counter = _atoi(aux);
