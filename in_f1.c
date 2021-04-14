@@ -243,6 +243,7 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int len_buff = 0;
 	char *path = NULL, *path_old = NULL;
+	char cwd[PATH_MAX];
 
 	_magic(ac, av, env, alias, o_en);
 	if (ac == 1)
@@ -263,7 +264,18 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	else if (ac == 2)
 	{
 		if (av[1][0] == '-')
+		{
 			path = _getenv("OLDPWD", *env);
+			if (path == NULL)
+			{
+				if (getcwd(cwd, sizeof(cwd)) != NULL)
+				{
+					_setenv("OLDPWD", cwd, env);
+					_print_n(cwd);
+				}
+				return;
+			}
+		}
 		else
 			path = _strcpy(av[1]);
 	}
