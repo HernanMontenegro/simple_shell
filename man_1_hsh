@@ -30,7 +30,7 @@ hsh
 
 .Sh SUPPORTED FEATURES
 .Fl
-AND (&) Operator
+AND (&&) Operator
 
 Example: 
 .Op command 1
@@ -39,7 +39,7 @@ Example:
 
 
 .Fl
-OR (|) Operator
+OR (||) Operator
 
 Example: 
 .Op command 1
