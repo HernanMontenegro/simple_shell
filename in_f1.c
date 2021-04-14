@@ -162,6 +162,11 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	target_env = _getenv(av[1], *env);
 	if (!target_env)
 	{
+		aux_error = _super_con_err("unsetenv", o_en);
+		aux = _strcon(aux_error, ": Error variable not found");
+		_print_2_n(aux);
+		free(aux);
+		free(aux_error);
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
