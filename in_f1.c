@@ -81,6 +81,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int global_env_len = 0, target_i = 0;
 	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
+	char *aux_error = NULL, *aux = NULL;
 
 	_magic(ac, av, env, alias, o_en);
 
