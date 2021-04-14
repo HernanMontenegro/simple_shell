@@ -2,56 +2,64 @@
 
 /**
 * syntax_manager - manages the syntax in our shell
-* @input: the input str
+* @inp: the input str
 * @fd: file descriptor
 * @env: global env variables
 * @alias: global alias variable
+* @o_en: our global variable
 * -------------------------------
 * Return: 0 if worked, 1 if not
 */
-int syntax_manager(char **input, int fd, char ***env, char ***alias)
+int syntax_manager(char **inp, int fd, char ***env, char ***alias, char ***o_en)
 {
 	int i, j;
-	char **cmd_splt = NULL, *command = NULL; /* Slpit by ; */
+	char **cmd_splt = NULL, *command = NULL;
 
-	if (input[0][0] == '\0')
-		counter_plus_plus(env);
+	if (inp[0][0] == '\0')
+		counter_plus_plus(o_en);
 
-	for (i = 0; input && input[i] != NULL; i++)
+	for (i = 0; inp && inp[i] != NULL; i++)
 	{
-		if (fd != -1)
-			counter_plus_plus(env);
-		if (input[i][0] == '\0')
-			continue;
-		if (fd == -1)
-			counter_plus_plus(env);
-		command = delete_comments(input[i]);
-		if (!command)
-			return (1);
-		/* Si esta vacio entonces continue; */
-		if (_strlen(command) == 0)
+		if (inp[i][0] != '\0')
 		{
-			free(command);
-			continue;
-		}
-		/* Traslate variables */
-		command = variable_translator(command, env);
-		if (!command)
-			return (1);
-		cmd_splt = _split(command, ";");
-		for (j = 0; cmd_splt[j] != NULL; j++)
-		{
-			or_operat(cmd_splt[j], env, alias);
-		
-			if (get_int_env("ABORT_INDICATOR", env))
+			command = delete_comments(inp[i]);
+			if (!command)
+				return (1);
+			if (_strlen(command) == 0)
 			{
-				free_split(cmd_splt);
+				if (fd == -1)
+					counter_plus_plus(o_en);
 				free(command);
-				return (0);
+				continue;
 			}
+			command = variable_translator(command, env, o_en);
+			if (!command)
+			{
+				if (fd == -1)
+					counter_plus_plus(o_en);
+				return (1);
+			}
+				
+			cmd_splt = _split(command, ";");
+			for (j = 0; cmd_splt[j] != NULL; j++)
+			{
+				or_operat(cmd_splt[j], env, alias, o_en);
+			
+				if (get_int_env("ABORT_INDICATOR", o_en))
+				{
+					free_split(cmd_splt);
+					free(command);
+					return (0);
+				}
+			}
+
+			if (fd == -1)
+				counter_plus_plus(o_en);
+			free_split(cmd_splt);
+			free(command);
 		}
-		free_split(cmd_splt);
-		free(command);
+		if (fd != -1)
+				counter_plus_plus(o_en);
 	}
 	return (0);
 }
@@ -83,13 +91,13 @@ char *delete_comments(char *str)
  * ------------------------------------------------
  * Return: New string with var content
 */
-char *variable_translator(char *str, char ***env)
+char *variable_translator(char *str, char ***env, char ***o_en)
 {
 	int tot_size = 0;
 	envs_list *list = NULL;
 	char *new_str = NULL;
 
-	list = generate_var_nodes(str, &tot_size, env);
+	list = generate_var_nodes(str, &tot_size, o_en);
 	gen_var_content(list, env);
 	new_str = var_big_bang(list, str, tot_size);
 	free(str);
@@ -106,7 +114,7 @@ char *variable_translator(char *str, char ***env)
  * ----------------------------------------------
  * Return: 0 FOR NOW
  */
-int or_operat(char *str, char ***env, char ***alias)
+int or_operat(char *str, char ***env, char ***alias, char ***o_en)
 {
 	int i, ret_and;
 	char **cmd_splt_or = NULL;
@@ -115,8 +123,8 @@ int or_operat(char *str, char ***env, char ***alias)
 
 	for (i = 0; cmd_splt_or[i] != NULL; i++)
 	{
-		ret_and = and_operat(cmd_splt_or[i], env, alias);
-		if (get_int_env("ABORT_INDICATOR", env))
+		ret_and = and_operat(cmd_splt_or[i], env, alias, o_en);
+		if (get_int_env("ABORT_INDICATOR", o_en))
 		{
 			free_split(cmd_splt_or);
 			return (1);
@@ -137,7 +145,7 @@ int or_operat(char *str, char ***env, char ***alias)
  * ----------------------------------------------
  * Return: 1 FOR NOW
  */
-int and_operat(char *str, char ***env, char ***alias)
+int and_operat(char *str, char ***env, char ***alias, char ***o_en)
 {
 	int i, ret;
 	char **cmd_splt_and = NULL;
@@ -146,8 +154,8 @@ int and_operat(char *str, char ***env, char ***alias)
 
 	for (i = 0; cmd_splt_and[i] != NULL; i++)
 	{
-		ret = localize_cmd(cmd_splt_and[i], env, alias);
-		if (get_int_env("ABORT_INDICATOR", env))
+		ret = localize_cmd(cmd_splt_and[i], env, alias, o_en);
+		if (get_int_env("ABORT_INDICATOR", o_en))
 		{
 			free_split(cmd_splt_and);
 			return (1);

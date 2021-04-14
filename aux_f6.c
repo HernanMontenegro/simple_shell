@@ -53,8 +53,11 @@ int parent_wait(int child_pid, int *status)
 *@env: none
 *@alias: none
 */
-void _magic(__attribute__((unused)) int ac, __attribute__((unused)) char **av,
-__attribute__((unused)) char ***env, __attribute__((unused)) char ***alias)
+void _magic(__attribute__((unused)) int ac,
+ __attribute__((unused)) char **av,
+__attribute__((unused)) char ***env,
+ __attribute__((unused)) char ***alias,
+  __attribute__((unused)) char ***o_en)
 {
 }
 
@@ -107,7 +110,7 @@ void counter_plus_plus(char ***env)
 	aux = _getenv("COUNTER", *env);
 	if (aux == NULL)
 	{
-		/*_setenv("COUNTER", "0", env);*/
+		_setenv("COUNTER", "1", env);
 		return;
 	}
 	counter = _atoi(aux);

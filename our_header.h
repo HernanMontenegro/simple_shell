@@ -23,24 +23,24 @@ char *add_aux_to_fill(char *fill, char *aux, int aux_size);
 
 /* Simple Shell Prototypes  */
 /* function main */
-int infinite_loop(int fd, int read_site, char ***env, char ***alias);
+int infinite_loop(int fd, int, char ***env, char ***alias, char ***o_en);
 /* Empty Slot */
 /* Empty Slot */
 /* Empty Slot */
 
 
 /* syntax_manager.c */
-int syntax_manager(char **input, int fd, char ***env, char ***alias);
+int syntax_manager(char **inp, int, char ***env, char ***alias, char ***o_en);
 char *delete_comments(char *str);
-char *variable_translator(char *str, char ***env);
-int or_operat(char *str, char ***env, char ***alias);
-int and_operat(char *str, char ***env, char ***alias);
+char *variable_translator(char *str, char ***env, char ***o_en);
+int or_operat(char *str, char ***env, char ***alias, char ***o_en);
+int and_operat(char *str, char ***env, char ***alias, char ***o_en);
 
 /* pre_launch.c  */
-int localize_cmd(char *str, char ***env, char ***alias);
+int localize_cmd(char *str, char ***env, char ***alias, char ***o_en);
 char **clean_arg(char **argv);
-int built_in_cmd(char **baby_av, char ***env, char ***alias);
-int external_cmd(char **baby_av, char ***env);
+int built_in_cmd(char **baby_av, char ***env, char ***alias, char ***o_en);
+int external_cmd(char **baby_av, char ***env, char ***o_en);
 char *serch_path(char *str, char ***env);
 
 

@@ -75,7 +75,7 @@ envs_list *add_node(envs_list **h, char *n, char *c, int ne, int ce, int ed)
  * -----------------------------------------------------
  * Return: an entire linked list with a new node
  */
-envs_list *generate_var_nodes(char *str, int *tot_size, char ***env)
+envs_list *generate_var_nodes(char *str, int *tot_size, char ***o_en)
 {
 	char *aux = NULL;
 	envs_list *head = NULL;
@@ -94,7 +94,11 @@ envs_list *generate_var_nodes(char *str, int *tot_size, char ***env)
 			if (str[i] == '$')
 				aux = int_to_str(getpid());
 			else
-				aux = _getenv("LAST_CHILD_RET", *env);
+			{
+				aux = _getenv("LAST_CHILD_RET", *o_en);
+				if (aux == NULL)
+					aux = _strcpy("0");
+			}
 			add_node(&head, NULL, aux, 1, _strlen(aux), i);
 			continue;
 		}

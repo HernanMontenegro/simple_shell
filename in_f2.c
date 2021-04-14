@@ -8,12 +8,12 @@
  * @alias: global alias variable
  * -------------------------------------
 */
-void cmd_alias(int ac, char **av, char ***env, char ***alias)
+void cmd_alias(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int i, alias_len = 0, index_alias = -1;
 	char *aux = NULL, **checker = NULL;
 
-	_magic(ac, av, env, alias);
+	_magic(ac, av, env, alias, o_en);
 
 	if (ac == 1)
 		for (i = 0; (*alias)[i] != NULL; i++)
@@ -46,7 +46,7 @@ void cmd_alias(int ac, char **av, char ***env, char ***alias)
 			(*alias)[alias_len + 1] = NULL;
 		}
 	}
-	_setenv("LAST_CHILD_RET", "0", env);
+	_setenv("LAST_CHILD_RET", "0", o_en);
 }
 
 /**
@@ -83,11 +83,11 @@ int get_index_alias(char *str, char ***alias)
  * @alias: global alias variable
  * -------------------------------------
 */
-void cmd_help(int ac, char **av, char ***env, char ***alias)
+void cmd_help(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	char *aux = NULL, *aux2 = NULL;
 
-	_magic(ac, av, env, alias);
+	_magic(ac, av, env, alias, o_en);
 	if (ac == 1)
 	{
 		hp_help();
@@ -112,5 +112,30 @@ void cmd_help(int ac, char **av, char ***env, char ***alias)
 		_print_n(aux2);
 		free(aux);
 		free(aux2);
+		_setenv("LAST_CHILD_RET", "1", o_en);
+	}
+	_setenv("LAST_CHILD_RET", "0", o_en);
+}
+
+/**
+ * cmd_oen - Manage the env built-in command
+ * @ac: Argument count
+ * @av: Arguments array
+ * @env: global env variables
+ * @alias: global alias variable
+ * ----------------------------------------
+ */
+void cmd_oen(int ac, char **av, char ***env, char ***alias, char ***o_en)
+{
+	int i;
+	char *cannon_meat = NULL;
+
+	_magic(ac, av, env, alias, o_en);
+
+	for (i = 0; (*o_en)[i] != NULL; i++)
+	{
+		cannon_meat = _strcon((*o_en)[i], "\n");
+		_print(cannon_meat);
+		free(cannon_meat);
 	}
 }

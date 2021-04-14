@@ -8,7 +8,7 @@
  * ----------------------------------
  * Return: command exit status if is a command, 1 if not
  */
-int localize_cmd(char *str, char ***env, char ***alias)
+int localize_cmd(char *str, char ***env, char ***alias, char ***o_en)
 {
 	char **baby_av;
 	char **aux;
@@ -32,12 +32,12 @@ int localize_cmd(char *str, char ***env, char ***alias)
 		baby_av = clean_arg(baby_av);
 	}
 
-	if (!(built_in_cmd(baby_av, env, alias)))
+	if (!(built_in_cmd(baby_av, env, alias, o_en)))
 	{
-		ret = external_cmd(baby_av, env);
+		ret = external_cmd(baby_av, env, o_en);
 		if (ret == 0)
 		{
-			aux_error = _super_con_err(baby_av[0], env);
+			aux_error = _super_con_err(baby_av[0], o_en);
 			aux2 = _strcon(aux_error, ": not found\n");
 			_print_2(aux2);
 			free(aux2);
@@ -49,7 +49,7 @@ int localize_cmd(char *str, char ***env, char ***alias)
 
 	free_split(baby_av);
 
-	return (get_int_env("LAST_CHILD_RET", env));
+	return (get_int_env("LAST_CHILD_RET", o_en));
 }
 
 /**
@@ -98,12 +98,13 @@ char **clean_arg(char **argv)
  * -------------------------
  * Return: 1 if found an internal command, 0 if not
  */
-int built_in_cmd(char **baby_av, char ***env, char ***alias)
+int built_in_cmd(char **baby_av, char ***env, char ***alias, char ***o_en)
 {
 	int i = 0, ac = 0;
 	internal_commands list_com[] = {
 		{"exit", cmd_exit},
 		{"env", cmd_env},
+		{"oen", cmd_oen},
 		{"setenv", cmd_setenv},
 		{"unsetenv", cmd_unsetenv},
 		{"cd", cmd_cd},
@@ -119,7 +120,7 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias)
 	{
 		if (_strcmp(baby_av[0], list_com[i].command) == 0)
 		{
-			list_com[i].f(ac, baby_av, env, alias);
+			list_com[i].f(ac, baby_av, env, alias, o_en);
 			return (1);
 		}
 	}
@@ -134,7 +135,7 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias)
  * -------------------------
  * Return: 1 if found an external command, 0 if not
  */
-int external_cmd(char **baby_av, char ***env)
+int external_cmd(char **baby_av, char ***env, char ***o_en)
 {
 	char *aux = NULL, *aux2 = NULL, *aux_error = NULL;
 	struct stat st;
@@ -157,7 +158,7 @@ int external_cmd(char **baby_av, char ***env)
 		if (!aux)
 		{
 			aux2 = int_to_str(127);
-			_setenv("LAST_CHILD_RET", aux2, env);
+			_setenv("LAST_CHILD_RET", aux2, o_en);
 			free(aux2);
 			return (0);
 		}
@@ -170,7 +171,7 @@ int external_cmd(char **baby_av, char ***env)
 	if (check_dir(aux))
 	{
 		aux2 = int_to_str(127);
-		_setenv("LAST_CHILD_RET", aux2, env);
+		_setenv("LAST_CHILD_RET", aux2, o_en);
 		free(aux2);
 		free(aux);
 		return (0);
@@ -186,7 +187,7 @@ int external_cmd(char **baby_av, char ***env)
 	{
 		if (execve(aux, baby_av, *env) == -1)
 		{
-			aux_error = _super_con_err(aux, env);
+			aux_error = _super_con_err(aux, o_en);
 			perror(aux_error);
 			free(aux_error);
 			exit (126);
@@ -196,7 +197,7 @@ int external_cmd(char **baby_av, char ***env)
 	{
 		output = parent_wait(child_pid, &status);
 		aux2 = int_to_str(output);
-		_setenv("LAST_CHILD_RET", aux2, env);
+		_setenv("LAST_CHILD_RET", aux2, o_en);
 		free(aux2);
 		free(aux);
 		if (output == 0)

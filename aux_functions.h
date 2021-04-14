@@ -33,7 +33,7 @@ int p_strlen(char **buff);
 /* aux_f3.c */
 void free_list(envs_list *head);
 envs_list *add_node(envs_list **, char *, char *, int, int, int);
-envs_list *generate_var_nodes(char *str, int *tot_size, char ***env);
+envs_list *generate_var_nodes(char *str, int *tot_size, char ***o_en);
 int check_var_delim(char c);
 void gen_var_content(envs_list *head, char ***env);
 
@@ -54,7 +54,7 @@ char **p_strcon(char **p, char **p2);
 /* aux_f6.c */
 int str_char_check(char *str, char c);
 int parent_wait(int child_pid, int *status);
-void _magic(int ac, char **av, char ***env, char ***alias);
+void _magic(int ac, char **av, char ***env, char ***alias, char ***o_en);
 void _setenv(char *name, char *value, char ***env);
 void counter_plus_plus(char ***env);
 

@@ -14,6 +14,7 @@ int main(int ac, char **av, char **env)
 {
 	int fd = -1, ret = 0, read_site = 1;
 	char **global_env = NULL;
+	char **our_env = NULL;
 	char **global_alias = NULL;
 
 	signal(SIGINT, sighandler);
@@ -23,13 +24,16 @@ int main(int ac, char **av, char **env)
 	global_alias = create_start_alias();
 
 	_set_PWD(&global_env);
-	/*
-	_setenv("LAST_CHILD_RET", "0", &global_env);
-	_setenv("ABORT_INDICATOR", "0", &global_env);
-	_setenv("ABORT_INDICATOR_STATUS", "0", &global_env);
-	_setenv("COUNTER", "0", &global_env);
-	_setenv("PROG_NAME", av[0], &global_env);
-	*/
+	
+	our_env = malloc(sizeof(char *) * 1);
+	our_env[0] = NULL;
+
+	_setenv("LAST_CHILD_RET", "0", &our_env);
+	_setenv("ABORT_INDICATOR", "0", &our_env);
+	_setenv("ABORT_INDICATOR_STATUS", "0", &our_env);
+	_setenv("COUNTER", "0", &our_env);
+	_setenv("PROG_NAME", av[0], &our_env);
+	
 	
 	/* READ FILE */
 	if (ac == 2)
@@ -48,26 +52,28 @@ int main(int ac, char **av, char **env)
 		read_site = 0;
 	}
 
-	ret = infinite_loop(fd, read_site, &global_env, &global_alias);
+	ret = infinite_loop(fd, read_site, &global_env, &global_alias, &our_env);
 
 	if (fd != -1)
 		close(fd);
 
 	free_split(global_env);
 	free_split(global_alias);
+	free_split(our_env);
 	return (ret);
 }
 
 /**
  * infinite_loop - Execute until the program end asking user's input
  * @fd: pass main file descriptor
- * @read_site: where read?
+ * @rs: where read?
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global variables
  * ------------------------------
  * Return: syntax manager return, 1 if error happens
  */
-int infinite_loop(int fd, int read_site, char ***env, char ***alias)
+int infinite_loop(int fd, int rs, char ***env, char ***alias, char ***o_en)
 {
 	char prompt[] = "\033[0;32m#cisfun$ \033[1;37m";
 	char *input = NULL, **lines = NULL;
@@ -82,7 +88,7 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 		lines = NULL;
 		if (fd == -1)
 			write(1, &prompt, sizeof(prompt) / sizeof(char));
-		bytes_read = _getline(&input, &bytes_used_read, read_site);
+		bytes_read = _getline(&input, &bytes_used_read, rs);
 		if (bytes_read == -1)
 		{
 			free(input);
@@ -90,24 +96,25 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 		}
 		lines = _split(input, "\n");
 		free(input);
-		ret = syntax_manager(lines, fd, env, alias);
+		ret = syntax_manager(lines, fd, env, alias, o_en);
 		free_split(lines);
 		if (ret == 1)
 		{
 			_print("Retorno syntax_manager\n\n");
 			return (1);
 		}
-		if (get_int_env("ABORT_INDICATOR", env) == 1)
+		if (get_int_env("ABORT_INDICATOR", o_en) == 1)
 		{
-			abort_indicator_status = get_int_env("ABORT_INDICATOR_STATUS", env);
+			abort_indicator_status = get_int_env("ABORT_INDICATOR_STATUS", o_en);
 			free_split(*env);
 			free_split(*alias);
+			free_split(*o_en);
 			exit(abort_indicator_status);
 		}
 		if (fd != -1)
 			break;
 	}
-	return (get_int_env("LAST_CHILD_RET", env));
+	return (get_int_env("LAST_CHILD_RET", o_en));
 }
 
 /**
