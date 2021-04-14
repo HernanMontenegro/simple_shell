@@ -73,13 +73,6 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 
 	while (1)
 	{
-		if (get_int_env("abort_indicator", env) == 1)
-		{
-			abort_indicator_status = get_int_env("abort_indicator_status", env);
-			free_split(*env);
-			free_split(*alias);
-			exit(abort_indicator_status);
-		}
 		bytes_read = 0;
 		bytes_used_read = 0;
 		input = NULL;
@@ -100,6 +93,13 @@ int infinite_loop(int fd, int read_site, char ***env, char ***alias)
 		{
 			_print("Retorno syntax_manager\n\n");
 			return (1);
+		}
+		if (get_int_env("abort_indicator", env) == 1)
+		{
+			abort_indicator_status = get_int_env("abort_indicator_status", env);
+			free_split(*env);
+			free_split(*alias);
+			exit(abort_indicator_status);
 		}
 		if (fd != -1)
 			break;
