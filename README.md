@@ -182,8 +182,10 @@ Copyright (c) [2021] [Hernan Montenegro, Tomas Martinez]
 
 ## Author Info
 [Hernan Montenegro](https://github.com/HernanMontenegro)
+
 [Tomás Martínez](https://github.com/tshuna332)
 
+<br>
 <br>
 
 [Back To The Top](#Simple_Shell)
