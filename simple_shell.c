@@ -31,7 +31,7 @@ int main(int ac, char **av, char **env)
 	_setenv("LAST_CHILD_RET", "0", &our_env);
 	_setenv("ABORT_INDICATOR", "0", &our_env);
 	_setenv("ABORT_INDICATOR_STATUS", "0", &our_env);
-	_setenv("COUNTER", "0", &our_env);
+	_setenv("COUNTER", "1", &our_env);
 	_setenv("PROG_NAME", av[0], &our_env);
 	
 	

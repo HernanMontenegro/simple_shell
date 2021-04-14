@@ -27,16 +27,14 @@ int syntax_manager(char **inp, int fd, char ***env, char ***alias, char ***o_en)
 				return (1);
 			if (_strlen(command) == 0)
 			{
-				if (fd == -1)
-					counter_plus_plus(o_en);
+				counter_plus_plus(o_en);
 				free(command);
 				continue;
 			}
 			command = variable_translator(command, env, o_en);
 			if (!command)
 			{
-				if (fd == -1)
-					counter_plus_plus(o_en);
+				counter_plus_plus(o_en);
 				return (1);
 			}
 				
