@@ -81,9 +81,10 @@ void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
 void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int global_env_len = 0, target_i = 0;
-	char *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
+	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
 
 	_magic(ac, av, env, alias, o_en);
+
 	if (ac > 3)
 	{
 		_print_2_n_extend("setenv", ": Error no more than 3 parameters", "0", o_en);
@@ -93,15 +94,20 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		aux3 = _strcpy(av[2]);
 	else
 	{
-_print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
+		_print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
 		return;	
 	}
+
+	/* look if exist env var */
+	target_env = _getenv(av[1], *env);
 	target_i = get_env_index(av[1], *env);
+
 	aux1 = _strcon(av[1], "=");
 	aux2 = _strcon(aux1, aux3);
 	free(aux1);
 	free(aux3);
-	if (_getenv_exist(av[1], *aux))
+
+	if (target_env)
 	{
 		free((*env)[target_i]);
 		(*env)[target_i] = aux2;
@@ -110,14 +116,19 @@ _print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
 	{
 		global_env_len = p_strlen(*env);
 		*env = p_realloc(*env, global_env_len, global_env_len + 2);
+
 		if (*env == NULL)
 		{
 			_print_2_n_extend("setenv", ": Error changing environment variable", "0", o_en);
+			free(target_env);
 			return;
 		}
+
 		(*env)[global_env_len] = aux2;
 		(*env)[global_env_len + 1] = NULL;
 	}
+	free(target_env);
+
 	_setenv("LAST_CHILD_RET", "0", o_en);
 }
 
