@@ -113,8 +113,7 @@ _print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
 	}
 	free(aux1);
 	free(aux3);
-
-	if (target_env)
+	if (_getenv_exist(av[1], *env))
 	{
 		free((*env)[target_i]);
 		(*env)[target_i] = aux2;
