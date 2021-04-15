@@ -6,6 +6,7 @@
  * @av: argument array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env var
  * -------------------------------------
 */
 void cmd_alias(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -81,6 +82,7 @@ int get_index_alias(char *str, char ***alias)
  * @av: argument array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env var
  * -------------------------------------
 */
 void cmd_help(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -125,6 +127,7 @@ void cmd_help(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env var
  * ----------------------------------------
  */
 void cmd_oen(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -139,17 +142,26 @@ void cmd_oen(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		cannon_meat = _strcon((*o_en)[i], "\n");
 		_print(cannon_meat);
 		free(cannon_meat);
+	}
+}
 
 /**
- * cmd_uwu - uwu command 
- * 
-*/	}
-}
- 
-void cmd_uwu(__attribute__((unused))int ac, __attribute__((unused))char **av,
-__attribute__((unused))char ***env,__attribute__((unused))char ***alias,
-__attribute__((unused))char ***o_en)
+ * cmd_uwu - uwu special command
+ * @ac: Argument count
+ * @av: Arguments array
+ * @env: global env variables
+ * @alias: global alias variable
+ * @o_en: our global env var
+ * ---------------------------------------
+*/
+void cmd_uwu(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
+	ac = ac;
+	av = av;
+	env = env;
+	alias = alias;
+	o_en = o_en;
+
 	_print_n("     ******       ******");
 	_print_n("   **********   **********");
 	_print_n(" ************* *************");
@@ -162,7 +174,6 @@ __attribute__((unused))char ***o_en)
 	_print_n("       ***************");
 	_print_n("         ***********");
 	_print_n("           *******");
-	
-_print_n("             ***");
+	_print_n("             ***");
 	_print_n("              *");
 }

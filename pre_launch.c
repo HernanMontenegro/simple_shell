@@ -5,6 +5,7 @@
  * @str: the string to check
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env var
  * ----------------------------------
  * Return: command exit status if is a command, 1 if not
  */
@@ -95,6 +96,7 @@ char **clean_arg(char **argv)
  * @baby_av: The cleanned baby to analize
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env var
  * -------------------------
  * Return: 1 if found an internal command, 0 if not
  */
@@ -133,6 +135,7 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias, char ***o_en)
  * external_cmd - External commands manager
  * @baby_av: The cleanned baby to analize
  * @env: global env variables
+ * @o_en: our global env var
  * -------------------------
  * Return: 1 if found an external command, 0 if not
  */
@@ -191,7 +194,7 @@ int external_cmd(char **baby_av, char ***env, char ***o_en)
 			aux_error = _super_con_err(aux, o_en);
 			perror(aux_error);
 			free(aux_error);
-			exit (126);
+			exit(126);
 		}
 	}
 	else
@@ -205,7 +208,7 @@ int external_cmd(char **baby_av, char ***env, char ***o_en)
 			return (1);
 		return (2);
 	}
-		
+
 	return (1);
 }
 

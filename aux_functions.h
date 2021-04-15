@@ -68,7 +68,7 @@ void _print_2_n(char *str);
 /* aux_f8.c */
 int check_num(char *str);
 void _set_PWD(char ***env);
-void _print_2_n_extend(char *fun, char *str, char *n, char ***o_en);
+void _print_2_n_ex(char *fun, char *str, char *n, char ***o_en);
 int _getenv_exist(char *str, char **env);
 /* empty slot */
 

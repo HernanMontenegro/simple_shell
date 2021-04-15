@@ -25,7 +25,6 @@ int main(int ac, char **av, char **env)
 	global_alias = create_start_alias();
 
 	_set_PWD(&global_env);
-	
 	our_env = malloc(sizeof(char *) * 1);
 	our_env[0] = NULL;
 
@@ -34,8 +33,7 @@ int main(int ac, char **av, char **env)
 	_setenv("ABORT_INDICATOR_STATUS", "0", &our_env);
 	_setenv("COUNTER", "0", &our_env);
 	_setenv("PROG_NAME", av[0], &our_env);
-	
-	
+
 	/* READ FILE */
 	if (ac >= 2)
 	{

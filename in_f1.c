@@ -6,7 +6,7 @@
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
- * @o_en: our
+ * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -53,6 +53,7 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -76,6 +77,7 @@ void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ------------------------------------------
  */
 void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -87,15 +89,15 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 	if (ac > 3)
 	{
-		_print_2_n_extend("setenv", ": Error no more than 3 parameters", "0", o_en);
+		_print_2_n_ex("setenv", ": Error no more than 3 parameters", "0", o_en);
 		return;
 	}
 	else if (ac == 3)
 		aux3 = _strcpy(av[2]);
 	else
 	{
-		_print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
-		return;	
+	_print_2_n_ex("setenv", ": Error expect at least 2 parameters", "0", o_en);
+		return;
 	}
 
 	/* look if exist env var */
@@ -119,7 +121,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 		if (*env == NULL)
 		{
-			_print_2_n_extend("setenv", ": Error changing environment variable", "0", o_en);
+			_print_2_n_ex("setenv", ": Error changing environment variable", "0", o_en);
 			free(target_env);
 			return;
 		}
@@ -138,6 +140,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ------------------------------------------
  */
 void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -198,6 +201,7 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -243,7 +247,7 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	if (chdir(path) == -1)
 	{
 		_setenv("LAST_CHILD_RET", "2", o_en);
-		
+
 		aux_error = _super_con_err("cd", o_en);
 		aux = _strcon(aux_error, ": can't cd to ");
 		free(aux_error);

@@ -35,13 +35,13 @@ void _set_PWD(char ***env)
 }
 
 /**
-* _print_2_n_extend - cut from large functions xd
+* _print_2_n_ex - cut from large functions xd
 * @fun: function name to use
 * @str: string to print
 * @n: number string to setenv
 * @o_en: our global env variables
 */
-void _print_2_n_extend(char *fun, char *str, char *n, char ***o_en)
+void _print_2_n_ex(char *fun, char *str, char *n, char ***o_en)
 {
 	char *aux_error = NULL, *aux = NULL;
 

@@ -5,12 +5,12 @@
 * @inp: the input str
 * @fd: file descriptor
 * @env: global env variables
-* @alias: global alias variable
+* @alis: global alias variable
 * @o_en: our global variable
 * -------------------------------
 * Return: 0 if worked, 1 if not
 */
-int syntax_manager(char **inp, int fd, char ***env, char ***alias, char ***o_en)
+int syntax_manager(char **inp, int fd, char ***env, char ***alis, char ***o_en)
 {
 	int i, j;
 	char **cmd_splt = NULL, *command = NULL;
@@ -37,12 +37,12 @@ int syntax_manager(char **inp, int fd, char ***env, char ***alias, char ***o_en)
 				counter_plus_plus(o_en);
 				return (1);
 			}
-				
+
 			cmd_splt = _split(command, ";");
 			for (j = 0; cmd_splt[j] != NULL; j++)
 			{
-				or_operat(cmd_splt[j], env, alias, o_en);
-			
+				or_operat(cmd_splt[j], env, alis, o_en);
+
 				if (get_int_env("ABORT_INDICATOR", o_en))
 				{
 					free_split(cmd_splt);
@@ -57,7 +57,7 @@ int syntax_manager(char **inp, int fd, char ***env, char ***alias, char ***o_en)
 			free(command);
 		}
 		if (fd != -1)
-				counter_plus_plus(o_en);
+			counter_plus_plus(o_en);
 	}
 	return (0);
 }
@@ -75,7 +75,7 @@ char *delete_comments(char *str)
 
 	if (str[0] == '#')
 		return (_strcpy(""));
-		
+
 	str_list = _split(str, " #");
 
 	str_aux = _strcpy(str_list[0]);
@@ -89,6 +89,7 @@ char *delete_comments(char *str)
  *						More like a brain calling functions requiered
  * @str: the source string containing a variable
  * @env: global env variables
+ * @o_en: our global variable
  * ------------------------------------------------
  * Return: New string with var content
 */
@@ -112,6 +113,7 @@ char *variable_translator(char *str, char ***env, char ***o_en)
  * @str: the string containing the OR operator
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global variable
  * ----------------------------------------------
  * Return: 0 FOR NOW
  */
@@ -143,6 +145,7 @@ int or_operat(char *str, char ***env, char ***alias, char ***o_en)
  * @str: the string containing the AND operator
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global variable
  * ----------------------------------------------
  * Return: 1 FOR NOW
  */
