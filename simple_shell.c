@@ -48,6 +48,9 @@ int main(int ac, char **av, char **env)
 			_setenv("LAST_CHILD_RET", "127", &our_env);
 			free(aux);
 			free(aux_error);
+			free_split(global_env);
+			free_split(global_alias);
+			free_split(our_env);
 			return (127);
 		}
 		read_site = fd;
