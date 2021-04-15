@@ -95,8 +95,6 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		_setenv("LAST_CHILD_RET", "0", o_en);
 		return;
 	}
-	else if (ac == 2)
-		aux3 = _strcpy("");
 	else if (ac == 3)
 		aux3 = _strcpy(av[2]);
 	else
