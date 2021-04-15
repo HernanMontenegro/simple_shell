@@ -100,9 +100,25 @@ _print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
 	}
 	target_i = get_env_index(av[1], *env);
 	aux1 = _strcon(av[1], "=");
+	if (aux1 == NULL)
+	{
+		_print_2_n_extend("setenv", ": Cannot run due to lack of memory", "1", o_en);
+		return;
+	}
 	aux2 = _strcon(aux1, aux3);
+	if (aux2 == NULL)
+	{
+		_print_2_n_extend("setenv", ": Cannot run due to lack of memory", "1", o_en);
+		return;
+	}
 	free(aux1);
 	free(aux3);
+
+	if (target_env)
+	{
+		free((*env)[target_i]);
+		(*env)[target_i] = aux2;
+	}
 	if (_getenv_exist(av[1], *env))
 	{
 		free((*env)[target_i]);
