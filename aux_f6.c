@@ -40,7 +40,7 @@ int parent_wait(int child_pid, int *status)
 	}
 	if (WIFEXITED(*status))
 	{
-		return(WEXITSTATUS(*status));
+		return (WEXITSTATUS(*status));
 	}
 
 	return (1);
@@ -48,16 +48,17 @@ int parent_wait(int child_pid, int *status)
 
 /**
 * _magic - used
-*@ac: none
-*@av: none
-*@env: none
-*@alias: none
+* @ac: none
+* @av: none
+* @env: none
+* @alias: none
+* @o_en: our global env variable
 */
 void _magic(__attribute__((unused)) int ac,
- __attribute__((unused)) char **av,
+__attribute__((unused)) char **av,
 __attribute__((unused)) char ***env,
- __attribute__((unused)) char ***alias,
-  __attribute__((unused)) char ***o_en)
+__attribute__((unused)) char ***alias,
+__attribute__((unused)) char ***o_en)
 {
 }
 

@@ -55,7 +55,10 @@ int get_int_env(char *name, char ***env)
 }
 
 /**
-*
+* check_dir - check if is a directory
+* @dir_path: string with the path
+* ---------------------------------------------
+* Return: 1 if is a directory, 0 if not
 */
 int check_dir(char *dir_path)
 {
@@ -72,7 +75,7 @@ int check_dir(char *dir_path)
 }
 
 /**
- * _print - prints a string given 2
+ * _print_2 - prints a string given 2
  * @str: the string to print
  * ---------------------------------------
  * Return: the length o the string
@@ -86,7 +89,7 @@ int _print_2(char *str)
 }
 
 /**
- * _print_n - print a string with a new line at the end 2
+ * _print_2_n - print a string with a new line at the end 2
  * @str: the string to print
  * -------------------------------
 */

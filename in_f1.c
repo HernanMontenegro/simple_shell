@@ -6,6 +6,7 @@
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -52,6 +53,7 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -75,71 +77,33 @@ void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ------------------------------------------
  */
 void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int global_env_len = 0, target_i = 0;
-	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
-	char *aux_error = NULL, *aux = NULL;
+	char *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
 
 	_magic(ac, av, env, alias, o_en);
-
 	if (ac > 3)
 	{
-		aux_error = _super_con_err("setenv", o_en);
-		aux = _strcon(aux_error, ": Error no more than 3 parameters");
-		_print_2_n(aux);
-		free(aux);
-		free(aux_error);
-		_setenv("LAST_CHILD_RET", "0", o_en);
+		_print_2_n_extend("setenv", ": Error no more than 3 parameters", "0", o_en);
 		return;
 	}
 	else if (ac == 3)
 		aux3 = _strcpy(av[2]);
 	else
 	{
-		aux_error = _super_con_err("setenv", o_en);
-		aux = _strcon(aux_error, ": Error expect at least 2 parameters");
-		_print_2_n(aux);
-		free(aux);
-		free(aux_error);
-		_setenv("LAST_CHILD_RET", "0", o_en);
-		return;	
+_print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
+		return;
 	}
-
-	/* look if exist env var */
-	target_env = _getenv(av[1], *env);
 	target_i = get_env_index(av[1], *env);
-
 	aux1 = _strcon(av[1], "=");
-	if (aux1 == NULL)
-	{
-		aux_error = _super_con_err("setenv", o_en);
-		aux = _strcon(aux_error, ": Cannot run due to lack of memory");
-		_print_2_n(aux);
-		_setenv("LAST_CHILD_RET", "1", o_en);
-		free(aux);
-		free(aux_error);
-		free(target_env);
-		return;
-	}
 	aux2 = _strcon(aux1, aux3);
-	if (aux2 == NULL)
-	{
-		aux_error = _super_con_err("setenv", o_en);
-		aux = _strcon(aux_error, ": Cannot run due to lack of memory");
-		_print_2_n(aux);
-		_setenv("LAST_CHILD_RET", "1", o_en);
-		free(aux);
-		free(aux_error);
-		free(target_env);
-		return;
-	}
 	free(aux1);
 	free(aux3);
-
-	if (target_env)
+	if (_getenv_exist(av[1], *env))
 	{
 		free((*env)[target_i]);
 		(*env)[target_i] = aux2;
@@ -148,24 +112,14 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	{
 		global_env_len = p_strlen(*env);
 		*env = p_realloc(*env, global_env_len, global_env_len + 2);
-
 		if (*env == NULL)
 		{
-			aux_error = _super_con_err("setenv", o_en);
-			aux = _strcon(aux_error, ": Error changing environment variable");
-			_print_2_n(aux);
-			_setenv("LAST_CHILD_RET", "1", o_en);
-			free(aux);
-			free(aux_error);
-			free(target_env);
+			_print_2_n_extend("setenv", ": Error changing environment variable", "1", o_en);
 			return;
 		}
-
 		(*env)[global_env_len] = aux2;
 		(*env)[global_env_len + 1] = NULL;
 	}
-	free(target_env);
-
 	_setenv("LAST_CHILD_RET", "0", o_en);
 }
 
@@ -175,6 +129,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ------------------------------------------
  */
 void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -235,6 +190,7 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
