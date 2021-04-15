@@ -6,6 +6,7 @@
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
+ * @o_en: our
  * ----------------------------------------
  */
 void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
