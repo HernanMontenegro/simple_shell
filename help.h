@@ -12,7 +12,7 @@ void hp_env(void);
 /* help_f2.c */
 void hp_setenv(void);
 void hp_unsetenv(void);
-/* EMPTY SLOT */
+void hp_help_help(void);
 /* EMPTY SLOT */
 /* EMPTY SLOT */
 /* ==============================  */

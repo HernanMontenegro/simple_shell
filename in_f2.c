@@ -105,6 +105,8 @@ void cmd_help(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		hp_setenv();
 	else if (_strcmp(av[1], "unsetenv") == 0)
 		hp_unsetenv();
+	else if (_strcmp(av[1], "help") == 0)
+		hp_help_help();
 	else
 	{
 		aux = _strcon("bash: help: no help topics match '", av[1]);

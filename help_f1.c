@@ -6,7 +6,15 @@
 */
 void hp_help(void)
 {
-	_print_n("Usage: help [internal command name]");
+	_print_n("help command options:");
+	_print_n("");
+	_print_n("help help");
+	_print_n("help exit");
+	_print_n("help cd");
+	_print_n("help alias");
+	_print_n("help env");
+	_print_n("help setenv");
+	_print_n("help unsetenv");
 }
 
 /**
