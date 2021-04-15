@@ -56,9 +56,10 @@ void _print_2_n_extend(char *fun, char *str, char *n, char ***o_en)
 
 /**
  * _getenv_exist - Check if an env exist
- * @str: env var name
+ * @env_name: env var name
+ * @env: global env var name
  * ----------------------------------
- * Return: 1 if exist, 0 if not 
+ * Return: 1 if exist, 0 if not
 */
 int _getenv_exist(char *env_name, char **env)
 {
