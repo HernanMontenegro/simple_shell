@@ -6,7 +6,6 @@
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
- * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -53,7 +52,6 @@ void cmd_exit(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
- * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -171,16 +169,12 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	_setenv("LAST_CHILD_RET", "0", o_en);
 }
 
-/*_print_2_n_extend("setenv", ": Cannot run due to lack of memory", "1", o_en);*/
-
-
 /**
  * cmd_unsetenv - Remove a previous setted environmental var
  * @ac: arguments count
  * @av: arguments array
  * @env: global env variables
  * @alias: global alias variable
- * @o_en: our global env variables
  * ------------------------------------------
  */
 void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
@@ -241,7 +235,6 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
  * @av: Arguments array
  * @env: global env variables
  * @alias: global alias variable
- * @o_en: our global env variables
  * ----------------------------------------
  */
 void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
