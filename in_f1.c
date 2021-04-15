@@ -82,30 +82,19 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int global_env_len = 0, target_i = 0;
 	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
-	char *aux_error = NULL, *aux = NULL;
 
 	_magic(ac, av, env, alias, o_en);
 
 	if (ac > 3)
 	{
-		aux_error = _super_con_err("setenv", o_en);
-		aux = _strcon(aux_error, ": Error no more than 3 parameters");
-		_print_2_n(aux);
-		free(aux);
-		free(aux_error);
-		_setenv("LAST_CHILD_RET", "0", o_en);
+		_print_2_n_extend("setenv", ": Error no more than 3 parameters", "0", o_en);
 		return;
 	}
 	else if (ac == 3)
 		aux3 = _strcpy(av[2]);
 	else
 	{
-		aux_error = _super_con_err("setenv", o_en);
-		aux = _strcon(aux_error, ": Error expect at least 2 parameters");
-		_print_2_n(aux);
-		free(aux);
-		free(aux_error);
-		_setenv("LAST_CHILD_RET", "0", o_en);
+		_print_2_n_extend("setenv", ": Error expect at least 2 parameters", "0", o_en);
 		return;	
 	}
 
@@ -130,12 +119,7 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 
 		if (*env == NULL)
 		{
-			aux_error = _super_con_err("setenv", o_en);
-			aux = _strcon(aux_error, ": Error changing environment variable");
-			_print_2_n(aux);
-			_setenv("LAST_CHILD_RET", "1", o_en);
-			free(aux);
-			free(aux_error);
+			_print_2_n_extend("setenv", ": Error changing environment variable", "0", o_en);
 			free(target_env);
 			return;
 		}
