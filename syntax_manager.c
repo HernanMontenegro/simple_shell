@@ -17,7 +17,6 @@ int syntax_manager(char **inp, int fd, char ***env, char ***alis, char ***o_en)
 
 	if (inp[0][0] == '\0')
 		counter_plus_plus(o_en);
-
 	for (i = 0; inp && inp[i] != NULL; i++)
 	{
 		if (inp[i][0] != '\0')
@@ -37,12 +36,10 @@ int syntax_manager(char **inp, int fd, char ***env, char ***alis, char ***o_en)
 				counter_plus_plus(o_en);
 				return (1);
 			}
-
 			cmd_splt = _split(command, ";");
 			for (j = 0; cmd_splt[j] != NULL; j++)
 			{
 				or_operat(cmd_splt[j], env, alis, o_en);
-
 				if (get_int_env("ABORT_INDICATOR", o_en))
 				{
 					free_split(cmd_splt);
@@ -50,14 +47,9 @@ int syntax_manager(char **inp, int fd, char ***env, char ***alis, char ***o_en)
 					return (0);
 				}
 			}
-
-			if (fd == -1)
-				counter_plus_plus(o_en);
-			free_split(cmd_splt);
-			free(command);
+			sytx_man_p2(fd, o_en, &cmd_splt, &command);
 		}
-		if (fd != -1)
-			counter_plus_plus(o_en);
+		sytx_man_p3(fd, o_en);
 	}
 	return (0);
 }
