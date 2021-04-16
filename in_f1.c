@@ -83,10 +83,9 @@ void cmd_env(int ac, char **av, char ***env, char ***alias, char ***o_en)
 void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int global_env_len = 0, target_i = 0;
-	char *target_env = NULL, *aux1 = NULL, *aux2 = NULL, *aux3 = NULL;
+	char *target_env = NULL, *aux2 = NULL, *aux3 = NULL;
 
 	_magic(ac, av, env, alias, o_en);
-
 	if (ac > 3)
 	{
 		_print_2_n_ex("setenv", ": Error no more than 3 parameters", "0", o_en);
@@ -99,16 +98,8 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	_print_2_n_ex("setenv", ": Error expect at least 2 parameters", "0", o_en);
 		return;
 	}
-
-	/* look if exist env var */
-	target_env = _getenv(av[1], *env);
-	target_i = get_env_index(av[1], *env);
-
-	aux1 = _strcon(av[1], "=");
-	aux2 = _strcon(aux1, aux3);
-	free(aux1);
+	setenv_part2(&target_env, &target_i, av[1], &aux2, *env, &aux3);
 	free(aux3);
-
 	if (target_env)
 	{
 		free((*env)[target_i]);
@@ -118,19 +109,16 @@ void cmd_setenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	{
 		global_env_len = p_strlen(*env);
 		*env = p_realloc(*env, global_env_len, global_env_len + 2);
-
 		if (*env == NULL)
 		{
 			_print_2_n_ex("setenv", ": Error changing environment variable", "0", o_en);
 			free(target_env);
 			return;
 		}
-
 		(*env)[global_env_len] = aux2;
 		(*env)[global_env_len + 1] = NULL;
 	}
 	free(target_env);
-
 	_setenv("LAST_CHILD_RET", "0", o_en);
 }
 
@@ -147,7 +135,7 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int i, j;
 	char **curr_env = NULL, **new_global_env = NULL;
-	char *target_env = NULL, *aux_error = NULL, *aux = NULL;
+	char *target_env = NULL, *aux_error = NULL;
 
 	_magic(ac, av, env, alias, o_en);
 	if (ac != 2)
@@ -158,24 +146,14 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 	target_env = _getenv(av[1], *env);
 	if (!target_env)
 	{
-		aux_error = _super_con_err("unsetenv", o_en);
-		aux = _strcon(aux_error, ": Error variable not found");
-		_print_2_n(aux);
-		free(aux);
-		free(aux_error);
-		_setenv("LAST_CHILD_RET", "0", o_en);
+		unsetenv_p2(&aux_error, o_en);
 		return;
 	}
 	free(target_env);
 	new_global_env = malloc((p_strlen(*env) + 1) * sizeof(char *));
 	if (!new_global_env)
 	{
-		aux_error = _super_con_err("unsetenv", o_en);
-		aux = _strcon(aux_error, ": Error deleting environment variable");
-		_print_2_n(aux);
-		_setenv("LAST_CHILD_RET", "1", o_en);
-		free(aux);
-		free(aux_error);
+		unsetenv_p3(&aux_error, o_en);
 		return;
 	}
 	for (i = 0, j = 0; (*env)[i] != NULL; i++)
@@ -207,8 +185,7 @@ void cmd_unsetenv(int ac, char **av, char ***env, char ***alias, char ***o_en)
 void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 {
 	int len_buff = 0;
-	char *path = NULL, *path_old = NULL, *aux_error = NULL, *aux = NULL;
-	char cwd[PATH_MAX];
+	char *path = NULL, *path_old = NULL;
 
 	_magic(ac, av, env, alias, o_en);
 	if (ac == 1)
@@ -227,35 +204,10 @@ void cmd_cd(int ac, char **av, char ***env, char ***alias, char ***o_en)
 		return;
 	}
 	else if (ac == 2)
-	{
-		if (av[1][0] == '-')
-		{
-			path = _getenv("OLDPWD", *env);
-			if (path == NULL)
-			{
-				if (getcwd(cwd, sizeof(cwd)) != NULL)
-				{
-					_setenv("OLDPWD", cwd, env);
-					_print_n(cwd);
-				}
-				return;
-			}
-		}
-		else
-			path = _strcpy(av[1]);
-	}
+		cd_p2(av[1][0], &path, av[1], env);
 	if (chdir(path) == -1)
 	{
-		_setenv("LAST_CHILD_RET", "2", o_en);
-
-		aux_error = _super_con_err("cd", o_en);
-		aux = _strcon(aux_error, ": can't cd to ");
-		free(aux_error);
-		aux_error = _strcon(aux, path);
-		_print_2_n(aux_error);
-		free(aux);
-		free(aux_error);
-		free(path);
+		cd_p3(o_en, &path);
 		return;
 	}
 	path_old = _getenv("PWD", *env);

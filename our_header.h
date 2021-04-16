@@ -14,6 +14,7 @@
 /* Our own libraries */
 #include "structs.h"
 #include "aux_functions.h"
+#include "directors_cut.h"
 #include "internal_cmds.h"
 #include "help.h"
 
