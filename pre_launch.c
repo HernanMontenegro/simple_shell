@@ -141,37 +141,14 @@ int built_in_cmd(char **baby_av, char ***env, char ***alias, char ***o_en)
  */
 int external_cmd(char **baby_av, char ***env, char ***o_en)
 {
-	char *aux = NULL, *aux2 = NULL, *aux_error = NULL;
+	char *aux = NULL, *aux2 = NULL;
 	struct stat st;
 	pid_t child_pid = 0;
 	int status, bool = 1, output = 0;
 
-	if (!(str_char_check(baby_av[0], '/')))
-		bool = 1;
-	else
-	{
-		if (stat(baby_av[0], &st) == 0)
-			bool = 0;
-		else
-			bool = 1;
-	}
-
-	if (bool)
-	{
-		aux = serch_path(baby_av[0], env);
-		if (!aux)
-		{
-			aux2 = int_to_str(127);
-			_setenv("LAST_CHILD_RET", aux2, o_en);
-			free(aux2);
-			return (0);
-		}
-	}
-	else
-	{
-		aux = _strcpy(baby_av[0]);
-	}
-
+	if (extrn_cmd_2(baby_av, &bool, &st, &aux, &aux2,
+	o_en, env) == 0)
+		return (0);
 	if (check_dir(aux))
 	{
 		aux2 = int_to_str(127);
@@ -180,7 +157,6 @@ int external_cmd(char **baby_av, char ***env, char ***o_en)
 		free(aux);
 		return (0);
 	}
-
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -190,12 +166,7 @@ int external_cmd(char **baby_av, char ***env, char ***o_en)
 	if (child_pid == 0)
 	{
 		if (execve(aux, baby_av, *env) == -1)
-		{
-			aux_error = _super_con_err(aux, o_en);
-			perror(aux_error);
-			free(aux_error);
-			exit(126);
-		}
+			extrn_cmd_3(&aux, o_en);
 	}
 	else
 	{
@@ -208,7 +179,6 @@ int external_cmd(char **baby_av, char ***env, char ***o_en)
 			return (1);
 		return (2);
 	}
-
 	return (1);
 }
 
